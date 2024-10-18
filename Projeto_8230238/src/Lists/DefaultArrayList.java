@@ -4,6 +4,7 @@
  */
 package Lists;
 
+import Exceptions.ElementNotFoundException;
 import Exceptions.EmptyCollectionException;
 import java.util.Iterator;
 
@@ -76,8 +77,30 @@ public class DefaultArrayList<T> implements ListADT<T> {
     * @param element the element to be removed from the list
     */
     @Override
-    public T remove(T element) throws EmptyCollectionException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public T remove(T element) throws EmptyCollectionException, ElementNotFoundException {
+        if (count == 0) {
+            throw new EmptyCollectionException("Empty list");
+        }
+        
+        if (!contains(element)) {
+            throw new ElementNotFoundException("Element not found!");
+        }
+        
+        int counter = 0;
+        
+        while (counter < count && !ArrayList[counter].equals(element)) {
+            counter++;
+        }
+        
+        T removed = ArrayList[counter];
+        
+        for (int i = counter; counter < count - 1; i++) {
+            ArrayList[i] = ArrayList[i + 1];
+        }
+        
+        ArrayList[count - 1] = null;
+        
+        return removed;
     }
 
     /**
