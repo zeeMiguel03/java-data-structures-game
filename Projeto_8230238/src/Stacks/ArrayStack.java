@@ -108,7 +108,7 @@ public class ArrayStack<T> implements StackADT<T> {
      * from the old stack to the new expanded stack.
      */
     private void expandCapacity() {
-        T[] expand = (T[])(new Object[INITAL_CAPACITY * 2]);
+        T[] expand = (T[])(new Object[stack.length * 2]);
         
         for (int i = 0; i < top; i++) {
             expand[i] = stack[i];

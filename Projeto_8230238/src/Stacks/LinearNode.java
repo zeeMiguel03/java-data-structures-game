@@ -20,7 +20,7 @@ public class LinearNode<T>{
     
     /**
     * Creates a node storing the specified element
-     * @param element element to be stored.*/
+    * @param element element to be stored.*/
     public LinearNode(T element) {
         this.element = element;
         this.next = null;
