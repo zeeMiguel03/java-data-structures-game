@@ -26,7 +26,6 @@ public class DoublyLinkedList<T> implements ListADT<T> {
         this.modCount = 0;
     }
 
-    //Funciona
     @Override
     public T removeFirst() throws EmptyCollectionException {
         if (count == 0) {
@@ -48,7 +47,6 @@ public class DoublyLinkedList<T> implements ListADT<T> {
         return element;
     }
 
-    //Funciona
     @Override
     public T removeLast() throws EmptyCollectionException {
         if (count == 0) {
@@ -153,7 +151,6 @@ public class DoublyLinkedList<T> implements ListADT<T> {
         return false;
     }
 
-    //funciona
     @Override
     public boolean isEmpty() {
         return count == 0;
