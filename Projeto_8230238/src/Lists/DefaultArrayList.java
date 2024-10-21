@@ -6,31 +6,31 @@ package Lists;
 
 import Exceptions.ElementNotFoundException;
 import Exceptions.EmptyCollectionException;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 /**
  *
  * @author Miguel
  */
-public class DefaultArrayList<T> implements ListADT<T> {
+public abstract class DefaultArrayList<T> implements ListADT<T> {
     private static final int INITAL_CAPACITY = 100;
-    private T[] ArrayList;
-    private int count;
     
-    public DefaultArrayList() {
-        this.ArrayList = (T[]) (new Object[INITAL_CAPACITY]);
-        this.count = 0;
-    }   
+    protected T[] ArrayList;
+    protected int count;
+    protected int modCount;
     
     public DefaultArrayList(int initial) {
         this.ArrayList = (T[]) (new Object[initial]);
         this.count = 0;
+        this.modCount = 0;
     }
-
-    /**
-    * Removes and returns the first element from this list.
-    * @return the first element from this list
-    */
+    
+    public DefaultArrayList() {
+        this(INITAL_CAPACITY);
+    }
+       
+    //funciona
     @Override
     public T removeFirst() throws EmptyCollectionException {
         if (count == 0) {
@@ -39,7 +39,7 @@ public class DefaultArrayList<T> implements ListADT<T> {
         
         T firstPosition = ArrayList[0];
         
-        if (count > 1) {
+        if (count > 1) { //sem if
             for (int i = 0; i < count - 1; i++) {
                 ArrayList[i] = ArrayList[i + 1];
             } 
@@ -50,14 +50,12 @@ public class DefaultArrayList<T> implements ListADT<T> {
         }
        
         count--;
+        modCount++;
         
         return firstPosition;
     }
 
-    /**
-    * Removes and returns the last element from this list.
-    * @return the last element from this list
-    */
+    //funciona
     @Override
     public T removeLast() throws EmptyCollectionException {
         if (count == 0) {
@@ -65,17 +63,15 @@ public class DefaultArrayList<T> implements ListADT<T> {
         }
         
         T lastPosition = ArrayList[count - 1]; 
-        ArrayList[count - 1] = null;
+        ArrayList[count - 1] = null; //fazer aqui --
         
         count--;
+        modCount++;
         
         return lastPosition;
     }
 
-    /**
-    * Removes and returns the specified element from this list.
-    * @param element the element to be removed from the list
-    */
+    //funciona
     @Override
     public T remove(T element) throws EmptyCollectionException, ElementNotFoundException {
         if (count == 0) {
@@ -89,24 +85,23 @@ public class DefaultArrayList<T> implements ListADT<T> {
         int counter = 0;
         
         while (counter < count && !ArrayList[counter].equals(element)) {
-            counter++;
+            counter++; //meter fora
         }
         
         T removed = ArrayList[counter];
-        
-        for (int i = counter; counter < count - 1; i++) {
+                
+        for (int i = counter; i < count - 1; i++) {
             ArrayList[i] = ArrayList[i + 1];
         }
         
         ArrayList[count - 1] = null;
+        count--;
+        modCount++;
         
         return removed;
     }
 
-    /**
-    * Returns a reference to the first element in this list.
-    * @return a reference to the first element in this list
-    */
+    //funciona
     @Override
     public T first() throws EmptyCollectionException {
         if (count == 0) {
@@ -116,10 +111,7 @@ public class DefaultArrayList<T> implements ListADT<T> {
         return ArrayList[0];
     }
 
-    /**
-    * Returns a reference to the last element in this list.
-    * @return a reference to the last element in this list
-    */
+    //funciona
     @Override
     public T last() throws EmptyCollectionException {
         if (count == 0) {
@@ -129,20 +121,11 @@ public class DefaultArrayList<T> implements ListADT<T> {
         return ArrayList[count - 1];
     }
 
-    /**
-    * Returns true if this list contains the specified target
-    * element.
-    * @param target the target that is being sought in the list
-    * @return true if the list contains this element
-    */
+    //funciona
     @Override
-    public boolean contains(T target) throws EmptyCollectionException {
-        if (count == 0) {
-            throw new EmptyCollectionException("Empty list");
-        }
-        
-        for (T element : ArrayList) {
-            if (element.equals(target)) {
+    public boolean contains(T target) {                
+        for (int i = 0; i < count; i++) {
+            if (ArrayList[i].equals(target)) {
                 return true;
             }
         }
@@ -150,21 +133,11 @@ public class DefaultArrayList<T> implements ListADT<T> {
         return false;
     }
 
-    /**
-    * Returns true if this list contains no elements.
-    * @return true if this list contains no elements
-    */
     @Override
     public boolean isEmpty() {
         return count == 0;
     }
 
-    /**
-    * Returns the number of elements in this list.
-    *
-    * @return the integer representation of number of
-    * elements in this list
-    */
     @Override
     public int size() {
         return count;
@@ -172,8 +145,80 @@ public class DefaultArrayList<T> implements ListADT<T> {
 
     @Override
     public Iterator<T> iterator() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return new BasicIterator<T>();
     }
     
+    private class BasicIterator<E> implements Iterator<T> {
+        private int expectedModCount;
+        private boolean okToRemove;
+        private int current;
+        
+        public BasicIterator() {
+            this.expectedModCount = modCount;
+            this.okToRemove = false;
+            this.current = 0;
+        }
+        
+        @Override
+        public boolean hasNext() {
+            return current < count;
+        }
+
+        @Override
+        public T next() {
+            if (expectedModCount != modCount) {
+                throw new ConcurrentModificationException();
+            }
+            
+            if (!hasNext()) {
+                throw new ElementNotFoundException();
+            }
+            
+            okToRemove = true;
+            
+            return ArrayList[current++];
+        }
+
+        @Override
+        public void remove() {
+            if (expectedModCount != modCount) {
+                throw new ConcurrentModificationException();
+            }
+            
+            if (!okToRemove) {
+                throw new IllegalStateException();
+            }
+            
+            DefaultArrayList.this.remove(ArrayList[current - 1]);
+            current--;
+            expectedModCount++;
+            okToRemove = false;
+        }
+    }
+    
+    @Override
+    public String toString() throws EmptyCollectionException {
+        if (count == 0) {
+            throw new EmptyCollectionException("Empty list");
+        }
+        
+        String list = "";
+        
+        for (int i = 0; i < count ; i++) {
+            list += " " + ArrayList[i];
+        }
+        
+        return list;
+    }
+    
+    protected void expandCapacity() {
+        T[] expand = (T[])(new Object[count * 2]);
+        
+        for (int i = 0; i < ArrayList.length; i++) {
+            expand[i] = ArrayList[i];
+        } 
+        
+        ArrayList = expand;
+    }
 }
     
