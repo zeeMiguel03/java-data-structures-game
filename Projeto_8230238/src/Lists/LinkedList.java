@@ -6,6 +6,7 @@ package Lists;
 
 import Exceptions.ElementNotFoundException;
 import Exceptions.EmptyCollectionException;
+import Stacks.LinearNode;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
@@ -13,98 +14,42 @@ import java.util.Iterator;
  *
  * @author Miguel
  */
-public class DoublyLinkedList<T> implements ListADT<T> {
-    protected DoubleNode<T> head;
-    protected DoubleNode<T> tail;
-    protected int count;
-    protected int modCount;
+public class LinkedList<T> implements ListADT<T> {
+    private LinearNode<T> head, tail;
+    private int count, modCount;
     
-    public void DoublyLinkedList() {
+    public LinkedList() {
         this.head = null;
         this.tail = null;
         this.count = 0;
         this.modCount = 0;
     }
+    
+    public void add(T element) {
+        LinearNode<T> newNode = new LinearNode<>(element);
+        
+        if (count == 0) {
+            head = tail = newNode;
+        } else {
+            tail.setNext(newNode);
+            tail = newNode;
+        }
+        
+        count++;
+        modCount++;
+    }
 
+    //funciona
     @Override
     public T removeFirst() throws EmptyCollectionException {
         if (count == 0) {
-            throw new EmptyCollectionException();
+            throw new EmptyCollectionException("Empty list!");
         }
         
-        T element = head.getElement();
+        T removed = head.getElement();
         
-        if (head == tail) {
-            head = tail = null;
-        } else {
-            head = head.getNext();
-            head.setPrevious(null);
-        }
+        head = head.getNext();
         
-        count--;
-        modCount++;
-        
-        return element;
-    }
-
-    @Override
-    public T removeLast() throws EmptyCollectionException {
-        if (count == 0) {
-            throw new EmptyCollectionException();
-        }
-        
-        T element = tail.getElement();
-        
-        if (head == tail) {
-            head = tail = null;
-        } else {
-            tail = tail.getPrevious();
-            tail.setNext(null);
-        }
-        
-        count--;
-        modCount++;
-        
-        return element;
-    }
-
-    //falta coisas
-    @Override
-    public T remove(T element) throws EmptyCollectionException, ElementNotFoundException {
-        if (count == 0) {
-            throw new EmptyCollectionException();
-        }
-        
-        if (!contains(element)) {
-            throw new ElementNotFoundException(); //corrigir esta a repetir duas vezes
-        }
-
-        T removed = null;
-        
-        if (count == 1) {
-            removed = head.getElement();
-            head = tail = null;
-        } else if (tail.getElement().equals(element)) {
-            removed = tail.getElement();
-            tail = tail.getPrevious();
-            tail.setNext(null);
-        } else if (head.getElement().equals(element)) {
-            removed = head.getElement();
-            head = head.getNext();
-            head.setPrevious(null);
-        } else {
-            DoubleNode<T> current = head;
-
-            while (current != null) {
-                if (current.getElement().equals(element)) {
-                    removed = current.getElement();
-                    current.setPrevious(current.getNext());
-                }
-                
-                current = current.getNext();
-            }
-        }
-            
         count--;
         modCount++;
         
@@ -113,32 +58,87 @@ public class DoublyLinkedList<T> implements ListADT<T> {
 
     //funciona
     @Override
+    public T removeLast() throws EmptyCollectionException {
+        if (count == 0) {
+            throw new EmptyCollectionException("Empty list!");
+        }
+        
+        T removed = tail.getElement();
+        
+        LinearNode<T> current = head;
+        
+        while (current.getNext() != tail) {
+            current = current.getNext();
+        }
+        
+        current.setNext(null);
+        tail = current;
+        
+        count--;
+        modCount++;
+        
+        return removed;
+    }
+
+    @Override
+    public T remove(T element) throws EmptyCollectionException, ElementNotFoundException {
+        if (count == 0) {
+            throw new EmptyCollectionException("Empty list!");
+        }
+        
+        LinearNode<T> current = head;
+        LinearNode<T> previous = null;
+        
+        while (current != null && !current.getElement().equals(element)) {
+            previous = current;
+            current = current.getNext();
+        }
+        
+        if (current != tail && !current.getElement().equals(element)) {
+            throw new ElementNotFoundException("Element not found!");
+        }
+        
+        if (current == head) {
+            return removeFirst();
+        } else if (current == tail) {
+            return removeLast();
+        }
+        
+        T removed = current.getElement();
+        
+        previous.setNext(current.getNext());
+        
+        count--;
+        modCount++;
+        
+        return removed;   
+    }
+
+    @Override
     public T first() throws EmptyCollectionException {
         if (count == 0) {
-            throw new EmptyCollectionException();
+            throw new EmptyCollectionException("Empty list!");
         }
         
         return head.getElement();
     }
-
-    //funciona
+    
     @Override
     public T last() throws EmptyCollectionException {
         if (count == 0) {
-            throw new EmptyCollectionException();
+            throw new EmptyCollectionException("Empty list!");
         }
         
         return tail.getElement();
     }
 
-    //funciona
     @Override
     public boolean contains(T target) throws EmptyCollectionException {
         if (count == 0) {
-            throw new EmptyCollectionException();
-        } //usar find
+            throw new EmptyCollectionException("Empty list!");
+        }
         
-        DoubleNode<T> current = head;
+        LinearNode<T> current = head;
         
         while (current != null) {
             if (current.getElement().equals(target)) {
@@ -169,7 +169,7 @@ public class DoublyLinkedList<T> implements ListADT<T> {
     private class BasicIterator<E> implements Iterator<T> { 
         private int expectedModCount;
         private boolean okToRemove;
-        private DoubleNode<T> current;
+        private LinearNode<T> current;
         
         public BasicIterator() {
             this.expectedModCount = modCount;
@@ -192,9 +192,11 @@ public class DoublyLinkedList<T> implements ListADT<T> {
                 throw new ElementNotFoundException();
             }
             
+            T element = current.getElement();
             okToRemove = true;
+            current = current.getNext();
             
-            return current.getNext().getElement();
+            return element;
         }
 
         @Override
@@ -207,21 +209,22 @@ public class DoublyLinkedList<T> implements ListADT<T> {
                 throw new IllegalStateException();
             }
             
-            DoublyLinkedList.this.remove(current.getPrevious().getElement()); //verificar pela position porque pode haver por exemplo dois 1 1
-            expectedModCount++; // 1  2  3 4 5 1
+            LinkedList.this.remove(current.getElement());
+            expectedModCount++;
+            
             okToRemove = false;
         }
     }
     
     @Override
-    public String toString() { 
+    public String toString() {
         if (count == 0) {
-            throw new EmptyCollectionException("Empty collection!");
+            throw new EmptyCollectionException("Empty list!");
         }
         
         String result = "";
         
-        DoubleNode<T> current = head;
+        LinearNode<T> current = head;
         
         while (current != null) {
             result += " " + current.getElement();
@@ -231,40 +234,24 @@ public class DoublyLinkedList<T> implements ListADT<T> {
         return result;
     }
     
-    //Para apagar depois
-    private String headToTail(DoubleNode node) {
+    public LinearNode<T> firstLink() throws EmptyCollectionException {
         if (count == 0) {
-            throw new EmptyCollectionException();
+            throw new EmptyCollectionException("Empty list!");
         }
         
+        return head;
+    }
+    
+    
+    public String print(LinearNode node) {
         String result = "";
         
         if (node == null) {
             result = "";
         } else {
-            result += node.getElement() + " " + headToTail(node.getNext());
+            result += node.getElement() + " " + print(node.getNext());
         }
         
         return result;
-    }
-    
-    public void headToTail() {
-        System.out.println(headToTail(head));
-    }
-        
-    private String tailToHead(DoubleNode node) {
-        String result = "";
-        
-        if (node == null) {
-            result = "";
-        } else {
-            result += node.getElement() + " " + tailToHead(node.getPrevious());
-        }
-        
-        return result;
-    }
-    
-    public void tailToHead() {
-        System.out.println(tailToHead(tail));
-    }
+    } 
 }

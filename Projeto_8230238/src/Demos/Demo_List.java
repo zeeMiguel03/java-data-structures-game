@@ -1,29 +1,24 @@
 package Demos;
 
-import Lists.ArrayOrderedList;
-import Lists.ArrayUnorderedList;
+import Lists.CircularLinkedList;
 import Lists.DoubleLinkedUnorderedList;
-import Lists.OrderedListADT;
-import Lists.UnorderedListADT;
+import Lists.DoublyLinkedList;
+import Lists.LinkedList;
 
 public class Demo_List {
 
     public static void main(String[] args) {
         try {
-            UnorderedListADT<String> list = new ArrayUnorderedList<String>();
+            DoubleLinkedUnorderedList<String> list = new DoubleLinkedUnorderedList<>();
             
-            list.addToRear("a");
-            list.addToRear("b");
-            list.addToRear("c");
-            list.addToRear("d");
-            
-            list.remove("e");
-
-            System.out.println(list.toString());
+            list.addToFront("a");
+            list.addToFront("b");
+            list.addToFront("c");
+            list.addToFront("d");
+                    
+            list.tailToHead();
         } catch (Exception e) {
             System.out.println(e.getMessage());
-        }
-        
-        
+        }        
     }
 }
