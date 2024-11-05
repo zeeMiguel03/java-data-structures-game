@@ -5,6 +5,7 @@
 package Lists;
 
 import Exceptions.ElementNotFoundException;
+import Exceptions.EmptyCollectionException;
 
 /**
  *
@@ -12,11 +13,18 @@ import Exceptions.ElementNotFoundException;
  */
 public class DoubleLinkedUnorderedList<T> extends DoublyLinkedList<T> implements UnorderedListADT<T> {
     
+    /**
+     * Creates an new DoubleLinkedUnorderedList.
+     */
     public DoubleLinkedUnorderedList() {
         super();
     }
     
-    //Funciona
+    /**
+     * This method adds a new element to the front of the list.
+     * 
+     * @param element the element to add.
+     */
     @Override
     public void addToFront(T element) {
         DoubleNode<T> newNode = new DoubleNode(element);
@@ -33,7 +41,11 @@ public class DoubleLinkedUnorderedList<T> extends DoublyLinkedList<T> implements
         modCount++;
     }
 
-    //funciona
+    /**
+     * This method adds a new element to the rear of the list.
+     * 
+     * @param element the element to add.
+     */
     @Override
     public void addToRear(T element) {
         DoubleNode<T> newNode = new DoubleNode(element);
@@ -50,37 +62,35 @@ public class DoubleLinkedUnorderedList<T> extends DoublyLinkedList<T> implements
         modCount++;
     }
 
+    //verificar se esta certo
     @Override
-    public void addAfter(T element, T target) throws ElementNotFoundException {
-        DoubleNode<T> newNode = new DoubleNode(element);
-        
-        if (head.getElement().equals(target)) {
-            newNode.setPrevious(head);
-            newNode.setNext(head.getNext());
-            head.setNext(newNode);
-        } else if (tail.getElement().equals(target)) {
-            newNode.setPrevious(tail);
-            tail.setNext(newNode);
-            tail = newNode;
-        } else {
-            DoubleNode<T> current = head;
-            
-            while (current != null && !current.getElement().equals(target)) {
-                current = current.getNext();
-            }
-            
-            if (current == null) {
-                throw new ElementNotFoundException("Element not found!");
-            }
-            
-            newNode.setPrevious(current);
-   
-            if (current != null) {
-                newNode.setNext(current.getNext());
-                current.setNext(newNode);
-            } 
+    public void addAfter(T element, T target) throws EmptyCollectionException, ElementNotFoundException {
+        if (count == 0) {
+            throw new EmptyCollectionException("Empty list!");
         }
         
+        DoubleNode<T> current = head;
+        
+        while (current != tail && !current.getElement().equals(target)) {
+            current = current.getNext();
+        }
+        
+        if (current == tail && !tail.getElement().equals(target)) {
+            throw new ElementNotFoundException("Element not found!");
+        }
+        
+        if (current == tail) {
+            addToRear(element);
+        } else {
+            DoubleNode<T> newNode = new DoubleNode(element);
+            
+            newNode.setNext(current.getNext());
+            newNode.setPrevious(current);
+            current.getNext().setPrevious(newNode);
+            current.setNext(newNode);
+            
+            count++;
+            modCount++;
+        }
     }
-    
 }

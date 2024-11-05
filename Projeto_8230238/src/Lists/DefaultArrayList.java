@@ -9,6 +9,8 @@ import Exceptions.EmptyCollectionException;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
+//tudo a funcionar
+
 /**
  *
  * @author Miguel
@@ -20,19 +22,26 @@ public abstract class DefaultArrayList<T> implements ListADT<T> {
     protected int count;
     protected int modCount;
     
+    /**
+     * Creates an new DefaultArrayList with a specific initial capacity.
+     * @param initial the initial capacity
+     */
     public DefaultArrayList(int initial) {
         this.ArrayList = (T[]) (new Object[initial]);
         this.count = 0;
         this.modCount = 0;
     }
     
+    /**
+     * Creates an new DefaultArrayList with the default initial capacity.
+     */
     public DefaultArrayList() {
         this(INITAL_CAPACITY);
     }
        
     /**
      * This method strats by checking if the counter is equals 0 if it is, he throws a an
-     * EmptyCollectionException, the method shifts the elements to the right place, 
+     * EmptyCollectionException, otherwise the method shifts the elements to the right place, 
      * and delete the first element and then returns the removed element.
      * 
      * @return the removed element
@@ -73,8 +82,8 @@ public abstract class DefaultArrayList<T> implements ListADT<T> {
         }
         
         T lastPosition = ArrayList[count - 1]; 
-        ArrayList[count--] = null; 
-
+        
+        ArrayList[--count] = null; 
         modCount++;
         
         return lastPosition;
@@ -110,7 +119,7 @@ public abstract class DefaultArrayList<T> implements ListADT<T> {
             ArrayList[i] = ArrayList[i + 1];
         }
         
-        ArrayList[count--] = null;
+        ArrayList[--count] = null;
         modCount++;
         
         return removed;

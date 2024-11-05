@@ -15,8 +15,8 @@ import java.util.Iterator;
  * @author Miguel
  */
 public class LinkedList<T> implements ListADT<T> {
-    private LinearNode<T> head, tail;
-    private int count, modCount;
+    protected LinearNode<T> head, tail;
+    protected int count, modCount;
     
     public LinkedList() {
         this.head = null;
@@ -25,20 +25,6 @@ public class LinkedList<T> implements ListADT<T> {
         this.modCount = 0;
     }
     
-    public void add(T element) {
-        LinearNode<T> newNode = new LinearNode<>(element);
-        
-        if (count == 0) {
-            head = tail = newNode;
-        } else {
-            tail.setNext(newNode);
-            tail = newNode;
-        }
-        
-        count++;
-        modCount++;
-    }
-
     //funciona
     @Override
     public T removeFirst() throws EmptyCollectionException {

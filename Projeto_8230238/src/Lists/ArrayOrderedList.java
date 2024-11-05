@@ -6,6 +6,8 @@ package Lists;
 
 import Exceptions.NoComparableException;
 
+//Está tudo a funcionar e tudo corrigido!
+
 /**
  * @author Miguel
  */
