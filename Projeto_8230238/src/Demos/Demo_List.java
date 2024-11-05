@@ -2,27 +2,33 @@ package Demos;
 
 import Lists.ArrayOrderedList;
 import Lists.ArrayUnorderedList;
+import Lists.DoubleLinkedOrderedList;
 import Lists.DoubleLinkedUnorderedList;
+import Lists.DoublyLinkedList;
+import Lists.LinkedUnorderedList;
+import Lists.OrderedListADT;
 import Lists.UnorderedListADT;
 
 public class Demo_List {
 
     public static void main(String[] args) {
         try {
-            UnorderedListADT<String> list = new ArrayUnorderedList<String>(2);
+            UnorderedListADT<Integer> list = new LinkedUnorderedList();
             
-            list.addToFront("a");
-            list.addToFront("b");
-            list.addToFront("c");
-            list.addToFront("d");
+            list.addToRear(1);
+            list.addToRear(2);
+            list.addToRear(3);
+            list.addToRear(4);
+            list.addToRear(5);
             
-            System.out.println(list.contains("e"));
+            list.addAfter(6, 7);
+               
+            for (Integer e : list) {
+                System.out.println(e);
+            }
             
-            System.out.println(list.toString());
         } catch (Exception e) {
             System.out.println(e.getMessage());
-        }
-        
-        
+        }        
     }
 }

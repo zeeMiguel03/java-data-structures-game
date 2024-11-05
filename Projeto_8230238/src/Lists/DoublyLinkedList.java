@@ -19,6 +19,9 @@ public class DoublyLinkedList<T> implements ListADT<T> {
     protected int count;
     protected int modCount;
     
+    /**
+     * The constructor for the DoublyLinkedList
+     */
     public void DoublyLinkedList() {
         this.head = null;
         this.tail = null;
@@ -26,7 +29,14 @@ public class DoublyLinkedList<T> implements ListADT<T> {
         this.modCount = 0;
     }
 
-    //Funciona
+    /**
+     * This method starts by checking if the counter is equals 0 if it is, he throws a an
+     * EmptyCollectionException, otherwise he delete the first element and 
+     * then returns the removed element.
+     * 
+     * @return the removed element
+     * @throws EmptyCollectionException if the collection is empty
+     */
     @Override
     public T removeFirst() throws EmptyCollectionException {
         if (count == 0) {
@@ -48,7 +58,14 @@ public class DoublyLinkedList<T> implements ListADT<T> {
         return element;
     }
 
-    //Funciona
+    /**
+     * This method starts by checking if the counter is equals 0 if it is, he throws a an
+     * EmptyCollectionException, otherwise he delete the last element and 
+     * then returns the removed element.
+     * 
+     * @return the removed element
+     * @throws EmptyCollectionException if the collection is empty
+     */
     @Override
     public T removeLast() throws EmptyCollectionException {
         if (count == 0) {
@@ -69,51 +86,55 @@ public class DoublyLinkedList<T> implements ListADT<T> {
         
         return element;
     }
-
-    //falta coisas
+    
+    /**
+     * This method starts by checking if the counter is equals to 0 if it is, he throws a an
+     * EmptyCollectionException, then he verify if the element exists, if it isn't he throws
+     * a ElementNotFoundException, otherwise he delete the element and then returns the 
+     * removed element.
+     * 
+     * @param element the element to remove
+     * @return the removed element
+     * @throws EmptyCollectionException if the collection is empty
+     * @throws ElementNotFoundException if the element was not found in the list
+     */
     @Override
     public T remove(T element) throws EmptyCollectionException, ElementNotFoundException {
         if (count == 0) {
             throw new EmptyCollectionException();
         }
         
-        if (!contains(element)) {
-            throw new ElementNotFoundException(); //corrigir esta a repetir duas vezes
-        }
-
-        T removed = null;
+        DoubleNode<T> current = find(element);
         
-        if (count == 1) {
-            removed = head.getElement();
-            head = tail = null;
-        } else if (tail.getElement().equals(element)) {
-            removed = tail.getElement();
-            tail = tail.getPrevious();
-            tail.setNext(null);
-        } else if (head.getElement().equals(element)) {
-            removed = head.getElement();
+        if (current == null) {
+            throw new ElementNotFoundException("element not found!");
+        }
+        
+        T removed = current.getElement();
+        
+        if (current == head) {
             head = head.getNext();
             head.setPrevious(null);
+        } else if (current == tail) {
+            tail = tail.getPrevious();
+            tail.setNext(null);
         } else {
-            DoubleNode<T> current = head;
-
-            while (current != null) {
-                if (current.getElement().equals(element)) {
-                    removed = current.getElement();
-                    current.setPrevious(current.getNext());
-                }
-                
-                current = current.getNext();
-            }
+            current.getPrevious().setNext(current.getNext());
+            current.getNext().setPrevious(current.getPrevious());
         }
-            
+         
         count--;
         modCount++;
         
         return removed;
     }
 
-    //funciona
+    /**
+     * This method returns the first element of the list if it is not empty.
+     * 
+     * @return the first element
+     * @throws EmptyCollectionException if list was empty
+     */
     @Override
     public T first() throws EmptyCollectionException {
         if (count == 0) {
@@ -123,7 +144,12 @@ public class DoublyLinkedList<T> implements ListADT<T> {
         return head.getElement();
     }
 
-    //funciona
+    /**
+     * This method returns the last element of the list if it is not empty.
+     * 
+     * @return the last element
+     * @throws EmptyCollectionException if list was empty
+     */
     @Override
     public T last() throws EmptyCollectionException {
         if (count == 0) {
@@ -133,32 +159,57 @@ public class DoublyLinkedList<T> implements ListADT<T> {
         return tail.getElement();
     }
 
-    //funciona
+    /**
+     * Verify if the element exists in the list.
+     * 
+     * @param target the element to search for
+     * @return true if the element exists, false otherwise
+     * @throws EmptyCollectionException if the collection is empty
+     */
     @Override
     public boolean contains(T target) throws EmptyCollectionException {
         if (count == 0) {
             throw new EmptyCollectionException();
-        } //usar find
+        } 
         
+        DoubleNode<T> current = find(target);
+      
+        return current != null;
+    }
+    
+    /**
+     * Verify if exists a certain element in the list, if it does
+     * he retuns the node of the element otherwise returns false
+     * 
+     * @param target the element to search for
+     * @return the node if it was find, false otherwise
+     */
+    public DoubleNode<T> find(T target) {
         DoubleNode<T> current = head;
         
         while (current != null) {
             if (current.getElement().equals(target)) {
-                return true;
+                return current;
             }
-            
             current = current.getNext();
         }
         
-        return false;
+        return null;
     }
 
-    //funciona
+    /**
+     * Verify if the list is empty.
+     * @return if the list is empty return true, otherwise false
+     */
     @Override
     public boolean isEmpty() {
         return count == 0;
     }
 
+    /**
+     * Returns the size of the list.
+     * @return the list size
+     */
     @Override
     public int size() {
         return count;
@@ -196,8 +247,10 @@ public class DoublyLinkedList<T> implements ListADT<T> {
             }
             
             okToRemove = true;
+            T element = current.getElement();
+            current = current.getNext();
             
-            return current.getNext().getElement();
+            return element;
         }
 
         @Override
@@ -210,16 +263,23 @@ public class DoublyLinkedList<T> implements ListADT<T> {
                 throw new IllegalStateException();
             }
             
-            DoublyLinkedList.this.remove(current.getPrevious().getElement()); //verificar pela position porque pode haver por exemplo dois 1 1
-            expectedModCount++; // 1  2  3 4 5 1
+            DoublyLinkedList.this.remove(current.getPrevious().getElement()); 
+            current.getNext();
+            expectedModCount++; 
             okToRemove = false;
         }
     }
     
+    /**
+     * Returns a string representation of the list.
+     *
+     * @return a string representation of the list
+     * @throws EmptyCollectionException if the list is empty
+     */
     @Override
     public String toString() { 
         if (count == 0) {
-            throw new EmptyCollectionException();
+            throw new EmptyCollectionException("Empty collection!");
         }
         
         String result = "";

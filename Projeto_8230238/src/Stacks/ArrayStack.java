@@ -12,8 +12,9 @@ import Exceptions.EmptyCollectionException;
  */
 public class ArrayStack<T> implements StackADT<T> {
     private static final int INITAL_CAPACITY = 100;
-    private int top;
-    private T[] stack;
+    
+    protected int top;
+    protected T[] stack;
     
     /**
     * Creates an empty stack using the default capacity.
@@ -49,6 +50,7 @@ public class ArrayStack<T> implements StackADT<T> {
     /**
     * Removes the element at the top of this stack and
     * returns a reference to it.
+    * 
     * Throws an EmptyCollectionException if the stack is empty.
     * @return T element removed from top of stack
     * @throws EmptyCollectionException if a pop
@@ -70,6 +72,7 @@ public class ArrayStack<T> implements StackADT<T> {
     /**
     * Returns a reference to the element at the top of this stack.
     * The element is not removed from the stack.
+    * 
     * Throws an EmptyCollectionException if the stack is empty.
     * @return T element on top of stack
     * @throws EmptyCollectionException if a
@@ -100,6 +103,17 @@ public class ArrayStack<T> implements StackADT<T> {
     @Override
     public int size() {
         return top;
+    }
+    
+    @Override
+    public String toString() {
+        String result = "";
+        
+        for (int i = 0; i < top; i++) {
+            result += " " + stack[i];
+        }
+        
+        return result;
     }
     
     /**
