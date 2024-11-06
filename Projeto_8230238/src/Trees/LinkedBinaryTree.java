@@ -17,12 +17,17 @@ import java.util.Iterator;
  * @author Miguel
  */
 public class LinkedBinaryTree<T> implements BinaryTreeADT<T> {
-    private BinaryTreeNode<T> root;
-    private int count;
+    protected BinaryTreeNode<T> root;
+    protected int count;
     
     public LinkedBinaryTree(T element) {
         root = new BinaryTreeNode<>(element);
         count = 1;
+    }
+    
+    public LinkedBinaryTree() {
+        root = null;
+        count = 0;
     }
     
     @Override
