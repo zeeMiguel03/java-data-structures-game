@@ -8,23 +8,27 @@ import Lists.DoublyLinkedList;
 import Lists.LinkedUnorderedList;
 import Lists.OrderedListADT;
 import Lists.UnorderedListADT;
+import Trees.BinarySearchTreeADT;
+import Trees.LinkedBinarySearchTree;
+import Trees.LinkedBinaryTree;
+import java.util.Iterator;
 
 public class Demo_List {
 
     public static void main(String[] args) {
         try {
-            UnorderedListADT<Integer> list = new LinkedUnorderedList();
+            BinarySearchTreeADT<Integer> tree = new LinkedBinarySearchTree<>();
             
-            list.addToRear(1);
-            list.addToRear(2);
-            list.addToRear(3);
-            list.addToRear(4);
-            list.addToRear(5);
+            tree.addElement(1);
+            tree.addElement(3);
+            tree.addElement(7);
+            tree.addElement(9);
+            tree.addElement(17);
             
-            list.addAfter(6, 7);
-               
-            for (Integer e : list) {
-                System.out.println(e);
+            Iterator<Integer> levelOrderIterator = tree.iteratorPostOrder();
+            
+            while (levelOrderIterator.hasNext()) {
+                System.out.print(levelOrderIterator.next() + " ");
             }
             
         } catch (Exception e) {
