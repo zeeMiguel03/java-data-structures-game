@@ -17,15 +17,25 @@ import java.util.Iterator;
 public class LinkedList<T> implements ListADT<T> {
     protected LinearNode<T> head, tail;
     protected int count, modCount;
-    
+
+    /**
+     * Empty linked list constructor.
+     */
     public LinkedList() {
         this.head = null;
         this.tail = null;
         this.count = 0;
         this.modCount = 0;
     }
-    
-    //funciona
+
+    /**
+     * This method starts by verifying if the collection is empty, if
+     * it was he throws a EmptyCollectionException, otherwise he
+     * removes and returns the first element of the list.
+     *
+     * @return the removed element
+     * @throws EmptyCollectionException if the collection was empty
+     */
     @Override
     public T removeFirst() throws EmptyCollectionException {
         if (count == 0) {
@@ -42,7 +52,14 @@ public class LinkedList<T> implements ListADT<T> {
         return removed;
     }
 
-    //funciona
+    /**
+     * This method starts by verifying if the collection is empty, if
+     * it was he throws a EmptyCollectionException, otherwise he
+     * removes and returns the last element of the list.
+     *
+     * @return the removed element
+     * @throws EmptyCollectionException if the list was empty
+     */
     @Override
     public T removeLast() throws EmptyCollectionException {
         if (count == 0) {
@@ -66,6 +83,18 @@ public class LinkedList<T> implements ListADT<T> {
         return removed;
     }
 
+    /**
+     * This method starts by verifying if the collection is empty, if
+     * it was he throws a EmptyCollectionException, otherwise starts searching
+     * for the specific element in the list, if the element was not found he
+     * throws a ElementNotFoundException, otherwise he removes the element
+     * was return the element.
+     *
+     * @param element the element to be removed from the list
+     * @return the removed element
+     * @throws EmptyCollectionException if the collection was empty
+     * @throws ElementNotFoundException if the element was not found
+     */
     @Override
     public T remove(T element) throws EmptyCollectionException, ElementNotFoundException {
         if (count == 0) {
@@ -91,15 +120,21 @@ public class LinkedList<T> implements ListADT<T> {
         }
         
         T removed = current.getElement();
-        
+
         previous.setNext(current.getNext());
-        
+
         count--;
         modCount++;
         
         return removed;   
     }
 
+    /**
+     * Returns the first element of the list.
+     *
+     * @return the first element
+     * @throws EmptyCollectionException if the list was empty
+     */
     @Override
     public T first() throws EmptyCollectionException {
         if (count == 0) {
@@ -108,7 +143,13 @@ public class LinkedList<T> implements ListADT<T> {
         
         return head.getElement();
     }
-    
+
+    /**
+     * Returns the last element of the list.
+     *
+     * @return the last element
+     * @throws EmptyCollectionException if the list was empty
+     */
     @Override
     public T last() throws EmptyCollectionException {
         if (count == 0) {
@@ -118,6 +159,13 @@ public class LinkedList<T> implements ListADT<T> {
         return tail.getElement();
     }
 
+    /**
+     * Search for a specific element in a list.
+     *
+     * @param target the target that is being sought in the list
+     * @return true if the list contains the element, false otherwise
+     * @throws EmptyCollectionException if the list was empty
+     */
     @Override
     public boolean contains(T target) throws EmptyCollectionException {
         if (count == 0) {
@@ -137,11 +185,19 @@ public class LinkedList<T> implements ListADT<T> {
         return false;
     }
 
+    /**
+     * Verify if the list is Empty.
+     * @return true if the list was empty, false otherwise
+     */
     @Override
     public boolean isEmpty() {
         return count == 0;
     }
 
+    /**
+     * Verify the size of the list.
+     * @return the size of the list
+     */
     @Override
     public int size() {
         return count;
@@ -201,7 +257,11 @@ public class LinkedList<T> implements ListADT<T> {
             okToRemove = false;
         }
     }
-    
+
+    /**
+     * Returns a string representation of the list.
+     * @return a string representation of the list
+     */
     @Override
     public String toString() {
         if (count == 0) {
@@ -219,25 +279,4 @@ public class LinkedList<T> implements ListADT<T> {
         
         return result;
     }
-    
-    public LinearNode<T> firstLink() throws EmptyCollectionException {
-        if (count == 0) {
-            throw new EmptyCollectionException("Empty list!");
-        }
-        
-        return head;
-    }
-    
-    
-    public String print(LinearNode node) {
-        String result = "";
-        
-        if (node == null) {
-            result = "";
-        } else {
-            result += node.getElement() + " " + print(node.getNext());
-        }
-        
-        return result;
-    } 
 }

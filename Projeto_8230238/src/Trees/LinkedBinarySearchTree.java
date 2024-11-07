@@ -137,12 +137,14 @@ public class LinkedBinarySearchTree<T> extends LinkedBinaryTree<T> implements Bi
     }
     
     @Override
-    public void removeAllOccurrences(T targetElement) {
-        removeElement(targetElement);
-        
-        while (contains(targetElement)) {
+    public void removeAllOccurrences(T targetElement) throws EmptyCollectionException {
+        if (count == 0) {
+            throw new EmptyCollectionException("Empty collection!");
+        }
+
+        do {
             removeElement(targetElement);
-        }   
+        } while (contains(targetElement));
     }
 
     @Override

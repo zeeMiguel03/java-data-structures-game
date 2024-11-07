@@ -324,7 +324,13 @@ public class ArrayBinarySearchTree<T> extends ArrayBinaryTree<T> implements Bina
 
     @Override
     public void removeAllOccurrences(T targetElement) throws EmptyCollectionException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (count == 0) {
+            throw new EmptyCollectionException("Empty collection!");
+        }
+
+        do {
+            removeElement(targetElement);
+        } while (contains(targetElement));
     }
 
     @Override
@@ -349,7 +355,7 @@ public class ArrayBinarySearchTree<T> extends ArrayBinaryTree<T> implements Bina
             currentIndex = currentIndex * 2 + 1;
         }
         
-        return tree[currentIndex ];
+        return tree[currentIndex];
     }
 
     @Override
@@ -369,7 +375,7 @@ public class ArrayBinarySearchTree<T> extends ArrayBinaryTree<T> implements Bina
     
     private void expandCapacity() {
         T[] expand = (T[])(new Object[tree.length * 2]);
-                
+
         for (int i = 0; i < tree.length; i++) {
             expand[i] = tree[i];
         }

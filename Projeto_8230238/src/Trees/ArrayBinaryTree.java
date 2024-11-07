@@ -31,12 +31,22 @@ public class ArrayBinaryTree<T> implements BinaryTreeADT<T> {
         tree = (T[]) new Object[CAPACITY];
     }
 
+    /**
+     * Creates a binary tree
+     * @param element
+     */
     public ArrayBinaryTree(T element) {
         count = 1;
         tree = (T[]) new Object[CAPACITY];
         tree[0] = element;
     }
-    
+
+    /**
+     * Returns the root of the tree.
+     *
+     * @return the tree root
+     * @throws EmptyCollectionException if the collection was empty
+     */
     @Override
     public T getRoot() throws EmptyCollectionException {
         if (count == 0) {
@@ -46,16 +56,32 @@ public class ArrayBinaryTree<T> implements BinaryTreeADT<T> {
         return tree[0];
     }
 
+    /**
+     * Verify if the Tree is empty.
+     *
+     * @return true if it was empty, false otherwise
+     */
     @Override
     public boolean isEmpty() {
         return count == 0;
     }
 
+    /**
+     * Returns the number of elements on the tree.
+     *
+     * @return the number of elements
+     */
     @Override
     public int size() {
         return count;
     }
 
+    /**
+     * Verify if a specific element exists in the tree.
+     *
+     * @param targetElement the element being sought in the tree
+     * @return true if the element was found, false otherwise
+     */
     @Override
     public boolean contains(T targetElement) {
         try {
