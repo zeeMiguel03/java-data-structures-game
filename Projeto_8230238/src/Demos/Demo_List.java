@@ -18,25 +18,21 @@ public class Demo_List {
 
     public static void main(String[] args) {
         try {
-            BinarySearchTreeADT<Integer> tree = new ArrayBinarySearchTree<>();
+            BinarySearchTreeADT<Integer> tree = new LinkedBinarySearchTree<>();
             
+            tree.addElement(4);
+            tree.addElement(2);
             tree.addElement(1);
             tree.addElement(3);
+            tree.addElement(6);
+            tree.addElement(5);
             tree.addElement(7);
-            tree.addElement(9);
-            tree.addElement(17);
+    
             
-            tree.removeMin();
-            tree.removeMin();
-            tree.removeMax();
-            tree.removeMax();
+            Iterator<Integer> iterator = tree.iteratorPostOrder();
             
-            tree.addElement(17);
-            
-            Iterator<Integer> levelOrderIterator = tree.iteratorPostOrder();
-            
-            while (levelOrderIterator.hasNext()) {
-                System.out.print(levelOrderIterator.next() + " ");
+            while (iterator.hasNext()) {
+                System.out.print(iterator.next() + " ");
             }
             
         } catch (Exception e) {

@@ -20,16 +20,30 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T> {
     protected BinaryTreeNode<T> root;
     protected int count;
     
+    /**
+     * Creates a new binary tree with a specific root
+     * 
+     * @param element the element to add in root
+     */
     public LinkedBinaryTree(T element) {
         root = new BinaryTreeNode<>(element);
         count = 1;
     }
     
+    /**
+     * Creates a empty binary tree
+     */
     public LinkedBinaryTree() {
         root = null;
         count = 0;
     }
     
+    /**
+     * Returns the element of the root.
+     * 
+     * @return root element
+     * @throws EmptyCollectionException if the tree is empty
+     */
     @Override
     public T getRoot() throws EmptyCollectionException {
         if (count == 0) {
@@ -39,16 +53,33 @@ public class LinkedBinaryTree<T> implements BinaryTreeADT<T> {
         return root.getElement();
     }
 
+    /**
+     * Verify if the tree is empty.
+     * 
+     * @return true if it is empty, false otherwise
+     */
     @Override
     public boolean isEmpty() {
         return count == 0;
     }
 
+    /**
+     * Checks the size of the tree
+     * 
+     * @return the size of the tree 
+     */
     @Override
     public int size() {
         return count;
     }
 
+    /**
+     * Verify if the tree contains a specific element.
+     * 
+     * @param targetElement the element to search
+     * @return true if contains the element, false otherwise
+     * @throws EmptyCollectionException if the collection is empty
+     */
     @Override
     public boolean contains(T targetElement) throws EmptyCollectionException {
         if (count == 0) {
