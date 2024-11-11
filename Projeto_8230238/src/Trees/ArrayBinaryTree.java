@@ -21,7 +21,7 @@ public class ArrayBinaryTree<T> implements BinaryTreeADT<T> {
     private final int CAPACITY = 2;
     
     protected int count;
-     protected T[] tree;
+    protected T[] tree;
     
     /**
     * Creates an empty binary tree.

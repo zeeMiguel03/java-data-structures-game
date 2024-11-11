@@ -34,16 +34,36 @@ public class LinkedOrderedBinarySearchTree<T> extends LinkedBinarySearchTree<T> 
         
         Comparable<T> comparableElement = (Comparable<T>) element;
         
+        BinaryTreeNode<T> newNode = new BinaryTreeNode<>(element);
         
+        if (count == 0) {
+            root = newNode;
+        } else {
+            BinaryTreeNode<T> current = root;
+            BinaryTreeNode<T> parent = null;
+            
+            while (current != null) {
+                parent = current;
+                
+                if (comparableElement.compareTo(current.getElement()) < 0) {
+                    current = current.getLeft();
+                } else {
+                    current = current.getRight();
+                }
+            }
+            
+            if (comparableElement.compareTo(parent.getElement()) < 0) {
+                parent.setLeft(newNode);
+            } else {
+                parent.setRight(newNode);
+            }
+        }
         
+        count++;
     }
 
     @Override
     public T removeFirst() throws EmptyCollectionException {
-        if (count == 0) {
-            throw new EmptyCollectionException("Empty collection");
-        }
-        
         return removeMin();
     }
 
@@ -58,30 +78,21 @@ public class LinkedOrderedBinarySearchTree<T> extends LinkedBinarySearchTree<T> 
 
     @Override
     public T remove(T element) throws EmptyCollectionException, ElementNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return removeElement(element);
     }
 
     @Override
     public T first() throws EmptyCollectionException {
-        if (count == 0) {
-            throw new EmptyCollectionException("Empty collection");
-        }
-        
         return findMin();
     }
 
     @Override
     public T last() throws EmptyCollectionException {
-        if (count == 0) {
-            throw new EmptyCollectionException("Empty Collection");
-        }
-        
         return findMax();
     }
 
     @Override
     public Iterator<T> iterator() {
-        return iteratorLevelOrder();
-    }
-    
+        return iteratorInOrder();
+    }  
 }

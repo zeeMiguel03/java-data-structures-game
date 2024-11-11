@@ -324,13 +324,15 @@ public class ArrayBinarySearchTree<T> extends ArrayBinaryTree<T> implements Bina
 
     @Override
     public void removeAllOccurrences(T targetElement) throws EmptyCollectionException {
-        if (count == 0) {
-            throw new EmptyCollectionException("Empty collection!");
-        }
+        removeElement(targetElement);
 
-        do {
-            removeElement(targetElement);
-        } while (contains(targetElement));
+        while (true) {
+            try {
+                removeElement(targetElement);
+            } catch (EmptyCollectionException e) {
+                break;
+            }
+        }
     }
 
     @Override
@@ -343,6 +345,7 @@ public class ArrayBinarySearchTree<T> extends ArrayBinaryTree<T> implements Bina
         return removeElement(findMax());
     }
 
+    //a dar erro
     @Override
     public T findMin() throws EmptyCollectionException {
         if (count == 0) {
