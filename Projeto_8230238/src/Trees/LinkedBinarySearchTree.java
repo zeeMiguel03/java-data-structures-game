@@ -21,6 +21,11 @@ public class LinkedBinarySearchTree<T> extends LinkedBinaryTree<T> implements Bi
         super(element);
     }
 
+    /**
+     * Adds the specified element to the proper location in this tree.
+     *
+     * @param element the element to be added to this tree
+     */
     @Override
     public void addElement(T element) {
         BinaryTreeNode<T> temp = new BinaryTreeNode<>(element);
@@ -54,6 +59,12 @@ public class LinkedBinarySearchTree<T> extends LinkedBinaryTree<T> implements Bi
         count++;
     }
     
+    /**
+     * Removes and returns the specified element from this tree.
+     *
+     * @param targetElement the element to be removed from this tree
+     * @return the element removed from this tree
+     */
     @Override
     public T removeElement(T targetElement) throws EmptyCollectionException {
         T result = null;
@@ -96,7 +107,7 @@ public class LinkedBinarySearchTree<T> extends LinkedBinaryTree<T> implements Bi
                 } 
                 
                 if (!found) {
-                     throw new ElementNotFoundException("binary search tree");
+                     throw new ElementNotFoundException("Element not found!");
                 }   
             } 
         }
@@ -136,27 +147,50 @@ public class LinkedBinarySearchTree<T> extends LinkedBinaryTree<T> implements Bi
         return result;
     }
     
+    /**
+     * Removes all occurences of the specified element from this tree.
+     *
+     * @param targetElement the element that the list will
+     * have all instances of it removed
+     */
     @Override
-    public void removeAllOccurrences(T targetElement) throws EmptyCollectionException {
-        if (count == 0) {
-            throw new EmptyCollectionException("Empty collection!");
+    public void removeAllOccurrences(T targetElement) throws EmptyCollectionException {        
+        removeElement(targetElement);
+        
+        while (true) {
+            try {
+                removeElement(targetElement);
+            } catch(EmptyCollectionException e) {
+                break;
+            }
         }
-
-        do {
-            removeElement(targetElement);
-        } while (contains(targetElement));
     }
 
+    /**
+     * Removes the lowest element.
+     * @return the removed element
+     * @throws EmptyCollectionException if the collection was empty
+     */
     @Override
     public T removeMin() throws EmptyCollectionException {
         return removeElement(findMin());
     }
 
+    /**
+     * Removes the biggest element.
+     * @return the removed element
+     */
     @Override
-    public T removeMax() {
+    public T removeMax() throws EmptyCollectionException{
         return removeElement(findMax());
     }
 
+    /**
+     * Searchs for the min element in the tree.
+     * 
+     * @return the min element
+     * @throws EmptyCollectionException if the collection was empty
+     */
     @Override
     public T findMin() throws EmptyCollectionException {
         if (count == 0) {
@@ -172,6 +206,12 @@ public class LinkedBinarySearchTree<T> extends LinkedBinaryTree<T> implements Bi
         return current.element;
     }
 
+    /**
+     * Searchs for the max element in the tree.
+     * 
+     * @return the max element
+     * @throws EmptyCollectionException if the collection was empty
+     */
     @Override
     public T findMax() throws EmptyCollectionException {
         if (count == 0) {
