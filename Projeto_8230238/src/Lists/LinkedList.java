@@ -11,8 +11,7 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 /**
- *
- * @author Miguel
+ * @author Miguel Rocha
  */
 public class LinkedList<T> implements ListADT<T> {
     protected LinearNode<T> head, tail;

@@ -10,20 +10,26 @@ import Lists.ArrayUnorderedList;
 import java.util.Iterator;
 
 /**
- *
- * @author migue
- * @param <T>
+ * @author Miguel Rocha
  */
+
 public class ArrayBinarySearchTree<T> extends ArrayBinaryTree<T> implements BinarySearchTreeADT<T> {
     protected int height;
     protected int maxIndex;
-    
+
+    /**
+     * Default constructor for Array Binary Search Tree
+     */
     public ArrayBinarySearchTree() {
         super();
         height = 0;
         maxIndex = -1;
     }
-    
+
+    /**
+     * Constructor for Array Binary Search, initializes with a single element
+     * @param element the first element
+     */
     public ArrayBinarySearchTree(T element) {
         super(element);
         height = 1;
@@ -345,7 +351,7 @@ public class ArrayBinarySearchTree<T> extends ArrayBinaryTree<T> implements Bina
         return removeElement(findMax());
     }
 
-    //a dar erro
+    //o findMin() e o findMax()
     @Override
     public T findMin() throws EmptyCollectionException {
         if (count == 0) {
@@ -353,7 +359,7 @@ public class ArrayBinarySearchTree<T> extends ArrayBinaryTree<T> implements Bina
         }
         
         int currentIndex = 0;
-        
+
         while (currentIndex * 2 + 1 < maxIndex && tree[currentIndex * 2 + 1] != null) {
             currentIndex = currentIndex * 2 + 1;
         }
@@ -376,6 +382,9 @@ public class ArrayBinarySearchTree<T> extends ArrayBinaryTree<T> implements Bina
         return tree[currentIndex];
     }
     
+    /**
+     * This method extends the array by multiplying by two
+     */
     private void expandCapacity() {
         T[] expand = (T[])(new Object[tree.length * 2]);
 

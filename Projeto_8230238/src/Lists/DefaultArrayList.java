@@ -9,14 +9,12 @@ import Exceptions.EmptyCollectionException;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
-//tudo a funcionar
 
 /**
- *
- * @author Miguel
+ * @author Miguel Rocha
  */
 public abstract class DefaultArrayList<T> implements ListADT<T> {
-    private static final int INITAL_CAPACITY = 100;
+    private static final int INITIAL_CAPACITY = 100;
     
     protected T[] ArrayList;
     protected int count;
@@ -36,7 +34,7 @@ public abstract class DefaultArrayList<T> implements ListADT<T> {
      * Creates an new DefaultArrayList with the default initial capacity.
      */
     public DefaultArrayList() {
-        this(INITAL_CAPACITY);
+        this(INITIAL_CAPACITY);
     }
        
     /**

@@ -11,6 +11,7 @@ import Exceptions.EmptyCollectionException;
  * @author Miguel
  */
 public interface StackADT<T>{
+    
     /** Adds one element to the top of this stack.
     * @param element element to be pushed onto stack
     */

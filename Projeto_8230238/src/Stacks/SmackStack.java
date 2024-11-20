@@ -7,9 +7,9 @@ package Stacks;
 import Exceptions.EmptyCollectionException;
 
 /**
- *
- * @author Miguel
+ * @author Miguel Rocha
  */
+
 public class SmackStack<T> extends ArrayStack<T> implements SmackStackADT<T> {
     
     /**

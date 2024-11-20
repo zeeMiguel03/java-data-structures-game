@@ -4,12 +4,10 @@
  */
 package Lists;
 
-//FUNCIONA
 import Exceptions.NoComparableException;
 
 /**
- *
- * @author Miguel
+ * @author Miguel Rocha
  */
 public class DoubleLinkedOrderedList<T> extends DoublyLinkedList<T> implements OrderedListADT<T> {
     

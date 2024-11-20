@@ -7,8 +7,7 @@ package Stacks;
 import Exceptions.EmptyCollectionException;
 
 /**
- *
- * @author Miguel
+ * @author Miguel Rocha
  */
 public class LinkedStack<T> implements StackADT<T> {
     private LinearNode<T> top;

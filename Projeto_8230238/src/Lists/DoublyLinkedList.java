@@ -10,8 +10,7 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 /**
- *
- * @author Miguel
+ * @author Miguel Rocha
  */
 public class DoublyLinkedList<T> implements ListADT<T> {
     protected DoubleNode<T> head;

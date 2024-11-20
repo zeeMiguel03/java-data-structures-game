@@ -5,9 +5,9 @@
 package Trees;
 
 /**
- *
- * @author Miguel
+ * @author Miguel Rocha
  */
+
 public class BinaryTreeNode<T> {
     protected T element;
     protected BinaryTreeNode<T> left, right;

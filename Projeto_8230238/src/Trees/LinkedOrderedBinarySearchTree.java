@@ -10,11 +10,8 @@ import Exceptions.NoComparableException;
 import Lists.OrderedListADT;
 import java.util.Iterator;
 
-
-
 /**
- *
- * @author Miguel
+ * @author Miguel Rocha
  */
 public class LinkedOrderedBinarySearchTree<T> extends LinkedBinarySearchTree<T> implements OrderedListADT<T> {
     

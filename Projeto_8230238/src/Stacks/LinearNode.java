@@ -5,8 +5,7 @@
 package Stacks;
 
 /**
- *
- * @author Miguel
+ * @author Miguel Rocha
  */
 public class LinearNode<T>{
     private T element;

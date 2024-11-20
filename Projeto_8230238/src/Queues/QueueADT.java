@@ -7,7 +7,6 @@ package Queues;
 import Exceptions.EmptyCollectionException;
 
 /**
- *
  * @author Miguel
  */
 public interface QueueADT<T> {

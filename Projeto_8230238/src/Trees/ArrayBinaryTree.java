@@ -13,10 +13,9 @@ import Queues.QueueADT;
 import java.util.Iterator;
 
 /**
- *
- * @author Miguel
- * @param <T>
+ * @author Miguel Rocha
  */
+
 public class ArrayBinaryTree<T> implements BinaryTreeADT<T> {
     private final int CAPACITY = 2;
     
@@ -32,8 +31,8 @@ public class ArrayBinaryTree<T> implements BinaryTreeADT<T> {
     }
 
     /**
-     * Creates a binary tree
-     * @param element
+     * Creates a binary tree with only one element.
+     * @param element the first element to add
      */
     public ArrayBinaryTree(T element) {
         count = 1;
@@ -98,7 +97,7 @@ public class ArrayBinaryTree<T> implements BinaryTreeADT<T> {
      * the specified target element is not found in the binary tree.
      *
      * @param targetElement the element being sought in the tree
-     * @return true if the element is in the tree
+     * @return the element
      * @throws ElementNotFoundException if an element not found
      * exception occurs
      */
@@ -121,6 +120,13 @@ public class ArrayBinaryTree<T> implements BinaryTreeADT<T> {
         return temp;
     }
 
+    /**
+     * Performs an inorder traversal on this binary tree by calling an
+     * overloaded, recursive inorder method that starts with
+     * the root.
+     *
+     * @return an in order iterator over this binary tree
+     */
     @Override
     public Iterator<T> iteratorInOrder() {
         UnorderedListADT<T> templist = new ArrayUnorderedList<>();
@@ -145,7 +151,14 @@ public class ArrayBinaryTree<T> implements BinaryTreeADT<T> {
             }
         }
     }
-    
+
+    /**
+     * Performs a preorder traversal on this binary tree by calling an
+     * overloaded, recursive preorder method that starts
+     * with the root.
+     *
+     * @return an iterator over the elements of this binary tree
+     */
     @Override
     public Iterator<T> iteratorPreOrder() {
         UnorderedListADT<T> templist = new ArrayUnorderedList<>();
@@ -154,7 +167,14 @@ public class ArrayBinaryTree<T> implements BinaryTreeADT<T> {
         
         return templist.iterator();
     }
-    
+
+    /**
+     * Performs a recursive preOrder traversal.
+     *
+     * @param node the node to be used as the root
+     * for this traversal
+     * @param tempList the temporary list for use in this traversal
+     */
     private void preOrder(int node, UnorderedListADT<T> tempList) {
         if (node < tree.length) {
             if (tree[node] != null) {
@@ -165,6 +185,13 @@ public class ArrayBinaryTree<T> implements BinaryTreeADT<T> {
         }
     }
 
+    /**
+     * Performs a postorder traversal on this binary tree by
+     * calling an overloaded, recursive postorder
+     * method that starts with the root.
+     *
+     * @return an iterator over the elements of this binary tree
+     */
     @Override
     public Iterator<T> iteratorPostOrder() {
         UnorderedListADT<T> templist = new ArrayUnorderedList<>();
@@ -174,6 +201,13 @@ public class ArrayBinaryTree<T> implements BinaryTreeADT<T> {
         return templist.iterator();
     }
 
+    /**
+     * Performs a recursive postOrder traversal.
+     *
+     * @param node the node to be used as the root
+     * for this traversal
+     * @param tempList the temporary list for use in this traversal
+     */
     private void postOrder(int node, UnorderedListADT<T> tempList) {
         if (node < tree.length) {
             if (tree[node] != null) {
@@ -183,7 +217,13 @@ public class ArrayBinaryTree<T> implements BinaryTreeADT<T> {
             }
         }
     }
-    
+
+    /**
+     * Performs a level order traversal on the binary tree,
+     * using a queue.
+     *
+     * @return an iterator over the elements of this binary tree
+     */
     @Override
     public Iterator<T> iteratorLevelOrder() {
         QueueADT<Integer> tempQueue = new LinkedQueue<>();

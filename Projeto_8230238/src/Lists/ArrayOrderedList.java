@@ -6,10 +6,8 @@ package Lists;
 
 import Exceptions.NoComparableException;
 
-//Está tudo a funcionar e tudo corrigido!
-
 /**
- * @author Miguel
+ * @author Miguel Rocha
  */
 public class ArrayOrderedList<T> extends DefaultArrayList<T> implements OrderedListADT<T> {
     

@@ -12,6 +12,12 @@ import Exceptions.EmptyCollectionException;
  */
 public interface SmackStackADT<T> extends StackADT<T> {
     
+    /**
+     * Removes the last element in a stack
+     *
+     * @return the removed element
+     * @throws EmptyCollectionException if the collection was empty
+     */
     public T smack() throws EmptyCollectionException;
     
 }

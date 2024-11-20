@@ -7,11 +7,10 @@ package Stacks;
 import Exceptions.EmptyCollectionException;
 
 /**
- *
- * @author Miguel
+ * @author Miguel Rocha
  */
 public class ArrayStack<T> implements StackADT<T> {
-    private static final int INITAL_CAPACITY = 100;
+    private static final int INITIAL_CAPACITY = 100;
     
     protected int top;
     protected T[] stack;
@@ -20,7 +19,7 @@ public class ArrayStack<T> implements StackADT<T> {
     * Creates an empty stack using the default capacity.
     */
     public ArrayStack() {
-        this.stack = (T[])(new Object[INITAL_CAPACITY]);
+        this.stack = (T[])(new Object[INITIAL_CAPACITY]);
         this.top = 0;
     }
     
@@ -50,7 +49,7 @@ public class ArrayStack<T> implements StackADT<T> {
     /**
     * Removes the element at the top of this stack and
     * returns a reference to it.
-    * 
+
     * Throws an EmptyCollectionException if the stack is empty.
     * @return T element removed from top of stack
     * @throws EmptyCollectionException if a pop
@@ -72,7 +71,7 @@ public class ArrayStack<T> implements StackADT<T> {
     /**
     * Returns a reference to the element at the top of this stack.
     * The element is not removed from the stack.
-    * 
+
     * Throws an EmptyCollectionException if the stack is empty.
     * @return T element on top of stack
     * @throws EmptyCollectionException if a

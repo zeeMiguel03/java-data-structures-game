@@ -8,9 +8,9 @@ import Exceptions.ElementNotFoundException;
 import Exceptions.EmptyCollectionException;
 
 /**
- *
- * @author Miguel
+ * @author Miguel Rocha
  */
+
 public class LinkedBinarySearchTree<T> extends LinkedBinaryTree<T> implements BinarySearchTreeADT<T> {
     
     public LinkedBinarySearchTree() {

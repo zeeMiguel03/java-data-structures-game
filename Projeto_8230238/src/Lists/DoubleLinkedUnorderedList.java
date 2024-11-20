@@ -8,8 +8,7 @@ import Exceptions.ElementNotFoundException;
 import Exceptions.EmptyCollectionException;
 
 /**
- *
- * @author Miguel
+ * @author Miguel Rocha
  */
 public class DoubleLinkedUnorderedList<T> extends DoublyLinkedList<T> implements UnorderedListADT<T> {
     

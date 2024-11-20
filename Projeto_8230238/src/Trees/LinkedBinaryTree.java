@@ -13,9 +13,9 @@ import Queues.QueueADT;
 import java.util.Iterator;
 
 /**
- *
- * @author Miguel
+ * @author Miguel Rocha
  */
+
 public class LinkedBinaryTree<T> implements BinaryTreeADT<T> {
     protected BinaryTreeNode<T> root;
     protected int count;

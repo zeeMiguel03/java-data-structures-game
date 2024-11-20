@@ -6,12 +6,10 @@ package Lists;
 
 import Exceptions.ElementNotFoundException;
 
-//esta a funcionar
-
 /**
- *
- * @author Miguel
+ * @author Miguel Rocha
  */
+
 public class ArrayUnorderedList<T> extends DefaultArrayList<T> implements UnorderedListADT<T> {
     
     /**
@@ -53,7 +51,7 @@ public class ArrayUnorderedList<T> extends DefaultArrayList<T> implements Unorde
 
     /**
      * This method starts by checking if the array is full, if so, the space increases,
-     * then add's a new element to the end of the ArrayList.
+     * then add a new element to the end of the ArrayList.
      * 
      * @param element the element to insert in rear
      */
@@ -69,9 +67,8 @@ public class ArrayUnorderedList<T> extends DefaultArrayList<T> implements Unorde
     }
 
     /**
-     * This method strats by checking if the array is full, if so, the space increases,
-     * then search for the target, if the target was not found, it throws a an
-     * ElementNotFoundException, otherwise if the target was found the method shifts
+     * This method starts by checking if the array is full, if so, the space increases,
+     * then search for the target, when he was found  the method shifts
      * the elements to the right place, and inserts the new element.
      * 
      * @param element the element to insert in the ArrayList

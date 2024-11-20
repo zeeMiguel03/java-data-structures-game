@@ -4,11 +4,9 @@
  */
 package Lists;
 
-//ta feito
-
 /**
  *
- * @author Miguel
+ * @author Miguel Rocha
  */
 public class DoubleNode<T> {
     private T element;

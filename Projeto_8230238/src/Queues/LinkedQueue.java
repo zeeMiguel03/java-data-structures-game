@@ -8,9 +8,7 @@ import Exceptions.EmptyCollectionException;
 import Stacks.LinearNode;
 
 /**
- *
- * @author Miguel
- * @param <T>
+ * @author Miguel Rocha
  */
 public class LinkedQueue<T> implements QueueADT<T> {
     private LinearNode<T> front, rear;

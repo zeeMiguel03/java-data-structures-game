@@ -9,8 +9,7 @@ import Exceptions.EmptyCollectionException;
 import Stacks.LinearNode;
 
 /**
- *
- * @author Miguel
+ * @author Miguel Rocha
  */
 public class LinkedUnorderedList<T> extends LinkedList<T> implements UnorderedListADT<T> {
     

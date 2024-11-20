@@ -7,8 +7,7 @@ package Queues;
 import Exceptions.EmptyCollectionException;
 
 /**
- *
- * @author Miguel
+ * @author Miguel Rocha
  */
 public class CircularArrayQueue<T> implements QueueADT<T> {
     private static final int INITAL_CAPACITY = 100;
