@@ -13,10 +13,17 @@ import Exceptions.EmptyCollectionException;
 
 public class LinkedBinarySearchTree<T> extends LinkedBinaryTree<T> implements BinarySearchTreeADT<T> {
     
+    /**
+     * Empty constructor for Linked Binary Search Tree.
+     */
     public LinkedBinarySearchTree() {
         super();
     }
     
+    /**
+     * Constructor with a specific element in root.
+     * @param element the element to root
+     */
     public LinkedBinarySearchTree(T element) {
         super(element);
     }
@@ -115,6 +122,11 @@ public class LinkedBinarySearchTree<T> extends LinkedBinaryTree<T> implements Bi
         return result;
     }
 
+    /**
+     * Replaces a specific node in the tree.
+     * @param node the node to be replaced
+     * @return the node that will replace the previous one
+     */
     private BinaryTreeNode<T> replacement(BinaryTreeNode<T> node) {
         BinaryTreeNode<T> result;
         

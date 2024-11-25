@@ -14,7 +14,7 @@ public class DoubleNode<T> {
     private DoubleNode<T> previous;
     
     /**
-     * Creates a empty double node
+     * Creates a empty double node.
      */
     public DoubleNode() {
         this.element = null;
@@ -23,7 +23,7 @@ public class DoubleNode<T> {
     }
     
     /**
-     * Creates a new double node with specific element 
+     * Creates a new double node with specific element. 
      * @param element 
      */
     public DoubleNode(T element) {
@@ -33,29 +33,49 @@ public class DoubleNode<T> {
     }
 
     /**
-     * Return the node element
+     * Return the node element.
      * @return node element
      */
     public T getElement() {
         return element;
     }
     
+    /**
+     * Sets the node element.
+     * @param element node element
+     */
     public void setElement(T element) {
         this.element = element;
     }
 
+    /**
+     * Return the next node.
+     * @return the next node
+     */
     public DoubleNode<T> getNext() {
         return next;
     }
 
+    /**
+     * Sets the next node.
+     * @param next the node to set
+     */
     public void setNext(DoubleNode<T> next) {
         this.next = next;
     }
     
+    /**
+     * Return the previous node.
+     * @return the previous node
+     */
     public DoubleNode<T> getPrevious() {
         return previous;
     }
     
+    /**
+     * Sets the previous node.
+     * @param previous the node to set
+     */
     public void setPrevious(DoubleNode<T> previous) {
         this.previous = previous;
     }

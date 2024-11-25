@@ -11,6 +11,7 @@ import Exceptions.EmptyCollectionException;
  */
 
 public interface HeapADT<T> extends BinaryTreeADT<T> {
+    
     /**
      * Adds the specified object to this heap.
      *

@@ -94,6 +94,12 @@ public class ArrayBinarySearchTree<T> extends ArrayBinaryTree<T> implements Bina
         count++;
     }
 
+    /**
+     * Removes and returns the specified element from this tree.
+     *
+     * @param targetElement the element to be removed from this tree
+     * @return the element removed from this tree
+     */
     @Override
     public T removeElement(T targetElement) throws EmptyCollectionException, ElementNotFoundException {
         if (isEmpty()) {
@@ -126,6 +132,13 @@ public class ArrayBinarySearchTree<T> extends ArrayBinaryTree<T> implements Bina
         return result;
     }
     
+    /**
+     * Search for a specific element in the binary tree
+     *
+     * @param element the element to search for
+     * @param root the root index from which the search will begin
+     * @return the index if it was found, -1 otherwise
+     */
     private int findIndex(Comparable<T> element, int root) {
         boolean found = false;
         int currentIndex = root;
@@ -328,6 +341,12 @@ public class ArrayBinarySearchTree<T> extends ArrayBinaryTree<T> implements Bina
         }
     }
 
+    /**
+     * Removes all occurences of the specified element from this tree.
+     *
+     * @param targetElement the element that the list will
+     * have all instances of it removed
+     */
     @Override
     public void removeAllOccurrences(T targetElement) throws EmptyCollectionException {
         removeElement(targetElement);
@@ -341,17 +360,31 @@ public class ArrayBinarySearchTree<T> extends ArrayBinaryTree<T> implements Bina
         }
     }
 
+    /**
+     * Removes and returns the smallest element from this tree.
+     *
+     * @return the smallest element from this tree.
+     */
     @Override
     public T removeMin() throws EmptyCollectionException {
         return removeElement(findMin());
     }
 
+    /**
+     * Removes and returns the largest element from this tree.
+     *
+     * @return the largest element from this tree
+     */
     @Override
     public T removeMax() throws EmptyCollectionException {
         return removeElement(findMax());
     }
 
-    //o findMin() e o findMax()
+    /**
+     * Returns a reference to the smallest element in this tree.
+     *
+     * @return a reference to the smallest element in this tree
+     */
     @Override
     public T findMin() throws EmptyCollectionException {
         if (count == 0) {
@@ -367,6 +400,11 @@ public class ArrayBinarySearchTree<T> extends ArrayBinaryTree<T> implements Bina
         return tree[currentIndex];
     }
 
+    /**
+     * Returns a reference to the largest element in this tree.
+     *
+     * @return a reference to the largest element in this tree
+     */
     @Override
     public T findMax() throws EmptyCollectionException {
         if (count == 0) {

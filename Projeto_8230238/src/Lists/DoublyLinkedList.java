@@ -214,27 +214,45 @@ public class DoublyLinkedList<T> implements ListADT<T> {
         return count;
     }
 
+    /**
+     * Returns the iterator.
+     * @return the iterator
+     */
     @Override
     public Iterator<T> iterator() {
         return new BasicIterator<T>();
     }
     
+    /**
+     * Creates a new iterator for the list
+     */
     private class BasicIterator<E> implements Iterator<T> { 
         private int expectedModCount;
         private boolean okToRemove;
         private DoubleNode<T> current;
         
+        /**
+         * constructor for the iterator
+         */
         public BasicIterator() {
             this.expectedModCount = modCount;
             this.okToRemove = false;
             this.current = head;
         }
 
+        /**
+         * Verify if there is other element
+         * @return true if there is, false otherwise
+         */
         @Override
         public boolean hasNext() {
             return current != null;
         }
 
+        /**
+         * Returns the next element of the list
+         * @return the next element
+         */
         @Override
         public T next() {
             if (expectedModCount != modCount) {
@@ -252,6 +270,9 @@ public class DoublyLinkedList<T> implements ListADT<T> {
             return element;
         }
 
+        /**
+         * Removes the last element returned by the iterator
+         */
         @Override
         public void remove() {
             if (expectedModCount != modCount) {

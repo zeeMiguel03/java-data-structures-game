@@ -77,12 +77,12 @@ public interface BinaryTreeADT<T> {
     public Iterator<T> iteratorPreOrder();
     
     /**
-    * Performs a postorder traversal on this binary tree by
-    * calling an overloaded, recursive postorder
-    * method that starts with the root.
-    *
-    * @return an iterator over the elements of this binary tree
-    */
+     * Performs a postorder traversal on this binary tree by
+     * calling an overloaded, recursive postorder
+     * method that starts with the root.
+     *
+     * @return an iterator over the elements of this binary tree
+     */
     public Iterator<T> iteratorPostOrder();
     
     /**

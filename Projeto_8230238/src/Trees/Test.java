@@ -15,20 +15,17 @@ public class Test {
             tree.addElement(2);
             tree.addElement(6);
             tree.addElement(1);
-            tree.addElement(1);
             tree.addElement(3);
             tree.addElement(5);
             tree.addElement(7);
-
-            System.out.println(tree.findMin());
             
-            Iterator<Integer> inOrder = tree.iteratorInOrder();
+            Iterator<Integer> inOrder = tree.iteratorLevelOrder();
             
             while (inOrder.hasNext()) {
                 System.out.print(inOrder.next() + " ");
             }
-        System.out.println();
-
+            
+     
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

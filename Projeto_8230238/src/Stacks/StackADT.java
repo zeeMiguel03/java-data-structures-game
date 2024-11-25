@@ -13,8 +13,8 @@ import Exceptions.EmptyCollectionException;
 public interface StackADT<T>{
     
     /** Adds one element to the top of this stack.
-    * @param element element to be pushed onto stack
-    */
+     * @param element element to be pushed onto stack
+     */
     public void push(T element);
      
     /** Removes and returns the top element from this stack.
@@ -34,7 +34,7 @@ public interface StackADT<T>{
 
     /** Returns the number of elements in this stack.
      * @return int number of elements in this stack
-    */
+     */
     public int size();
      
     /** Returns a string representation of this stack.

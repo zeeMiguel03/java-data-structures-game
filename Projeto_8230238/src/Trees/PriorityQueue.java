@@ -9,9 +9,10 @@ package Trees;
  * @author migue
  */
 public class PriorityQueue<T> extends ArrayHeap<PriorityQueueNode<T>> {
+    
     /**
-    * Creates an empty priority queue.
-    */
+     * Creates an empty priority queue.
+     */
     public PriorityQueue() {
         super();
     }
@@ -38,5 +39,4 @@ public class PriorityQueue<T> extends ArrayHeap<PriorityQueueNode<T>> {
         PriorityQueueNode<T> temp = (PriorityQueueNode<T>)super.removeMin();
         return temp.getElement();
     }
-
 }

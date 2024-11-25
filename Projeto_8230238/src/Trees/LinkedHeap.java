@@ -13,6 +13,9 @@ import Exceptions.EmptyCollectionException;
 public class LinkedHeap<T> extends LinkedBinaryTree<T>  implements HeapADT<T>  {
     public HeapNode<T> lastNode;
 
+    /**
+     * Empty constructor for linked heap.
+     */
     public LinkedHeap() {
         super();
     }

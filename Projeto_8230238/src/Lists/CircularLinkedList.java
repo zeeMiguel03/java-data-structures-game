@@ -10,9 +10,7 @@ import Stacks.LinearNode;
 import java.util.Iterator;
 
 /**
- *
- * @author Miguel
- * @param <T>
+ * @author Miguel Rocha
  */
 public class CircularLinkedList<T> implements ListADT<T> {
     private LinearNode<T> head;

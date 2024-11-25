@@ -15,8 +15,8 @@ public class LinkedQueue<T> implements QueueADT<T> {
     private int count;
     
     /**
-    * Creates an empty Queue.
-    */
+     * Creates an empty Queue.
+     */
     public LinkedQueue() {
         this.front = null;
         this.rear = null;
@@ -24,11 +24,11 @@ public class LinkedQueue<T> implements QueueADT<T> {
     }
 
     /**
-    * Adds one element to the rear of this queue.
-    *
-    * @param element the element to be added to
-    * the rear of this queue
-    */
+     * Adds one element to the rear of this queue.
+     *
+     * @param element the element to be added to
+     * the rear of this queue
+     */
     @Override
     public void enqueue(T element) {
         LinearNode<T> newNode = new LinearNode(element);
@@ -44,11 +44,11 @@ public class LinkedQueue<T> implements QueueADT<T> {
     }
 
     /**
-    * Removes and returns the element at the front of
-    * this queue.
-    *
-    * @return the element at the front of this queue
-    */
+     * Removes and returns the element at the front of
+     * this queue.
+     *
+     * @return the element at the front of this queue
+     */
     @Override
     public T dequeue() throws EmptyCollectionException {
         if (count == 0) {
@@ -63,11 +63,11 @@ public class LinkedQueue<T> implements QueueADT<T> {
     }
 
     /**
-    * Returns without removing the element at the front of
-    * this queue.
-    *
-    * @return the first element in this queue
-    */
+     * Returns without removing the element at the front of
+     * this queue.
+     *
+     * @return the first element in this queue
+     */
     @Override
     public T first() throws EmptyCollectionException {
         if (count == 0) {
@@ -78,30 +78,30 @@ public class LinkedQueue<T> implements QueueADT<T> {
     }
 
     /**
-    * Returns true if this queue contains no elements.
-    *
-    * @return true if this queue is empty
-    */
+     * Returns true if this queue contains no elements.
+     *
+     * @return true if this queue is empty
+     */
     @Override
     public boolean isEmpty() {
         return count == 0;
     }
 
     /**
-    * Returns the number of elements in this queue.
-    *
-    * @return the integer representation of the size of this queue
-    */
+     * Returns the number of elements in this queue.
+     *
+     * @return the integer representation of the size of this queue
+     */
     @Override
     public int size() {
         return count;
     }
     
     /**
-    * Returns a string representation of this queue.
-    *
-    * @return the string representation of this queue
-    */
+     * Returns a string representation of this queue.
+     *
+     * @return the string representation of this queue
+     */
     @Override
     public String toString() {
         String list = "";
