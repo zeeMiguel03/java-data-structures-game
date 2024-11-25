@@ -23,7 +23,6 @@ public class LinkedStack<T> implements StackADT<T> {
     
     /**
     * Adds the specified element to the top of this stack,
-    * expanding the capacity of the stack array if necessary.
     * @param element generic element to be pushed onto stack
     */
     @Override
