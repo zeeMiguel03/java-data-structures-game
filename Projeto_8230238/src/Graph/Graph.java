@@ -14,6 +14,10 @@ import java.util.Iterator;
 /**
  * @author Miguel Rocha
  */
+
+/**
+ * Graph represents an adjacency matrix implementation of a graph.
+ */
 public class Graph<T> implements GraphADT<T> {
     protected final int DEFAULT_CAPACITY = 10;
     protected int numVertices; 
@@ -29,6 +33,12 @@ public class Graph<T> implements GraphADT<T> {
         this.vertices = (T[])(new Object[DEFAULT_CAPACITY]);
     }
 
+    /**
+     * Adds a vertex to the graph, expanding the capacity of the graph
+     * if necessary. It also associates an object with the vertex.
+     *
+     * @param vertex the vertex to add to the graph
+     */
     @Override
     public void addVertex(T vertex) {
         if (numVertices == vertices.length) {
@@ -51,7 +61,7 @@ public class Graph<T> implements GraphADT<T> {
             throw new EmptyCollectionException("No vertex's!");
         }
         
-        int index = findIndex(vertex);
+        int index = getIndex(vertex);
         
         if (index == -1) {
             throw new ElementNotFoundException("Vertex not found!");
@@ -59,18 +69,31 @@ public class Graph<T> implements GraphADT<T> {
         
         for (int i = index; i < numVertices - 1; i++) {
             vertices[i] = vertices[i + 1];
-            
-            for (int j = 0; j < numVertices; j++) {
-                adjMatrix[i][j] = adjMatrix[i + 1][j];
-                adjMatrix[j][i] = adjMatrix[j][i + 1];
-            }
         }
         
         vertices[numVertices - 1] = null;
         numVertices--;
+        
+        for (int i = index; i < numVertices - 1; i++) {
+            for (int j = 0; j < numVertices; j++) {
+                adjMatrix[i][j] = adjMatrix[i + 1][j];
+            }
+        }
+        
+        for (int j = index; j < numVertices - 1; j++) {
+            for (int i = 0; i < numVertices; i++) {
+                adjMatrix[i][j] = adjMatrix[i][j + 1]; 
+            }
+        }    
     }
     
-    private int findIndex(T vertex) { 
+    /**
+     * Search for a specific vertex and return his index.
+     * 
+     * @param vertex the vertex to search
+     * @return the index of the vertex if it was found, -1 otherwise.
+     */
+    protected int getIndex(T vertex) { 
         for (int i = 0; i < numVertices; i++) {
             if (vertices[i].equals(vertex)) {
                 return i;
@@ -80,23 +103,34 @@ public class Graph<T> implements GraphADT<T> {
         return -1;
     }
     
+    /**
+     * Inserts an edge between two vertices of the graph.
+     * 
+     * @param vertex1 the first vertex
+     * @param vertex2 the second vertex
+     */
     @Override
     public void addEdge(T vertex1, T vertex2) {
-        int index1 = findIndex(vertex1);
-        int index2 = findIndex(vertex2);
-         
-        if (index1 == -1 || index2 == -1) {
-            throw new ElementNotFoundException("element not found");
+        addEdge(getIndex(vertex1), getIndex(vertex2));
+    }
+    
+    /**
+     * Inserts an edge between two vertices of the graph.
+     *
+     * @param index1 the first index
+     * @param index2 the second index
+     */
+    public void addEdge (int index1, int index2) {
+        if (indexIsValid(index1) && indexIsValid(index2)) {
+            adjMatrix[index1][index2] = true;
+            adjMatrix[index2][index1] = true;
         }
-         
-        adjMatrix[index1][index2] = true;
-        adjMatrix[index2][index1] = true;
     }
 
     @Override
     public void removeEdge(T vertex1, T vertex2) {
-        int index1 = findIndex(vertex1);
-        int index2 = findIndex(vertex2);
+        int index1 = getIndex(vertex1);
+        int index2 = getIndex(vertex2);
          
         if (index1 == -1 || index2 == -1) {
              throw new ElementNotFoundException("element not found");
@@ -108,7 +142,7 @@ public class Graph<T> implements GraphADT<T> {
     
     @Override
     public Iterator iteratorBFS(T startVertex) {
-        return iteratorBFS(findIndex(startVertex));
+        return iteratorBFS(getIndex(startVertex));
     }
     
     /**
@@ -120,8 +154,8 @@ public class Graph<T> implements GraphADT<T> {
      */
     private Iterator<T> iteratorBFS(int startIndex) {
         Integer x;
-        LinkedQueue<Integer> traversalQueue = new LinkedQueue<Integer>();
-        ArrayUnorderedList<T> resultList = new ArrayUnorderedList<T>();
+        LinkedQueue<Integer> traversalQueue = new LinkedQueue<>();
+        ArrayUnorderedList<T> resultList = new ArrayUnorderedList<>();
 
         if (!indexIsValid(startIndex)) {
             return resultList.iterator();
@@ -155,7 +189,7 @@ public class Graph<T> implements GraphADT<T> {
 
     @Override
     public Iterator iteratorDFS(T startVertex) {
-        return iteratorDFS(findIndex(startVertex));
+        return iteratorDFS(getIndex(startVertex));
     }
     
     /**
@@ -168,8 +202,8 @@ public class Graph<T> implements GraphADT<T> {
     public Iterator<T> iteratorDFS(int startIndex) {
         Integer x;
         boolean found;
-        LinkedStack<Integer> traversalStack = new LinkedStack<Integer>();
-        ArrayUnorderedList<T> resultList = new ArrayUnorderedList<T>();
+        LinkedStack<Integer> traversalStack = new LinkedStack<>();
+        ArrayUnorderedList<T> resultList = new ArrayUnorderedList<>();
         boolean[] visited = new boolean[numVertices];
 
         if (!indexIsValid(startIndex)) {
@@ -212,15 +246,32 @@ public class Graph<T> implements GraphADT<T> {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
-    private boolean indexIsValid(int index) {
+    /**
+     * Verify if the index is valid.
+     * 
+     * @param index the index to verify
+     * @return true if is valid, false otherwise
+     */
+    protected boolean indexIsValid(int index) {
         return ((index < numVertices) && (index >= 0));
     }
 
+    /**
+     * Returns true if this graph is empty, false otherwise.
+     *
+     * @return true if this graph is empty
+     */
     @Override
     public boolean isEmpty() {
         return numVertices == 0;
     }
 
+    /**
+     * Verify if the graph is connected.
+     * 
+     * @return true if the graph was connected, false otherwise
+     * @throws EmptyCollectionException if the graph was empty
+     */
     @Override
     public boolean isConnected() throws EmptyCollectionException {
         if (isEmpty()) {
@@ -231,17 +282,26 @@ public class Graph<T> implements GraphADT<T> {
         int count = 0;
 
         while (iterator.hasNext()) {
+            iterator.next();
             count++;
         }
         
         return count == numVertices;
     }
 
+    /**
+     * Return the number of vertices.
+     * 
+     * @return vertices number
+     */
     @Override
     public int size() {
         return numVertices;
     } 
     
+    /**
+     * Expands the capacity of the Graph.
+     */
     private void expandCapacity() {
         T[] expandVert = (T[])(new Object[vertices.length * 2]);
         boolean[][] expandMatrix = new boolean[vertices.length * 2][vertices.length * 2];
@@ -255,6 +315,52 @@ public class Graph<T> implements GraphADT<T> {
         }
         
         vertices = expandVert;
-        expandMatrix = adjMatrix;
+        adjMatrix = expandMatrix;
+    }
+    
+    /**
+     * String representation of the graph.
+     * 
+     * @return string representation of the graph
+     */
+    @Override
+    public String toString() {
+        String result = "";
+
+        result += "   "; 
+        
+        for (int i = 0; i < numVertices; i++) {
+            if (i < 10) {
+                result += " " + i + " "; 
+            } else {
+                result += i + " "; 
+            }
+        }
+        
+        result += "\n";
+
+        result += "   ";
+        
+        for (int i = 0; i < numVertices; i++) {
+            result += "---";
+        }
+        
+        result += "\n";
+
+        for (int i = 0; i < numVertices; i++) {
+            if (i < 10) {
+                result += " " + i + "|"; 
+            } else {
+                result += i + "|"; 
+            }
+
+            for (int j = 0; j < numVertices; j++) {
+                result += " " + (adjMatrix[i][j] ? "1" : "0") + " ";
+            }
+            
+            result += "\n";
+        }
+
+        return result;
     }
 }
