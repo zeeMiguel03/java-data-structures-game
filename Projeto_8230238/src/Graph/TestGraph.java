@@ -4,6 +4,8 @@
  */
 package Graph;
 
+import java.util.Iterator;
+
 /**
  *
  * @author Miguel
@@ -14,19 +16,31 @@ public class TestGraph {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        NetworkADT<Integer> graph = new Network<>();
+        GraphADT<Integer> graph = new Network<>();
         
-        graph.addVertex(0);
-        graph.addVertex(1);
-        graph.addVertex(2);
-        graph.addVertex(3);
-        graph.addVertex(4);
-        graph.addVertex(5);
+        try {
+            graph.addVertex(0);
+            graph.addVertex(1);
+            graph.addVertex(2);
+            graph.addVertex(3);
+            graph.addVertex(4);
+            graph.addVertex(5);
+            
+            graph.addEdge(0,1);
+            graph.addEdge(1, 2);
 
-        
-        graph.addEdge(1, 2, 3);
-        
-        System.out.println(graph.toString());
+            
+            
+            System.out.println("BFS (Iniciando no vértice 0): ");
+            Iterator<Integer> bfsIterator = graph.iteratorBFS(0);
+            while (bfsIterator.hasNext()) {
+                System.out.print(bfsIterator.next() + " ");
+            }
+            
+           
+            
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
-    
 }

@@ -19,7 +19,7 @@ import java.util.Iterator;
  * Graph represents an adjacency matrix implementation of a graph.
  */
 public class Graph<T> implements GraphADT<T> {
-    protected final int DEFAULT_CAPACITY = 10;
+    protected final int DEFAULT_CAPACITY = 2;
     protected int numVertices; 
     protected boolean[][] adjMatrix; 
     protected T[] vertices; 
@@ -55,6 +55,12 @@ public class Graph<T> implements GraphADT<T> {
         numVertices++;
     }
 
+    /**
+     * Removes a single vertex with the given value from this graph.
+     * 
+     * @param vertex the vertex to be removed from this graph
+     * @throws EmptyCollectionException if the colletion is empty
+     */
     @Override
     public void removeVertex(T vertex) throws EmptyCollectionException {
         if (isEmpty()) {
@@ -127,8 +133,15 @@ public class Graph<T> implements GraphADT<T> {
         }
     }
 
+    /**
+     * Removes an edge between two vertices of this graph.
+     * 
+     * @param vertex1 the first vertex
+     * @param vertex2 the second vertex
+     * @throws ElementNotFoundException if the collection is not found
+     */
     @Override
-    public void removeEdge(T vertex1, T vertex2) {
+    public void removeEdge(T vertex1, T vertex2) throws ElementNotFoundException {
         int index1 = getIndex(vertex1);
         int index2 = getIndex(vertex2);
          
@@ -140,6 +153,13 @@ public class Graph<T> implements GraphADT<T> {
         adjMatrix[index2][index1] = false;
     }
     
+    /**
+     * Returns an iterator that performs a breadth first search
+     * traversal.
+     * 
+     * @param startVertex the vertex to begin the search from
+     * @return an iterator that performs a breadth first traversal
+     */
     @Override
     public Iterator iteratorBFS(T startVertex) {
         return iteratorBFS(getIndex(startVertex));
@@ -187,6 +207,13 @@ public class Graph<T> implements GraphADT<T> {
         return resultList.iterator();
     }
 
+    /**
+     * Returns an iterator that performs a depth first search
+     * traversal starting at the given vertex.
+     *
+     * @param startVertex the vertex to begin the search traversal from
+     * @return an iterator that performs a depth first traversal
+     */
     @Override
     public Iterator iteratorDFS(T startVertex) {
         return iteratorDFS(getIndex(startVertex));
@@ -243,7 +270,7 @@ public class Graph<T> implements GraphADT<T> {
 
     @Override
     public Iterator iteratorShortestPath(T startVertex, T targetVertex) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return null;
     }
     
     /**
@@ -302,7 +329,7 @@ public class Graph<T> implements GraphADT<T> {
     /**
      * Expands the capacity of the Graph.
      */
-    private void expandCapacity() {
+    protected void expandCapacity() {
         T[] expandVert = (T[])(new Object[vertices.length * 2]);
         boolean[][] expandMatrix = new boolean[vertices.length * 2][vertices.length * 2];
         
