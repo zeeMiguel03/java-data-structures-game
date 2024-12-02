@@ -4,12 +4,11 @@
  */
 package Game.Interfaces;
 
-import Game.GameImpl.ItemImpl;
-
 /**
  * @author Miguel Rocha
  */
 public interface Player {
+    
     /**
      * Use the last item of the backpack.
      */

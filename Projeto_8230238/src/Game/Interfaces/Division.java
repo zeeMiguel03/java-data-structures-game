@@ -5,7 +5,6 @@
 package Game.Interfaces;
 
 import Collections.Lists.UnorderedListADT;
-import Collections.Stacks.StackADT;
 
 /**
  *
@@ -14,19 +13,29 @@ import Collections.Stacks.StackADT;
 public interface Division {
 
     /**
-     *
-     * @return a stack with the persons that are in division
+     * Returns the name of the division.
+     * 
+     * @return division name
+     */
+    public String getName();
+    
+    /**
+     * Sets the division name.
+     * 
+     * @param name name to set
+     */
+    public void setName(String name);
+    
+    /**
+     * Return the persons in the division.
+     * 
+     * @return the persons in the division
      */
     public UnorderedListADT<Person> getPersonsInDivision();
 
     /**
-     *
-     * @return the divisions the person can go through this divion
-     */
-    public UnorderedListADT<Division> getAdjacentDivisions();
-
-    /**
-     *
+     * Returns the item in the division.
+     * 
      * @return the items in division
      */
     public UnorderedListADT<Item> getItemsInDivision();

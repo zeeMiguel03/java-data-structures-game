@@ -22,6 +22,7 @@ public abstract class PersonImpl implements Person {
      * @param name the person name
      * @param division the division of the person
      * @param power the person power
+     * @param life the person life
      */
     public PersonImpl(String name, Division division, int power, int life) {
         this.name = name;

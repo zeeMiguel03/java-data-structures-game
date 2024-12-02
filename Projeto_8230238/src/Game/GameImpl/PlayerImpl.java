@@ -4,7 +4,6 @@
  */
 package Game.GameImpl;
 
-import Collections.Stacks.ArrayStack;
 import Collections.Stacks.LinkedStack;
 import Collections.Stacks.StackADT;
 import Game.Enums.typeItem;
@@ -18,7 +17,6 @@ public class PlayerImpl extends PersonImpl implements Player {
     private static final int POWER_PLAYER = 20;
     private static final int MAX_ITEMS = 3;
 
-    private int lifePoints;
     private StackADT<Item> backpack;
 
     /**
@@ -26,8 +24,8 @@ public class PlayerImpl extends PersonImpl implements Player {
      *
      * @param division the player division
      */
-    public PlayerImpl(Division division, String name) {
-        super(name, division, POWER_PLAYER, MAX_LIFE);
+    public PlayerImpl(Division division) {
+        super("Tó Cruz", division, POWER_PLAYER, MAX_LIFE);
         backpack = new LinkedStack<>();
     }
 
@@ -48,7 +46,7 @@ public class PlayerImpl extends PersonImpl implements Player {
         Item item = backpack.pop();
             
         if (item.getType().equals(typeItem.KIT_LIFE)) {
-            if (lifePoints + item.getPoints() > MAX_LIFE) {
+            if (getLife() + item.getPoints() > MAX_LIFE) {
                     setLife(MAX_LIFE);
                     return;
             }
