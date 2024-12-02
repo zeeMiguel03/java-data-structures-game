@@ -49,4 +49,30 @@ public interface Person {
      * @param power the person power
      */
     public void setPower(int power);
+
+    /**
+     * Returns the life of the person.
+     *
+     * @return the player life
+     */
+    public int getLife();
+
+    /**
+     * Sets the life of the person.
+     *
+     * @param life life to set
+     */
+    public void setLife(int life);
+
+    /**
+     * Atacks
+     */
+    public abstract void atack();
+
+    /**
+     * Change the divison of the person
+     *
+     * @param division where the person will go
+     */
+    public void changeDivision(Division division);
 }

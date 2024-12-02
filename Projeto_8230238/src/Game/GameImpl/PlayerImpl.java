@@ -4,11 +4,11 @@
  */
 package Game.GameImpl;
 
+import Collections.Stacks.ArrayStack;
 import Collections.Stacks.LinkedStack;
 import Collections.Stacks.StackADT;
 import Game.Enums.typeItem;
-import Game.Interfaces.Division;
-import Game.Interfaces.Player;
+import Game.Interfaces.*;
 
 /**
  * @author Miguel Rocha
@@ -16,40 +16,28 @@ import Game.Interfaces.Player;
 public class PlayerImpl extends PersonImpl implements Player {
     private static final int MAX_LIFE = 100;
     private static final int POWER_PLAYER = 20;
-    
+    private static final int MAX_ITEMS = 3;
+
     private int lifePoints;
-    private StackADT<ItemImpl> backpack;
-    
+    private StackADT<Item> backpack;
+
     /**
      * Constructor for Player class.
-     * 
+     *
      * @param division the player division
      */
-    public PlayerImpl(Division division, int power) {
-        super("Tó Cruz", division, POWER_PLAYER);
-        
-        this.lifePoints = MAX_LIFE;
-        this.backpack = new LinkedStack<>();
+    public PlayerImpl(Division division, String name) {
+        super(name, division, POWER_PLAYER, MAX_LIFE);
+        backpack = new LinkedStack<>();
     }
 
-    /**
-     * Returns the life of the player.
-     * 
-     * @return the player life
-     */
     @Override
-    public int getLife() {
-        return lifePoints;
-    }
-
-    /**
-     * Sets the life of the player.
-     * 
-     * @param life life to set
-     */
-    @Override
-    public void setLife(int life) {
-        this.lifePoints = life;
+    public void atack() {
+        for (Person person : getDivision().getPersonsInDivision()) {
+            if (person instanceof Enemy) {
+                person.setLife(person.getLife() - getPower());
+            }
+        }
     }
 
     /**
@@ -57,17 +45,24 @@ public class PlayerImpl extends PersonImpl implements Player {
      */
     @Override
     public void useItem() {
-        //Falta meter máximo
-        
-        ItemImpl item = backpack.pop();
+        Item item = backpack.pop();
             
         if (item.getType().equals(typeItem.KIT_LIFE)) {
             if (lifePoints + item.getPoints() > MAX_LIFE) {
-                    lifePoints = MAX_LIFE;
+                    setLife(MAX_LIFE);
                     return;
             }
         }
-            
-        lifePoints += item.getPoints();
-    }    
+
+        setLife(getLife() + item.getPoints());
+    }
+
+    @Override
+    public void pickItem(Item item) {
+        for (Item items : getDivision().getItemsInDivision()) {
+            if (backpack.size() < MAX_ITEMS) {
+                backpack.push(items);
+            }
+        }
+    }
 }

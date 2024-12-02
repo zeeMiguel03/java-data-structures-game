@@ -51,7 +51,7 @@ public interface Item {
      * @return type of the item
      */
     public typeItem getType();
-    
+
     /**
      * Return a string representation of the item.
      * 

@@ -8,6 +8,6 @@ package Game.Interfaces;
  *
  * @author Miguel
  */
-public interface Enemy {
-    
+public interface Enemy extends Person{
+
 }

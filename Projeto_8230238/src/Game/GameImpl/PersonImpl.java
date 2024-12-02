@@ -10,10 +10,11 @@ import Game.Interfaces.Person;
 /**
  * @author Miguel Rocha
  */
-public class PersonImpl implements Person {
+public abstract class PersonImpl implements Person {
     private String name;
     private Division division;
     private int power;
+    private int life;
     
     /**
      * Constructor for Person class.
@@ -22,10 +23,11 @@ public class PersonImpl implements Person {
      * @param division the division of the person
      * @param power the person power
      */
-    public PersonImpl(String name, Division division, int power) {
+    public PersonImpl(String name, Division division, int power, int life) {
         this.name = name;
         this.division = division;
         this.power = power;
+        this.life = life;
     }
     
     /**
@@ -87,7 +89,25 @@ public class PersonImpl implements Person {
     public void setPower(int power) { 
         this.power = power;
     }
-    
+
+    @Override
+    public int getLife() {
+        return life;
+    }
+
+    @Override
+    public void setLife(int life) {
+        this.life = life;
+    }
+
+    @Override
+    public abstract void atack();
+
+    @Override
+    public void changeDivision(Division division) {
+        setDivision(division);
+    }
+
     /**
      * String representation of the person.
      * 
@@ -95,6 +115,6 @@ public class PersonImpl implements Person {
      */
     @Override
     public String toString() {
-        return "Name: " + name + " Divison: " + division + "Power: " + power;
+        return "Name: " + name + " Divison: " + division + "Power: " + power + " Life: " + life;
     }
 }

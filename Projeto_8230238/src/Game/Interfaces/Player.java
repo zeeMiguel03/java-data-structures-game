@@ -4,26 +4,21 @@
  */
 package Game.Interfaces;
 
+import Game.GameImpl.ItemImpl;
+
 /**
  * @author Miguel Rocha
  */
 public interface Player {
     /**
-     * Returns the life of the player.
-     * 
-     * @return the player life
-     */
-    public int getLife();
-    
-    /**
-     * Sets the life of the player.
-     * 
-     * @param life life to set
-     */
-    public void setLife(int life);
-    
-    /**
      * Use the last item of the backpack.
      */
     public void useItem();
+
+    /**
+     * Pick the item and save it
+     *
+     * @param item item to pick
+     */
+    public void pickItem(Item item);
 }
