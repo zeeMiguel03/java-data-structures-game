@@ -15,6 +15,7 @@ import Game.Interfaces.Player;
  */
 public class PlayerImpl extends PersonImpl implements Player {
     private static final int MAX_LIFE = 100;
+    private static final int POWER_PLAYER = 20;
     
     private int lifePoints;
     private StackADT<ItemImpl> backpack;
@@ -24,8 +25,8 @@ public class PlayerImpl extends PersonImpl implements Player {
      * 
      * @param division the player division
      */
-    public PlayerImpl(Division division) {
-        super("Tó Cruz", division);
+    public PlayerImpl(Division division, int power) {
+        super("Tó Cruz", division, POWER_PLAYER);
         
         this.lifePoints = MAX_LIFE;
         this.backpack = new LinkedStack<>();

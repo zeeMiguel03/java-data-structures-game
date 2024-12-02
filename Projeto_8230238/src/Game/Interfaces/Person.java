@@ -5,8 +5,7 @@
 package Game.Interfaces;
 
 /**
- *
- * @author Miguel
+ * @author Miguel Rocha
  */
 public interface Person {
     /**
@@ -36,4 +35,18 @@ public interface Person {
      * @param division person division
      */
     public void setDivision(Division division);
+    
+    /**
+     * Return the Power of the person.
+     * 
+     * @return person power.
+     */
+    public int getPower();
+    
+    /**
+     * Sets the power of the person.
+     * 
+     * @param power the person power
+     */
+    public void setPower(int power);
 }

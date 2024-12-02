@@ -4,11 +4,8 @@
  */
 package Game.Interfaces;
 
-import Game.GameImpl.ItemImpl;
-
 /**
- *
- * @author Miguel
+ * @author Miguel Rocha
  */
 public interface Player {
     /**

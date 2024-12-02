@@ -13,16 +13,19 @@ import Game.Interfaces.Person;
 public class PersonImpl implements Person {
     private String name;
     private Division division;
+    private int power;
     
     /**
      * Constructor for Person class.
      * 
      * @param name the person name
      * @param division the division of the person
+     * @param power the person power
      */
-    public PersonImpl(String name, Division division) {
+    public PersonImpl(String name, Division division, int power) {
         this.name = name;
         this.division = division;
+        this.power = power;
     }
     
     /**
@@ -66,12 +69,32 @@ public class PersonImpl implements Person {
     }
     
     /**
+     * Returns the power of the person.
+     * 
+     * @return person power
+     */
+    @Override
+    public int getPower() {
+        return power;
+    }
+
+    /**
+     * Sets the power of the person.
+     * 
+     * @param power sets the power
+     */
+    @Override
+    public void setPower(int power) { 
+        this.power = power;
+    }
+    
+    /**
      * String representation of the person.
      * 
      * @return representation
      */
     @Override
     public String toString() {
-        return "Name: " + name + " Divison: " + division;
+        return "Name: " + name + " Divison: " + division + "Power: " + power;
     }
 }
