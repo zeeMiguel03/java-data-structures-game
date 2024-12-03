@@ -44,5 +44,7 @@ public class DivisionImpl implements Division {
     @Override
     public UnorderedListADT<Item> getItemsInDivision() {
         return itens;
-    }  
+    }
+
+    public boolean isEntranceExit() {return entranceExit;}
 }

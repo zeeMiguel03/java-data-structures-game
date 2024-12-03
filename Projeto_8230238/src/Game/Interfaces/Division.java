@@ -39,4 +39,10 @@ public interface Division {
      * @return the items in division
      */
     public UnorderedListADT<Item> getItemsInDivision();
+
+    /**
+     *
+     * @return true if the division is a division that you can use as input or output
+     */
+    public boolean isEntranceExit();
 }
