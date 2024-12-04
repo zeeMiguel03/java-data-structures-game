@@ -10,6 +10,7 @@ import Game.Interfaces.Target;
 
 /**
  * @author Miguel Rocha
+ * @author António Monteiro
  */
 public class TargetImpl implements Target {
     private typeTarget type;
