@@ -6,6 +6,7 @@ package Game.GameImpl;
 
 import Game.Interfaces.Building;
 import Game.Interfaces.Mission;
+import Game.Interfaces.Player;
 
 /**
  * @author Miguel Rocha
@@ -15,6 +16,7 @@ public class MissionImpl implements Mission {
     private String codMission;
     private int version;
     private Building building;
+    private Player player;
     
     /**
      * Constructor for the MissionImpl class.
@@ -22,11 +24,13 @@ public class MissionImpl implements Mission {
      * @param code the code of the mission
      * @param version the version of the mission
      * @param building the building of the mission
+     * @param player the mission player
      */
-    public MissionImpl(String code, int version, Building building) {
+    public MissionImpl(String code, int version, Building building, Player player) {
         this.codMission = code;
         this.version = version;
         this.building = building;
+        this.player = player;
     }
     
     /**
@@ -88,8 +92,34 @@ public class MissionImpl implements Mission {
     public void setBuilding(Building building) {
         this.building = building;
     }
+    
+    /**
+     * Returns the mission player.
+     * 
+     * @return the player
+     */
+    @Override
+    public Player getPlayer() {
+        return player;
+    }
+    
+    /**
+     * Sets the player of the mission.
+     * 
+     * @param player the player to set
+     */
+    @Override
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
         
+    @Override
     public void manualSimulation() {
+        
+    }
+    
+    @Override
+    public void automaticSimulation() {
         
     }
 }

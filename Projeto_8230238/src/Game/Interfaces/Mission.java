@@ -5,8 +5,8 @@
 package Game.Interfaces;
 
 /**
- *
- * @author Miguel
+ * @author Miguel Rocha
+ * @author António Monteiro
  */
 public interface Mission {
     
@@ -51,4 +51,22 @@ public interface Mission {
      * @param building the building of the mission
      */
     public void setBuilding(Building building);
+    
+    /**
+     * Returns the mission player.
+     * 
+     * @return the player
+     */
+    public Player getPlayer();
+    
+    /**
+     * Sets the player of the mission.
+     * 
+     * @param player the player to set
+     */
+    public void setPlayer(Player player);
+    
+    public void manualSimulation();
+    
+    public void automaticSimulation();
 }
