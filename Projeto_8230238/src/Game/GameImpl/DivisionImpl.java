@@ -11,6 +11,7 @@ import Game.Exceptions.PersonNullException;
 import Game.Interfaces.Division;
 import Game.Interfaces.Item;
 import Game.Interfaces.Person;
+import Game.Interfaces.Target;
 
 /**
  * Implementation of the Division interface, representing a division in the game.
@@ -25,6 +26,7 @@ public class DivisionImpl implements Division {
     private UnorderedListADT<Person> persons;
     private UnorderedListADT<Item> itens;
     private boolean entranceExit;
+    private Target target;
     
     /**
      * Constructor for the division class.
@@ -37,6 +39,22 @@ public class DivisionImpl implements Division {
         this.entranceExit = entranceExit;
         this.persons = new LinkedUnorderedList<>();
         this.itens = new LinkedUnorderedList<>();
+        this.target = null;
+    }
+    
+    /**
+     * Constructor for the division class.
+     * 
+     * @param name the name of the division
+     * @param entranceExit true if is a exit or entrance
+     * @param target the target in division
+     */
+    public DivisionImpl(String name, boolean entranceExit, Target target) {
+        this.name = name;
+        this.entranceExit = entranceExit;
+        this.persons = new LinkedUnorderedList<>();
+        this.itens = new LinkedUnorderedList<>();
+        this.target = target;
     }
 
     /**
@@ -174,7 +192,7 @@ public class DivisionImpl implements Division {
         if (itens.size() < MAX_ITENS) {
             itens.addToRear(item);
         } 
-        //deve levar exception??
+        //deve levar exception se nao poder levar mais itens??
     }
     
     /**

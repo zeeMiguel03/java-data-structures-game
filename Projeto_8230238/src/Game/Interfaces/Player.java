@@ -23,7 +23,7 @@ public interface Player {
      * 
      * @param itens itens to set
      */
-    public void getBackpack(StackADT<Item> itens);
+    public void setBackpack(StackADT<Item> itens);
     
     /**
      * Use the last item of the backpack.

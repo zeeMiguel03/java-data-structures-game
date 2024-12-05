@@ -47,7 +47,7 @@ public class PlayerImpl extends PersonImpl implements Player {
      * @param itens itens to set
      */
     @Override
-    public void getBackpack(StackADT<Item> itens) {
+    public void setBackpack(StackADT<Item> itens) {
         this.backpack = itens;
     }
 

@@ -25,6 +25,15 @@ public class BuildingImpl implements Building {
     }
     
     /**
+     * Constructor for building class.
+     * 
+     * @param divisions the building divisions
+     */
+    public BuildingImpl(NetworkADT<Division> divisions) {
+        this.divisions = divisions;
+    }
+    
+    /**
      * Return the divisions of the building.
      * 
      * @return the divisions
