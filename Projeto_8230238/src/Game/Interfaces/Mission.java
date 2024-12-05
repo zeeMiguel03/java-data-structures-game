@@ -51,18 +51,4 @@ public interface Mission {
      * @param building the building of the mission
      */
     public void setBuilding(Building building);
-    
-    /**
-     * Returns the player of the mission.
-     * 
-     * @return the player of the mission
-     */
-    public Player getPlayer();
-    
-    /**
-     * Sets the player of the mission.
-     * 
-     * @param player the player to set
-     */
-    public void setPlayer(Player player);
 }

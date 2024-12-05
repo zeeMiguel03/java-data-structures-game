@@ -53,10 +53,8 @@ public class PlayerImpl extends PersonImpl implements Player {
 
     @Override
     public void atack() {
-        for (Person person : getDivision().getPersonsInDivision()) {
-            if (person instanceof Enemy) {
-                person.setLife(person.getLife() - getPower());
-            }
+        for (Enemy enemy : getDivision().getEnemysInDivision()) {
+            enemy.setLife(enemy.getLife() - getPower());
         }
     }
 

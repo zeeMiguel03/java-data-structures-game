@@ -92,27 +92,7 @@ public class MissionImpl implements Mission {
     public void setBuilding(Building building) {
         this.building = building;
     }
-    
-    /**
-     * Returns the player of the mission.
-     * 
-     * @return the player of the mission
-     */
-    @Override
-    public Player getPlayer() {
-        return player;
-    }
-    
-    /**
-     * Sets the player of the mission.
-     * 
-     * @param player the player to set
-     */
-    @Override
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-    
+        
     public void manualSimulation() {
         
     }

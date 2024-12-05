@@ -9,8 +9,8 @@ import Collections.Lists.UnorderedListADT;
 import Game.Exceptions.ItemNullException;
 import Game.Exceptions.PersonNullException;
 import Game.Interfaces.Division;
+import Game.Interfaces.Enemy;
 import Game.Interfaces.Item;
-import Game.Interfaces.Person;
 import Game.Interfaces.Target;
 
 /**
@@ -23,10 +23,10 @@ public class DivisionImpl implements Division {
     private static final int MAX_ITENS = 2;
     
     private String name;
-    private UnorderedListADT<Person> persons;
+    private UnorderedListADT<Enemy> enemys;
     private UnorderedListADT<Item> itens;
     private boolean entranceExit;
-    private Target target;
+    private Target target; //pensar sobre isto
     
     /**
      * Constructor for the division class.
@@ -37,7 +37,7 @@ public class DivisionImpl implements Division {
     public DivisionImpl(String name, boolean entranceExit) {
         this.name = name;
         this.entranceExit = entranceExit;
-        this.persons = new LinkedUnorderedList<>();
+        this.enemys = new LinkedUnorderedList<>();
         this.itens = new LinkedUnorderedList<>();
         this.target = null;
     }
@@ -52,7 +52,7 @@ public class DivisionImpl implements Division {
     public DivisionImpl(String name, boolean entranceExit, Target target) {
         this.name = name;
         this.entranceExit = entranceExit;
-        this.persons = new LinkedUnorderedList<>();
+        this.enemys = new LinkedUnorderedList<>();
         this.itens = new LinkedUnorderedList<>();
         this.target = target;
     }
@@ -98,23 +98,23 @@ public class DivisionImpl implements Division {
     }
     
     /**
-     * Return the persons in the division.
+     * Return the Enemys in the division.
      * 
-     * @return the persons in the division
+     * @return the Enemys in the division
      */
     @Override
-    public UnorderedListADT<Person> getPersonsInDivision() {
-        return persons;
+    public UnorderedListADT<Enemy> getEnemysInDivision() {
+        return enemys;
     }
     
     /**
-     * Sets the persons in the division.
+     * Sets the enemys in the division.
      * 
-     * @param persons persons to set
+     * @param enemys enemys to set
      */
     @Override
-    public void setPersonsInDivision(UnorderedListADT<Person> persons) {
-        this.persons = persons;
+    public void setEnemysInDivision(UnorderedListADT<Enemy> enemys) {
+        this.enemys = enemys;
     }
 
     /**
@@ -148,33 +148,33 @@ public class DivisionImpl implements Division {
     }
     
     /**
-     * Adds a new person to the division.
+     * Adds a new enemy to the division.
      * 
-     * @param person person to add in division
+     * @param enemy enemy to add in division
      * @throws PersonNullException if the person in null
      */
     @Override
-    public void addPerson(Person person) throws PersonNullException {
-        if (person == null) {
+    public void addEnemy(Enemy enemy) throws PersonNullException {
+        if (enemy == null) {
             throw new PersonNullException("Person is null!");
         }
         
-        persons.addToRear(person);
+        enemys.addToRear(enemy);
     }
     
     /**
-     * Remove a person of the division.
+     * Remove a enemy of the division.
      * 
-     * @param person person to remove 
+     * @param enemy enemy to remove 
      * @throws PersonNullException if the person in null
      */
     @Override
-    public void removePerson(Person person) throws PersonNullException {
-        if (person == null) {
+    public void removeEnemy(Enemy enemy) throws PersonNullException {
+        if (enemy == null) {
             throw new PersonNullException("Person is null!");
         }
         
-        persons.remove(person);
+        enemys.remove(enemy);
     }
     
     /**
@@ -217,6 +217,6 @@ public class DivisionImpl implements Division {
      */
     @Override
     public String toString() {
-        return "Division name: " + name + "Persons: " + persons.toString() + "Itens: " + itens.toString();
+        return "Division name: " + name + "Persons: " + enemys.toString() + "Itens: " + itens.toString();
     }
 }

@@ -45,18 +45,18 @@ public interface Division {
     public void setEntranceExit(boolean entranceExit);
     
     /**
-     * Return the persons in the division.
+     * Return the enemys in the division.
      * 
-     * @return the persons in the division
+     * @return the enemys in the division
      */
-    public UnorderedListADT<Person> getPersonsInDivision();
+    public UnorderedListADT<Enemy> getEnemysInDivision();
     
     /**
-     * Sets the persons in the division.
+     * Sets the enemys in the division.
      * 
-     * @param persons persons to set
+     * @param enemys enemys to set
      */
-    public void setPersonsInDivision(UnorderedListADT<Person> persons);
+    public void setEnemysInDivision(UnorderedListADT<Enemy> enemys);
 
     /**
      * Returns the item in the division.
@@ -80,20 +80,20 @@ public interface Division {
     public boolean isEntranceExit();
     
     /**
-     * Adds a new person to the division.
+     * Adds a new enemy to the division.
      * 
-     * @param person person to add in division
-     * @throws PersonNullException if the person in null
+     * @param enemy enemy to add in division
+     * @throws PersonNullException if the enemy in null
      */
-    public void addPerson(Person person) throws PersonNullException;
+    public void addEnemy(Enemy enemy) throws PersonNullException;
     
     /**
-     * Remove a person of the division.
+     * Remove a enemy of the division.
      * 
-     * @param person person to remove 
+     * @param enemy enemy to remove 
      * @throws PersonNullException if the person in null
      */
-    public void removePerson(Person person) throws PersonNullException;
+    public void removeEnemy(Enemy enemy) throws PersonNullException;
     
     /**
      * Adds a new item to the division.
