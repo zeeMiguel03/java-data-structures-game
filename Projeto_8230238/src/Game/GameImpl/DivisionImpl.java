@@ -26,7 +26,7 @@ public class DivisionImpl implements Division {
     private UnorderedListADT<Enemy> enemys;
     private UnorderedListADT<Item> itens;
     private boolean entranceExit;
-    private Target target; //pensar sobre isto
+    private Target target; 
     
     /**
      * Constructor for the division class.
