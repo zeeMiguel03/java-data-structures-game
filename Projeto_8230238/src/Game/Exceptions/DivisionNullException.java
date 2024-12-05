@@ -8,20 +8,20 @@ package Game.Exceptions;
  *
  * @author Miguel
  */
-public class ItemNullException extends RuntimeException {
+public class DivisionNullException extends RuntimeException {
     /**
-     * Creates an ItemNullException with no message
+     * Creates an DivisionNullException with no message
      */
-    public ItemNullException() {
+    public DivisionNullException() {
         super();
     }
 
     /**
-     * Creates an ItemNullException with the specified message
+     * Creates an DivisionNullException with the specified message
      *
      * @param message the message to be displayed with the exception
      */
-    public ItemNullException(String message) {
+    public DivisionNullException(String message) {
         super(message);
     }  
 }
