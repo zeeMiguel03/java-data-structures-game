@@ -68,4 +68,9 @@ public interface Building {
      * @throws DivisionNullException if one of the divisions is null
      */
     public void removeConnection(Division division1, Division division2) throws DivisionNullException;
+    
+    /**
+     * This method print the divisions that are a entrance or a exit.
+     */
+    public void printEntranceExit();
 }

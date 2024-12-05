@@ -9,6 +9,7 @@ import Collections.Graph.NetworkADT;
 import Game.Exceptions.DivisionNullException;
 import Game.Interfaces.Building;
 import Game.Interfaces.Division;
+import java.util.Iterator;
 
 /**
  * @author Miguel Rocha
@@ -16,6 +17,7 @@ import Game.Interfaces.Division;
  */
 public class BuildingImpl implements Building {
     private NetworkADT<Division> divisions;
+    private Division firstDivision;
     
     /**
      * Constructor for building class.
@@ -54,7 +56,8 @@ public class BuildingImpl implements Building {
     }
     
     /**
-     * Adds a new division to the building.
+     * Adds a new division to the building, and if the divisions is empty adds
+     * the firstDivision.
      * 
      * @param division the division to add
      * @throws DivisionNullException if the division is null
@@ -63,6 +66,10 @@ public class BuildingImpl implements Building {
     public void addDivision(Division division) throws DivisionNullException {
         if (division == null) {
             throw new DivisionNullException("Division null!");
+        }
+        
+        if (divisions.isEmpty()) {
+            firstDivision = division;
         }
         
         divisions.addVertex(division);
@@ -130,5 +137,23 @@ public class BuildingImpl implements Building {
         }
         
         divisions.removeEdge(division1, division2);
+    }
+    
+    /**
+     * This method print the divisions that are a entrance or a exit.
+     */
+    @Override
+    public void printEntranceExit() {
+        Iterator<Division> iterator = divisions.iteratorBFS(firstDivision);
+        
+        System.out.println("\nEntrace or exit Divisions:");
+        
+        while (iterator.hasNext()) {
+            Division currentDivision = iterator.next();
+            
+            if (currentDivision.getEntranceExit()) {
+                System.out.print(currentDivision.getName() + " " + "\n");
+            }
+        }
     }
 }
