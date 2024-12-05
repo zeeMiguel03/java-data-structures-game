@@ -4,20 +4,34 @@
  */
 package Game.Interfaces;
 
+import Collections.Stacks.StackADT;
+
 /**
  * @author Miguel Rocha
  */
 public interface Player {
     
     /**
+     * Returns the player backpack.
+     * 
+     * @return the backpack
+     */
+    public StackADT<Item> getBackpack();
+    
+    /**
+     * Sets the player backpack.
+     * 
+     * @param itens itens to set
+     */
+    public void getBackpack(StackADT<Item> itens);
+    
+    /**
      * Use the last item of the backpack.
      */
-    public void useItem();
+    public void useMedicKit();
 
     /**
-     * Pick the item and save it
-     *
-     * @param item item to pick
+     * Pick the item and save it or use it.
      */
-    public void pickItem(Item item);
+    public void pickItem();
 }

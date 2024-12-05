@@ -14,8 +14,9 @@ import Game.Interfaces.*;
  */
 public class PlayerImpl extends PersonImpl implements Player {
     private static final int MAX_LIFE = 100;
-    private static final int POWER_PLAYER = 20;
     private static final int MAX_ITEMS = 3;
+    private static final int POWER_PLAYER = 20;
+    private static final String PLAYER_NAME = "Tó Cruz";
 
     private StackADT<Item> backpack;
 
@@ -25,8 +26,29 @@ public class PlayerImpl extends PersonImpl implements Player {
      * @param division the player division
      */
     public PlayerImpl(Division division) {
-        super("Tó Cruz", division, POWER_PLAYER, MAX_LIFE);
+        super(PLAYER_NAME, division, POWER_PLAYER, MAX_LIFE);
+        
         backpack = new LinkedStack<>();
+    }
+    
+    /**
+     * Returns the player backpack.
+     * 
+     * @return the backpack
+     */
+    @Override
+    public StackADT<Item> getBackpack() {
+        return backpack;
+    }
+    
+    /**
+     * Sets the player backpack.
+     * 
+     * @param itens itens to set
+     */
+    @Override
+    public void getBackpack(StackADT<Item> itens) {
+        this.backpack = itens;
     }
 
     @Override
@@ -39,27 +61,32 @@ public class PlayerImpl extends PersonImpl implements Player {
     }
 
     /**
-     * Use the last item of the backpack.
+     * Use the last medic kit of the backpack.
      */
     @Override
-    public void useItem() {
+    public void useMedicKit() {
         Item item = backpack.pop();
             
-        if (item.getType().equals(typeItem.KIT_LIFE)) {
-            if (getLife() + item.getPoints() > MAX_LIFE) {
-                    setLife(MAX_LIFE);
-                    return;
-            }
+        if (getLife() + item.getPoints() > MAX_LIFE) {
+            setLife(MAX_LIFE);
+            return;
         }
-
+        
         setLife(getLife() + item.getPoints());
     }
 
+    /**
+     * Pick the item and save it or use it.
+     */
     @Override
-    public void pickItem(Item item) {
-        for (Item items : getDivision().getItemsInDivision()) {
-            if (backpack.size() < MAX_ITEMS) {
-                backpack.push(items);
+    public void pickItem() {
+        for (Item item : getDivision().getItemsInDivision()) {
+            if (item.getType().equals(typeItem.KIT_LIFE)) {
+                if (backpack.size() < MAX_ITEMS) {
+                    backpack.push(item);
+                }
+            } else {
+                setLife(getLife() + item.getPoints());
             }
         }
     }

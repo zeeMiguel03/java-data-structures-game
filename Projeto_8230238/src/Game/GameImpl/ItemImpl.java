@@ -9,7 +9,10 @@ import Game.Interfaces.Division;
 import Game.Interfaces.Item;
 
 /**
+ * Implementation of the item interface, representing a item in the game.
+ * 
  * @author Miguel Rocha
+ * @author António Monteiro
  */
 public class ItemImpl implements Item {
     private typeItem type;

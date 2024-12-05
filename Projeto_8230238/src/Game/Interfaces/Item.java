@@ -7,9 +7,13 @@ package Game.Interfaces;
 import Game.Enums.typeItem;
 
 /**
+ * Implementation of the Item interface, representing a item in the game.
+ * 
  * @author Miguel Rocha
+ * @author António Monteiro
  */
 public interface Item {  
+    
     /**
      * Returns the item division.
      * 
@@ -51,11 +55,4 @@ public interface Item {
      * @return type of the item
      */
     public typeItem getType();
-
-    /**
-     * Return a string representation of the item.
-     * 
-     * @return the string representation 
-     */
-    public String toString();
 }
