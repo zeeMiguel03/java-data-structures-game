@@ -138,6 +138,10 @@ public class BuildingImpl implements Building {
         
         divisions.removeEdge(division1, division2);
     }
+
+    public Division getFirstDivision() {
+        return firstDivision;
+    }
     
     /**
      * This method print the divisions that are a entrance or a exit.
