@@ -231,14 +231,4 @@ public class DivisionImpl implements Division {
     public void setTarget(Target target) {
         this.target = target;
     }
-    
-    /**
-     * String representation of the division.
-     * 
-     * @return string representation
-     */
-    @Override
-    public String toString() {
-        return "Division name: " + name + "Persons: " + enemys.toString() + "Itens: " + itens.toString();
-    }
 }

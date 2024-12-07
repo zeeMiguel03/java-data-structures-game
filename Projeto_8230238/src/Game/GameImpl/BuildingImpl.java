@@ -5,11 +5,10 @@
 package Game.GameImpl;
 
 import Collections.Exceptions.ElementNotFoundException;
-import Collections.Graph.Network;
-import Collections.Graph.NetworkADT;
 import Game.Exceptions.DivisionNullException;
 import Game.Interfaces.Building;
 import Game.Interfaces.Division;
+import Game.Interfaces.GameNetworkADT;
 import java.util.Iterator;
 
 /**
@@ -17,14 +16,14 @@ import java.util.Iterator;
  * @author António Monteiro
  */
 public class BuildingImpl implements Building {
-    private NetworkADT<Division> divisions;
+    private GameNetworkADT<Division> divisions;
     private Division firstDivision;
     
     /**
      * Constructor for building class.
      */
     public BuildingImpl() {
-        this.divisions = new Network<>();
+        this.divisions = new GameNetwork<>();
     }
     
     /**
@@ -32,7 +31,7 @@ public class BuildingImpl implements Building {
      * 
      * @param divisions the building divisions
      */
-    public BuildingImpl(NetworkADT<Division> divisions) {
+    public BuildingImpl(GameNetworkADT<Division> divisions) {
         this.divisions = divisions;
     }
     
@@ -42,7 +41,7 @@ public class BuildingImpl implements Building {
      * @return the divisions
      */
     @Override
-    public NetworkADT<Division> getDivisions() {
+    public GameNetworkADT<Division> getDivisions() {
         return divisions;
     }
     
@@ -52,7 +51,7 @@ public class BuildingImpl implements Building {
      * @param divisions the divisions
      */
     @Override
-    public void setDivisions(NetworkADT<Division> divisions) {
+    public void setDivisions(GameNetworkADT<Division> divisions) {
         this.divisions = divisions;
     }
     

@@ -5,7 +5,6 @@
 package Game.Interfaces;
 
 import Collections.Exceptions.ElementNotFoundException;
-import Collections.Graph.NetworkADT;
 import Game.Exceptions.DivisionNullException;
 
 /**
@@ -19,14 +18,14 @@ public interface Building {
      * 
      * @return the divisions
      */
-    public NetworkADT<Division> getDivisions();
+    public GameNetworkADT<Division> getDivisions();
     
     /**
      * Sets the divisions of the building.
      * 
      * @param divisions the divisions
      */
-    public void setDivisions(NetworkADT<Division> divisions);
+    public void setDivisions(GameNetworkADT<Division> divisions);
     
     /**
      * Adds a new division to the building.

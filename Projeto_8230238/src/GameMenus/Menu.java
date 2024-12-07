@@ -52,7 +52,7 @@ public class Menu {
             
             switch (option) {
                 case 1:
-                    mission.manualSimulation();
+                    menuStartGame();
                     break;
                 case 2:  
                     break;

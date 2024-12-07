@@ -131,13 +131,18 @@ public class MissionImpl implements Mission {
         
     @Override
     public void manualSimulation() {
-        chooseEntrance();
+        try {
+            chooseEntrance();
+        } catch (InvalidEntranceException e) {
+            System.out.println(e);
+        }
         
-        System.out.println(player.getDivision().getName());
+        System.out.println(player.getDivision());
     }
     
     @Override
     public void automaticSimulation() {
+        
     }
     
     /**
@@ -154,6 +159,8 @@ public class MissionImpl implements Mission {
         
         String entrance = scanner.nextLine();
         
+        scanner.close();
+        
         try {
             Division division = building.searchDivisionByName(entrance);
             
@@ -165,7 +172,12 @@ public class MissionImpl implements Mission {
         } catch (ElementNotFoundException e) {
             System.out.println(e);
         }
+    }
+    
+    private void chooseNextPosition(Division division) {
+        Scanner scanner = new Scanner(System.in);
         
-        scanner.close();
+        System.out.println("Choose the next position: ");
+        
     }
 }
