@@ -6,6 +6,7 @@ package Game.GameImpl;
 
 import Collections.Graph.Network;
 import Collections.Lists.ArrayUnorderedList;
+import Collections.Lists.UnorderedListADT;
 import Game.Interfaces.GameNetworkADT;
 import java.util.Iterator;
 
@@ -29,10 +30,10 @@ public class GameNetwork<T> extends Network<T> implements GameNetworkADT<T> {
     public Iterator<T> iteratorAdjacent(T vertex) {
         int index = getIndex(vertex);
         
-        ArrayUnorderedList<T> adjacentVertices = new ArrayUnorderedList<>();
+        UnorderedListADT<T> adjacentVertices = new ArrayUnorderedList<>();
         
         for (int i = 0; i < numVertices; i++) {
-            if (adjMatrix[index][i] >= 0) {
+            if (adjMatrix[index][i] > 0) {
                 adjacentVertices.addToRear(vertices[i]);
             }
         }
