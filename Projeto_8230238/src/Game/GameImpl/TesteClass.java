@@ -3,6 +3,7 @@ package Game.GameImpl;
 import Game.Exceptions.DivisionNullException;
 import Game.Interfaces.Building;
 import Game.Interfaces.Division;
+import Game.Interfaces.Mission;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,8 +15,8 @@ import java.util.Map;
 public class TesteClass {
 
     public static void main(String[] args) {
-        // Instância do Building
         Building building = new BuildingImpl();
+        Mission mission = new MissionImpl("1" , 1, building);
         
         // Lista de divisões do edifício
         String[] edificio = {
@@ -79,6 +80,6 @@ public class TesteClass {
             }
         }
         
-        building.printEntranceExit();
+        mission.manualSimulation();
     }
 }

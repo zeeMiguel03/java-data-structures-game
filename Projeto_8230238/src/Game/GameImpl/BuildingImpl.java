@@ -4,6 +4,7 @@
  */
 package Game.GameImpl;
 
+import Collections.Exceptions.ElementNotFoundException;
 import Collections.Graph.Network;
 import Collections.Graph.NetworkADT;
 import Game.Exceptions.DivisionNullException;
@@ -160,4 +161,28 @@ public class BuildingImpl implements Building {
             }
         }
     }
+    
+    /**
+     * Searchs for a specific division.
+     * 
+     * @param name the division name to search for
+     * @return the division if it was found
+     * @throws ElementNotFoundException if the division was not found
+     */
+    @Override
+    public Division searchDivisionByName(String name) throws ElementNotFoundException {
+        Iterator<Division> iterator = divisions.iteratorBFS(firstDivision);
+        
+        while (iterator.hasNext()) {
+            Division currentDivision = iterator.next();
+            
+            if (currentDivision.getName().equals(name)) {
+                return currentDivision;
+            }
+        } 
+
+        throw new ElementNotFoundException("Division with name " + name + " not found.");
+    }
+    
+    //Perguntar ao stor se podemos criar a nossa própia network e criar por exemplo este method de cima(nao esquecer)
 }

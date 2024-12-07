@@ -110,4 +110,18 @@ public interface Division {
      * @throws ItemNullException if the person in null
      */
     public void removeItem(Item item) throws ItemNullException;
+    
+    /**
+     * Returns the target of the division.
+     * 
+     * @return the division target
+     */
+    public Target getTarget();
+    
+    /**
+     * Sets the target of the division.
+     * 
+     * @param target the division target
+     */
+    public void setTarget(Target target);
 }

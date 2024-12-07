@@ -4,6 +4,7 @@
  */
 package Game.Interfaces;
 
+import Collections.Exceptions.ElementNotFoundException;
 import Collections.Graph.NetworkADT;
 import Game.Exceptions.DivisionNullException;
 
@@ -73,4 +74,13 @@ public interface Building {
      * This method print the divisions that are a entrance or a exit.
      */
     public void printEntranceExit();
+    
+    /**
+     * Searchs for a specific division.
+     * 
+     * @param name the division name to search for
+     * @return the division if it was found
+     * @throws ElementNotFoundException if the division was not found
+     */
+    public Division searchDivisionByName(String name) throws ElementNotFoundException;
 }

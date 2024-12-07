@@ -6,7 +6,7 @@ package GameMenus;
 
 import Game.GameImpl.BuildingImpl;
 import Game.GameImpl.Game;
-import Game.Interfaces.Division;
+import Game.GameImpl.MissionImpl;
 import Game.Interfaces.Mission;
 import Game.Json.KeyNotFoundException;
 import org.json.simple.parser.ParseException;
@@ -22,9 +22,11 @@ import java.util.Scanner;
  */
 public class Menu {
     private Game game;
+    private Mission mission;
 
     public Menu() {
         this.game = new Game();
+        this.mission = new MissionImpl("1", 1);
     }
 
     public void mainMenu() throws IOException, ParseException, KeyNotFoundException {
@@ -36,7 +38,6 @@ public class Menu {
             System.out.println("----------- Menu Mission -----------");
             System.out.println("|[1] Manual Mission                |");
             System.out.println("|[2] Automatic Mission             |");
-            System.out.println("|[3] Import data                   |");
             System.out.println("|[0] Leave                         |");
             System.out.println("------------------------------------");
             System.out.print("Option: ");
@@ -51,12 +52,9 @@ public class Menu {
             
             switch (option) {
                 case 1:
-                    menuStartGame();
+                    mission.manualSimulation();
                     break;
-                case 2:
-
-                    break;
-                case 3:
+                case 2:  
                     break;
                 case 0:
                     System.out.println("Leaving...");

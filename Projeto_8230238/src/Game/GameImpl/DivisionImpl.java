@@ -11,6 +11,7 @@ import Game.Exceptions.PersonNullException;
 import Game.Interfaces.Division;
 import Game.Interfaces.Enemy;
 import Game.Interfaces.Item;
+import Game.Interfaces.Person;
 import Game.Interfaces.Target;
 
 /**
@@ -25,6 +26,7 @@ public class DivisionImpl implements Division {
     private String name;
     private UnorderedListADT<Enemy> enemys;
     private UnorderedListADT<Item> itens;
+    private Person player;
     private boolean entranceExit;
     private Target target; 
     
@@ -208,6 +210,26 @@ public class DivisionImpl implements Division {
         }
         
         itens.remove(item);
+    }
+    
+    /**
+     * Returns the target of the division.
+     * 
+     * @return the division target
+     */
+    @Override
+    public Target getTarget() {
+        return target;
+    }
+    
+    /**
+     * Sets the target of the division.
+     * 
+     * @param target the division target
+     */
+    @Override
+    public void setTarget(Target target) {
+        this.target = target;
     }
     
     /**

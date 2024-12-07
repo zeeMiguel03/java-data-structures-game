@@ -32,6 +32,16 @@ public class PlayerImpl extends PersonImpl implements Player {
     }
     
     /**
+     * Constructor for Player class.
+     *
+     */
+    public PlayerImpl() {
+        super(PLAYER_NAME, POWER_PLAYER, MAX_LIFE);
+        
+        backpack = new LinkedStack<>();
+    }
+    
+    /**
      * Returns the player backpack.
      * 
      * @return the backpack

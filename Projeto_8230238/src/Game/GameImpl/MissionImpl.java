@@ -4,9 +4,13 @@
  */
 package Game.GameImpl;
 
+import Collections.Exceptions.ElementNotFoundException;
+import Game.Exceptions.InvalidEntranceException;
 import Game.Interfaces.Building;
+import Game.Interfaces.Division;
 import Game.Interfaces.Mission;
-import Game.Interfaces.Player;
+import Game.Interfaces.Person;
+import java.util.Scanner;
 
 /**
  * @author Miguel Rocha
@@ -16,7 +20,7 @@ public class MissionImpl implements Mission {
     private String codMission;
     private int version;
     private Building building;
-    private Player player;
+    private Person player;
     
     /**
      * Constructor for the MissionImpl class.
@@ -24,13 +28,25 @@ public class MissionImpl implements Mission {
      * @param code the code of the mission
      * @param version the version of the mission
      * @param building the building of the mission
-     * @param player the mission player
      */
-    public MissionImpl(String code, int version, Building building, Player player) {
+    public MissionImpl(String code, int version, Building building) {
         this.codMission = code;
         this.version = version;
         this.building = building;
-        this.player = player;
+        this.player = new PlayerImpl();
+    }
+    
+    /**
+     * Constructor for the MissionImpl class.
+     * 
+     * @param code the code of the mission
+     * @param version the version of the mission
+     */
+    public MissionImpl(String code, int version) {
+        this.codMission = code;
+        this.version = version;
+        this.building = new BuildingImpl();
+        this.player = new PlayerImpl();
     }
     
     /**
@@ -99,7 +115,7 @@ public class MissionImpl implements Mission {
      * @return the player
      */
     @Override
-    public Player getPlayer() {
+    public Person getPlayer() {
         return player;
     }
     
@@ -109,17 +125,47 @@ public class MissionImpl implements Mission {
      * @param player the player to set
      */
     @Override
-    public void setPlayer(Player player) {
+    public void setPlayer(Person player) {
         this.player = player;
     }
         
     @Override
     public void manualSimulation() {
+        chooseEntrance();
         
+        System.out.println(player.getDivision().getName());
     }
     
     @Override
     public void automaticSimulation() {
+    }
+    
+    /**
+     * This method prints the entrance or exit divisions, so that the
+     * player can choose it.
+     * 
+     * @throws InvalidEntranceException if the chosen division was not a entrance
+     */
+    private void chooseEntrance() throws InvalidEntranceException {
+        Scanner scanner = new Scanner(System.in);
         
+        building.printEntranceExit();
+        System.out.println("Choose a entrance: ");
+        
+        String entrance = scanner.nextLine();
+        
+        try {
+            Division division = building.searchDivisionByName(entrance);
+            
+            if (!division.getEntranceExit()) {
+                throw new InvalidEntranceException("this division is not an entry");
+            }
+            
+            player.setDivision(division);
+        } catch (ElementNotFoundException e) {
+            System.out.println(e);
+        }
+        
+        scanner.close();
     }
 }

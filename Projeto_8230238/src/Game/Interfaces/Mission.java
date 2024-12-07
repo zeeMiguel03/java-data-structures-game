@@ -57,14 +57,14 @@ public interface Mission {
      * 
      * @return the player
      */
-    public Player getPlayer();
+    public Person getPlayer();
     
     /**
      * Sets the player of the mission.
      * 
      * @param player the player to set
      */
-    public void setPlayer(Player player);
+    public void setPlayer(Person player);
     
     public void manualSimulation();
     

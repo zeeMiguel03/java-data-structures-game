@@ -280,6 +280,7 @@ public class LinkedList<T> implements ListADT<T> {
 
     /**
      * Returns a string representation of the list.
+     * 
      * @return a string representation of the list
      */
     @Override

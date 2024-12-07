@@ -31,6 +31,20 @@ public abstract class PersonImpl implements Person {
         this.life = life;
     }
     
+     /**
+     * Constructor for Person class without a specific division.
+     * 
+     * @param name the person name
+     * @param power the person power
+     * @param life the person life
+     */
+    public PersonImpl(String name, int power, int life) {
+        this.name = name;
+        this.division = null;
+        this.power = power;
+        this.life = life;
+    }
+    
     /**
      * Return the name of the person.
      * 
