@@ -95,7 +95,7 @@ public class Game {
                 }
             }
 
-            building.addConection(div1, div2, 20);
+            building.addConection(div1, div2);
         }
     }
 
