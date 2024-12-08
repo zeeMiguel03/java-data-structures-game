@@ -24,9 +24,8 @@ public class DivisionImpl implements Division {
     private static final int MAX_ITENS = 2;
     
     private String name;
-    private UnorderedListADT<Enemy> enemys;
+    private UnorderedListADT<Person> persons;
     private UnorderedListADT<Item> itens;
-    private Person player;
     private boolean entranceExit;
     private Target target; 
     
@@ -39,7 +38,7 @@ public class DivisionImpl implements Division {
     public DivisionImpl(String name, boolean entranceExit) {
         this.name = name;
         this.entranceExit = entranceExit;
-        this.enemys = new LinkedUnorderedList<>();
+        this.persons = new LinkedUnorderedList<>();
         this.itens = new LinkedUnorderedList<>();
         this.target = null;
     }
@@ -54,7 +53,7 @@ public class DivisionImpl implements Division {
     public DivisionImpl(String name, boolean entranceExit, Target target) {
         this.name = name;
         this.entranceExit = entranceExit;
-        this.enemys = new LinkedUnorderedList<>();
+        this.persons = new LinkedUnorderedList<>();
         this.itens = new LinkedUnorderedList<>();
         this.target = target;
     }
@@ -106,17 +105,15 @@ public class DivisionImpl implements Division {
      */
     @Override
     public UnorderedListADT<Enemy> getEnemysInDivision() {
-        return enemys;
-    }
-    
-    /**
-     * Sets the enemys in the division.
-     * 
-     * @param enemys enemys to set
-     */
-    @Override
-    public void setEnemysInDivision(UnorderedListADT<Enemy> enemys) {
-        this.enemys = enemys;
+        UnorderedListADT<Enemy> enemiesInDivision = new LinkedUnorderedList<>();
+
+        for (Person person : persons) {
+            if (person instanceof EnemyImpl) {
+                enemiesInDivision.addToFront((Enemy) person);
+            }
+        }
+
+        return enemiesInDivision;
     }
 
     /**
@@ -127,16 +124,6 @@ public class DivisionImpl implements Division {
     @Override
     public UnorderedListADT<Item> getItemsInDivision() {
         return itens;
-    }
-    
-    /**
-     * Sets the itens in the division.
-     * 
-     * @param itens itens to set
-     */
-    @Override
-    public void setItensInDivision(UnorderedListADT<Item> itens) {
-        this.itens = itens; //exception talvez, porque esse itens pode ter mais de dois!!
     }
 
     /**
@@ -150,33 +137,33 @@ public class DivisionImpl implements Division {
     }
     
     /**
-     * Adds a new enemy to the division.
+     * Adds a new person to the division.
      * 
-     * @param enemy enemy to add in division
+     * @param person person to add in division
      * @throws PersonNullException if the person in null
      */
     @Override
-    public void addEnemy(Enemy enemy) throws PersonNullException {
-        if (enemy == null) {
+    public void addPerson(Person person) throws PersonNullException {
+        if (person == null) {
             throw new PersonNullException("Person is null!");
         }
         
-        enemys.addToRear(enemy);
+        persons.addToRear(person);
     }
     
     /**
-     * Remove a enemy of the division.
+     * Remove a person of the division.
      * 
-     * @param enemy enemy to remove 
+     * @param Person person to remove
      * @throws PersonNullException if the person in null
      */
     @Override
-    public void removeEnemy(Enemy enemy) throws PersonNullException {
-        if (enemy == null) {
+    public void removePerson(Person person) throws PersonNullException {
+        if (person == null) {
             throw new PersonNullException("Person is null!");
         }
         
-        enemys.remove(enemy);
+        persons.remove(person);
     }
     
     /**

@@ -6,14 +6,10 @@ package Game.GameImpl;
 
 import Collections.Lists.LinkedUnorderedList;
 import Collections.Lists.UnorderedListADT;
-import Game.ExceptionsForGame.NotAnEntryExitDivisonException;
-import Game.Interfaces.Building;
-import Game.Interfaces.Division;
-import Game.Interfaces.Mission;
-import Game.Interfaces.Player;
+import Game.Enums.typeItem;
+import Game.Interfaces.*;
 import Game.Json.JsonHandler;
 import Game.Json.KeyNotFoundException;
-import GameMenus.Menu;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
@@ -39,6 +35,46 @@ public class Game {
         new LinkedUnorderedList<>();
     }
 
+    public void loadGame() throws IOException, ParseException, KeyNotFoundException {
+        setBuilding();
+        setItems();
+        setEnemy();
+    }
+
+    public void setItems() throws IOException, ParseException, KeyNotFoundException {
+        JSONArray jArray = (JSONArray) JsonHandler.getFromFile("itens");
+        Item mewItem;
+
+        for (Object itens : jArray) {
+            JSONObject item = (JSONObject) itens;
+            long pontosVida = item.get("pontos-recuperados") != null ? (long) item.get("pontos-recuperados") : 0;
+            long pontosExtra = item.get("pontos-extra") != null ? ((long)item.get("pontos-extra")) : 0;
+
+            if (item.get("tipo").equals("kit de vida")) {
+                mewItem = new ItemImpl(typeItem.KIT_LIFE, (int)pontosVida, building.searchDivisionByName(item.get("divisao").toString()));
+                building.searchDivisionByName(item.get("divisao").toString()).addItem(mewItem);
+            } else {
+                mewItem = new ItemImpl(typeItem.VEST, (int)pontosExtra, building.searchDivisionByName(item.get("divisao").toString()));
+                building.searchDivisionByName(item.get("divisao").toString()).addItem(mewItem);
+            }
+        }
+
+    }
+
+    public void setEnemy() throws IOException, ParseException, KeyNotFoundException {
+        JSONArray jArray = (JSONArray) JsonHandler.getFromFile("inimigos");
+        Person newEnemy;
+
+        for (Object enemies : jArray) {
+            JSONObject enemy = (JSONObject) enemies;
+            long poder = (long) enemy.get("poder");
+
+            newEnemy = new EnemyImpl(enemy.get("nome").toString(), (int) poder, building.searchDivisionByName(enemy.get("divisao").toString()), 100);
+            building.searchDivisionByName(enemy.get("divisao").toString()).addPerson(newEnemy);
+        }
+
+    }
+
     public void setBuilding() throws IOException, ParseException, KeyNotFoundException {
         JSONArray ligacoes = (JSONArray) JsonHandler.getFromFile("ligacoes");
 
@@ -59,7 +95,18 @@ public class Game {
                 }
             }
 
-            building.addConection(div1, div2);
+            building.addConection(div1, div2, 20);
+        }
+    }
+
+    public void startGame(Boolean isManual, Division divisionPlayer) {
+        Person ToCruz = new PlayerImpl(divisionPlayer);
+        building.searchDivisionByName(divisionPlayer.getName()).addPerson(ToCruz);
+
+        if (isManual) {
+            return;
+        } else {
+            return;
         }
     }
 

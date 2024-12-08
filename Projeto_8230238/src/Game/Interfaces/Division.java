@@ -50,13 +50,6 @@ public interface Division {
      * @return the enemys in the division
      */
     public UnorderedListADT<Enemy> getEnemysInDivision();
-    
-    /**
-     * Sets the enemys in the division.
-     * 
-     * @param enemys enemys to set
-     */
-    public void setEnemysInDivision(UnorderedListADT<Enemy> enemys);
 
     /**
      * Returns the item in the division.
@@ -64,13 +57,6 @@ public interface Division {
      * @return the items in division
      */
     public UnorderedListADT<Item> getItemsInDivision();
-    
-    /**
-     * Sets the itens in the division.
-     * 
-     * @param itens itens to set
-     */
-    public void setItensInDivision(UnorderedListADT<Item> itens);
 
     /**
      * Return true if the division is a division that you can use as input or output
@@ -82,18 +68,18 @@ public interface Division {
     /**
      * Adds a new enemy to the division.
      * 
-     * @param enemy enemy to add in division
+     * @param person person to add in division
      * @throws PersonNullException if the enemy in null
      */
-    public void addEnemy(Enemy enemy) throws PersonNullException;
+    public void addPerson(Person person) throws PersonNullException;
     
     /**
      * Remove a enemy of the division.
      * 
-     * @param enemy enemy to remove 
+     * @param person person to remove
      * @throws PersonNullException if the person in null
      */
-    public void removeEnemy(Enemy enemy) throws PersonNullException;
+    public void removePerson(Person person) throws PersonNullException;
     
     /**
      * Adds a new item to the division.
