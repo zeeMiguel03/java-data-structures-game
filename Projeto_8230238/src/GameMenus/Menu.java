@@ -127,7 +127,7 @@ public class Menu {
 
     }
 
-    public void menuDuringGame() {
+    public void menuChangeDivision() {
         return;
     }
 }

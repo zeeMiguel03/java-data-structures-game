@@ -7,6 +7,7 @@ package Game.GameImpl;
 import Collections.Lists.LinkedUnorderedList;
 import Collections.Lists.UnorderedListADT;
 import Game.Enums.typeItem;
+import Game.Enums.typeTarget;
 import Game.Interfaces.*;
 import Game.Json.JsonHandler;
 import Game.Json.KeyNotFoundException;
@@ -22,14 +23,16 @@ import java.util.Iterator;
  * @author Miguel
  */
 public class Game {
-    Building building;
-    Mission mission;
-    UnorderedListADT<Division> divisions;
-    Iterator<Division> iterator;
+    private Building building;
+    private Mission mission;
+    private UnorderedListADT<Division> divisions;
+    private Iterator<Division> iterator;
+    private Person ToCruz;
 
 
     public Game() {
         mission = null;
+        ToCruz = null;
         building = new BuildingImpl();
         divisions = new LinkedUnorderedList<>();
         new LinkedUnorderedList<>();
@@ -39,9 +42,10 @@ public class Game {
         setBuilding();
         setItems();
         setEnemy();
+        setAlvo();
     }
 
-    public void setItems() throws IOException, ParseException, KeyNotFoundException {
+    private void setItems() throws IOException, ParseException, KeyNotFoundException {
         JSONArray jArray = (JSONArray) JsonHandler.getFromFile("itens");
         Item mewItem;
 
@@ -61,7 +65,7 @@ public class Game {
 
     }
 
-    public void setEnemy() throws IOException, ParseException, KeyNotFoundException {
+    private void setEnemy() throws IOException, ParseException, KeyNotFoundException {
         JSONArray jArray = (JSONArray) JsonHandler.getFromFile("inimigos");
         Person newEnemy;
 
@@ -75,7 +79,7 @@ public class Game {
 
     }
 
-    public void setBuilding() throws IOException, ParseException, KeyNotFoundException {
+    private void setBuilding() throws IOException, ParseException, KeyNotFoundException {
         JSONArray ligacoes = (JSONArray) JsonHandler.getFromFile("ligacoes");
 
         createDivisions();
@@ -99,9 +103,29 @@ public class Game {
         }
     }
 
+    private void setAlvo() throws IOException, ParseException, KeyNotFoundException {
+        JSONObject alvo = (JSONObject) JsonHandler.getFromFile("alvo");
+        Division alvoDivision = building.searchDivisionByName((String) alvo.get("divisao"));
+        Target alvoImpl = null;
+
+        switch ((String) alvo.get("tipo")) {
+            case "quimico":
+                alvoImpl = new TargetImpl(typeTarget.CHEMICAL, alvoDivision);
+                break;
+            case "gun":
+                alvoImpl = new TargetImpl(typeTarget.GUN, alvoDivision);
+                break;
+            case "person":
+                alvoImpl = new TargetImpl(typeTarget.PERSON, alvoDivision);
+                break;
+        }
+
+        alvoDivision.setTarget(alvoImpl);
+    }
+
     public void startGame(Boolean isManual, Division divisionPlayer) {
-        Person ToCruz = new PlayerImpl(divisionPlayer);
-        building.searchDivisionByName(divisionPlayer.getName()).addPerson(ToCruz);
+        ToCruz = new PlayerImpl(divisionPlayer);
+        divisionPlayer.addPerson(ToCruz);
 
         if (isManual) {
             return;

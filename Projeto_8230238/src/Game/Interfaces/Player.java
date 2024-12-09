@@ -10,21 +10,35 @@ import Collections.Stacks.StackADT;
  * @author Miguel Rocha
  */
 public interface Player {
-    
+
     /**
      * Returns the player backpack.
-     * 
+     *
      * @return the backpack
      */
     public StackADT<Item> getBackpack();
-    
+
     /**
      * Sets the player backpack.
-     * 
+     *
      * @param itens itens to set
      */
     public void setBackpack(StackADT<Item> itens);
-    
+
+    /**
+     * Return if the player have the target
+     *
+     * @return return if the player have the target
+     */
+    public boolean getHaveTarget();
+
+    /**
+     * Sets if the player have the target or not
+     *
+     * @param haveTarget true or false
+     */
+    public void setHaveTarget(boolean haveTarget);
+
     /**
      * Use the last item of the backpack.
      */

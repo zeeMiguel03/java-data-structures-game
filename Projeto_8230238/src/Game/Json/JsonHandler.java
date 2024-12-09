@@ -7,7 +7,7 @@ import org.json.simple.parser.ParseException;
 import java.io.*;
 
 public class JsonHandler {
-    private static final String FILE_NAME = "Projeto_8230238/Json/Mission.json";
+    private static final String FILE_NAME = "./Json/Mission.json";
     private JSONParser parser;
 
     public static Object getFromFile(String section) throws IOException, ParseException, KeyNotFoundException {
