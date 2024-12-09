@@ -5,9 +5,12 @@
 package Game.GameImpl;
 
 import Collections.Exceptions.ElementNotFoundException;
+import Collections.Lists.LinkedUnorderedList;
+import Game.Exceptions.EndOfMissionException;
 import Game.Exceptions.InvalidEntranceException;
 import Game.Interfaces.Building;
 import Game.Interfaces.Division;
+import Game.Interfaces.Enemy;
 import Game.Interfaces.Mission;
 import Game.Interfaces.Person;
 import java.util.Scanner;
@@ -21,6 +24,7 @@ public class MissionImpl implements Mission {
     private int version;
     private Building building;
     private Person player;
+    private boolean missionStarted;
     
     /**
      * Constructor for the MissionImpl class.
@@ -34,6 +38,7 @@ public class MissionImpl implements Mission {
         this.version = version;
         this.building = building;
         this.player = new PlayerImpl();
+        this.missionStarted = false;
     }
     
     /**
@@ -131,13 +136,44 @@ public class MissionImpl implements Mission {
         
     @Override
     public void manualSimulation() {
-        try {
-            chooseEntrance();
-        } catch (InvalidEntranceException e) {
-            System.out.println(e);
-        }
+        Scanner scanner = new Scanner(System.in);
         
-        System.out.println(player.getDivision());
+        try {
+            chooseEntrance(scanner);
+
+            while (!verifyEndMission()) {
+                missionStarted = true;
+                chooseNextPosition(player.getDivision(), scanner);
+                 
+                if (!player.getDivision().getEnemysInDivision().isEmpty()) {
+                    while (player.getLife() > 0 && !player.getDivision().getEnemysInDivision().isEmpty()) {
+                        player.atack();
+                                
+                        for (Enemy enemy : player.getDivision().getEnemysInDivision()) {
+                            enemy.atack();
+                        }
+                        
+                        System.out.println(player.getLife());
+                        System.out.println(player.getDivision().getEnemysInDivision().size());
+                        
+                        if (player.getDivision().getEnemysInDivision().isEmpty()) {
+                            System.out.println("Ta sem inimigos agora!");
+                        }
+                    }
+                }
+    
+                if (player.getDivision().getTarget() != null) {
+                    System.out.println("You are in the target division!!!");
+                    
+                    PlayerImpl playerImpl = (PlayerImpl) player;
+                    
+                    playerImpl.setHaveTarget(true);
+                }
+                
+            }
+        } catch (EndOfMissionException e) {
+            System.out.println(e.getMessage());
+        }
     }
     
     @Override
@@ -151,33 +187,90 @@ public class MissionImpl implements Mission {
      * 
      * @throws InvalidEntranceException if the chosen division was not a entrance
      */
-    private void chooseEntrance() throws InvalidEntranceException {
-        Scanner scanner = new Scanner(System.in);
-        
-        building.printEntranceExit();
-        System.out.println("Choose a entrance: ");
-        
-        String entrance = scanner.nextLine();
-        
-        scanner.close();
-        
-        try {
-            Division division = building.searchDivisionByName(entrance);
-            
-            if (!division.getEntranceExit()) {
-                throw new InvalidEntranceException("this division is not an entry");
+    private void chooseEntrance(Scanner scanner) throws InvalidEntranceException {  
+        boolean validEntrance = false;
+
+        while (!validEntrance) {
+            building.printEntranceExit();
+            System.out.println("Choose an entrance: ");
+
+            String entrance = scanner.nextLine();
+
+            try {
+                Division division = building.searchDivisionByName(entrance);
+
+                if (division.getEntranceExit()) {
+                    player.setDivision(division);
+                    division.addPerson(player);
+                    validEntrance = true;
+                } else {
+                    System.out.println("Invalid entrance. This division is not an entry. Try again.");
+                }
+            } catch (ElementNotFoundException e) {
+                System.out.println(e.getMessage() + " Try again.");
             }
-            
-            player.setDivision(division);
-        } catch (ElementNotFoundException e) {
-            System.out.println(e);
         }
     }
+
     
-    private void chooseNextPosition(Division division) {
-        Scanner scanner = new Scanner(System.in);
+    /**
+     * This method prints the possible divisions options for the user to choose.
+     * 
+     * @param currentDivision the current division
+     * @param scanner the scanner to read the option
+     */
+    private void chooseNextPosition(Division currentDivision, Scanner scanner) {
+        Division newDivision = null;
+        boolean validDivision = false;
+
+        while (!validDivision) {
+            building.printNextDivisions(currentDivision);
+            System.out.println("Choose the next position: ");
+
+            String nextDivisionName = scanner.nextLine();
+
+            try {
+                newDivision = building.searchDivisionByName(nextDivisionName);
+                if (building.getDivisions().verifyConnection(currentDivision, newDivision)) {
+                    validDivision = true;
+                } else {
+                    System.out.println("Invalid move. There is no connection between the current division and the selected division. Try again.");
+                }
+            } catch (ElementNotFoundException e) {
+                System.out.println(e);
+            }
+        }
+
+        player.setDivision(newDivision);
+        newDivision.addPerson(player);
+    }
+    
+    /**
+     * Verifies whether the mission has ended.
+     * 
+     * @return false if the mission was not finish
+     * @throws EndOfMissionException  if the mission ends due to player death or mission completion
+     */
+    private boolean verifyEndMission() throws EndOfMissionException {  
+        if (!missionStarted) {
+            return false;  
+        }
         
-        System.out.println("Choose the next position: ");
+        if (player.getLife() <= 0) {
+            throw new EndOfMissionException("Tó Cruz died, , end of the Game!!");
+        } 
         
+        if (player.getDivision().isEntranceExit()) {
+            PlayerImpl playerImpl = (PlayerImpl) player;
+            
+            if (playerImpl.getHaveTarget() && player.getDivision().getEnemysInDivision().isEmpty()) {
+                throw new EndOfMissionException("Tó Cruz Win, end of the Game!!");
+            } else if (!playerImpl.getHaveTarget()) {
+                throw new EndOfMissionException("To Cruz forgot the target, end of the Game!!");
+            }
+            
+        }
+                
+        return false;
     }
 }

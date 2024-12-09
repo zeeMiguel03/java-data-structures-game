@@ -31,7 +31,7 @@ public class GameNetwork<T> extends Network<T> implements GameNetworkADT<T> {
      * @return the connections
      */
     @Override
-    public Iterator<T> iteratorAdjacent(T vertex) { //podemos fazer isto certo? ou nao podemos usar o iterator??
+    public Iterator<T> iteratorAdjacent(T vertex) { 
         int index = getIndex(vertex);
 
         if (!indexIsValid(index)) {

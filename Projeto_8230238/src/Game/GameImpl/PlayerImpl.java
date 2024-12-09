@@ -29,54 +29,54 @@ public class PlayerImpl extends PersonImpl implements Player {
      */
     public PlayerImpl(Division division) {
         super(PLAYER_NAME, division, POWER_PLAYER, MAX_LIFE);
-
+        
         backpack = new LinkedStack<>();
         haveTarget = false;
     }
-
+    
     /**
      * Constructor for Player class.
      *
      */
     public PlayerImpl() {
         super(PLAYER_NAME, POWER_PLAYER, MAX_LIFE);
-
+        
         backpack = new LinkedStack<>();
     }
-
+    
     /**
      * Return if the player have the target
-     *
+     * 
      * @return return if the player have the target
      */
     @Override
     public boolean getHaveTarget() {
         return haveTarget;
     }
-
+    
     /**
      * Sets if the player have the target or not
-     *
+     * 
      * @param haveTarget true or false
      */
     @Override
     public void setHaveTarget(boolean haveTarget) {
         this.haveTarget = haveTarget;
     }
-
+    
     /**
      * Returns the player backpack.
-     *
+     * 
      * @return the backpack
      */
     @Override
     public StackADT<Item> getBackpack() {
         return backpack;
     }
-
+    
     /**
      * Sets the player backpack.
-     *
+     * 
      * @param itens itens to set
      */
     @Override
@@ -87,10 +87,10 @@ public class PlayerImpl extends PersonImpl implements Player {
     @Override
     public void atack() {
         Iterator<Enemy> iterator = getDivision().getEnemysInDivision().iterator();
-
+        
         while (iterator.hasNext()) {
             Enemy enemy = iterator.next();
-
+            
             enemy.setLife(enemy.getLife() - getPower());
 
             if (enemy.getLife() <= 0) {
@@ -105,12 +105,12 @@ public class PlayerImpl extends PersonImpl implements Player {
     @Override
     public void useMedicKit() {
         Item item = backpack.pop();
-
+            
         if (getLife() + item.getPoints() > MAX_LIFE) {
             setLife(MAX_LIFE);
             return;
         }
-
+        
         setLife(getLife() + item.getPoints());
     }
 
@@ -127,7 +127,6 @@ public class PlayerImpl extends PersonImpl implements Player {
             } else {
                 setLife(getLife() + item.getPoints());
             }
-            getDivision().removeItem(item);
         }
     }
 }

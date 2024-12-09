@@ -109,7 +109,7 @@ public class DivisionImpl implements Division {
 
         for (Person person : persons) {
             if (person instanceof EnemyImpl) {
-                enemiesInDivision.addToFront((Enemy) person);
+                enemiesInDivision.addToRear((Enemy) person);
             }
         }
 
@@ -154,7 +154,7 @@ public class DivisionImpl implements Division {
     /**
      * Remove a person of the division.
      * 
-     * @param Person person to remove
+     * @param person person to remove
      * @throws PersonNullException if the person in null
      */
     @Override
@@ -181,7 +181,6 @@ public class DivisionImpl implements Division {
         if (itens.size() < MAX_ITENS) {
             itens.addToRear(item);
         } 
-        //deve levar exception se nao poder levar mais itens??
     }
     
     /**

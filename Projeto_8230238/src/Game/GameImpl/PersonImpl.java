@@ -82,10 +82,7 @@ public abstract class PersonImpl implements Person {
      */
     @Override
     public void setDivision(Division division) {
-        Division last = this.division;
-        division.addPerson(this);
         this.division = division;
-        last.removePerson(this);
     }
     
     /**

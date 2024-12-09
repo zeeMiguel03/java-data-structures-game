@@ -1,14 +1,22 @@
 package Game.GameImpl;
 
+import Game.Enums.typeItem;
+import Game.Enums.typeTarget;
 import Game.Exceptions.DivisionNullException;
+import Game.Exceptions.ItemNullException;
+import Game.Exceptions.PersonNullException;
 import Game.Interfaces.Building;
 import Game.Interfaces.Division;
+import Game.Interfaces.Enemy;
+import Game.Interfaces.Item;
 import Game.Interfaces.Mission;
+import Game.Interfaces.Target;
+
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Classe para teste das implementações de Division e Building. Feito pelo chatgpt
+ * Classe para teste das implementacoes de Division e Building. Feito pelo chatgpt
  *
  * @author Miguel
  */
@@ -16,23 +24,23 @@ public class TesteClass {
 
     public static void main(String[] args) {
         Building building = new BuildingImpl();
-        Mission mission = new MissionImpl("1" , 1, building);
+        Mission mission = new MissionImpl("1", 1, building);
         
-        // Lista de divisões do edifício
+        // Lista de divisoes do edificio
         String[] edificio = {
-            "Heliporto", "Escada 6", "Camaratas", "Armazém", "Escada 5",
-            "Laboratório", "Escritório 3", "Escada 4", "WC", "Corredor 2",
-            "Segurança", "Hall", "Escada 3", "Escritório 1", "Escritório 2",
-            "Escada de Emergência", "Corredor 1", "Escada 2", "Porteiro",
+            "Heliporto", "Escada 6", "Camaratas", "Armazem", "Escada 5",
+            "Laboratorio", "Escritorio 3", "Escada 4", "WC", "Corredor 2",
+            "Seguranca", "Hall", "Escada 3", "Escritorio 1", "Escritorio 2",
+            "Escada de Emergencia", "Corredor 1", "Escada 2", "Porteiro",
             "Escada 1", "Garagem"
         };
 
-        // Divisões de entrada-saída
+        // Divisoes de entrada-saida
         String[] entradasSaidas = {
-            "Escada de Emergência", "Garagem", "Heliporto", "Porteiro"
+            "Escada de Emergencia", "Garagem", "Heliporto", "Porteiro"
         };
 
-        // Criando as divisões
+        // Criando as divisoes
         Map<String, Division> divisionMap = new HashMap<>();
         for (String nome : edificio) {
             boolean isEntradaSaida = java.util.Arrays.asList(entradasSaidas).contains(nome);
@@ -41,30 +49,30 @@ public class TesteClass {
             try {
                 building.addDivision(division);
             } catch (DivisionNullException e) {
-                System.err.println("Erro ao adicionar divisão: " + e.getMessage());
+                System.err.println("Erro ao adicionar divisao: " + e.getMessage());
             }
         }
 
-        // Adicionando as conexões entre divisões
+        // Adicionando as conexoes entre divisoes
         String[][] ligacoes = {
             {"Garagem", "Escada 1"},
-            {"Garagem", "Escada de Emergência"},
-            {"Escritório 1", "Escada de Emergência"},
+            {"Garagem", "Escada de Emergencia"},
+            {"Escritorio 1", "Escada de Emergencia"},
             {"Porteiro", "Escada 1"},
             {"Porteiro", "Escada 2"},
             {"Corredor 1", "Escada 2"},
-            {"Corredor 1", "Escritório 1"},
-            {"Corredor 1", "Escritório 2"},
+            {"Corredor 1", "Escritorio 1"},
+            {"Corredor 1", "Escritorio 2"},
             {"Corredor 1", "Escada 3"},
             {"Hall", "Escada 3"},
-            {"Hall", "Segurança"},
-            {"Corredor 2", "Segurança"},
+            {"Hall", "Seguranca"},
+            {"Corredor 2", "Seguranca"},
             {"Corredor 2", "WC"},
             {"Corredor 2", "Escada 4"},
-            {"Escritório 3", "Escada 4"},
-            {"Escritório 3", "Escada 5"},
-            {"Laboratório", "Escada 5"},
-            {"Armazém", "Escada 5"},
+            {"Escritorio 3", "Escada 4"},
+            {"Escritorio 3", "Escada 5"},
+            {"Laboratorio", "Escada 5"},
+            {"Armazem", "Escada 5"},
             {"Camaratas", "Escada 5"},
             {"Camaratas", "Escada 6"},
             {"Heliporto", "Escada 6"}
@@ -76,10 +84,55 @@ public class TesteClass {
             try {
                 building.addConection(division1, division2);
             } catch (DivisionNullException e) {
-                System.err.println("Erro ao adicionar conexão: " + e.getMessage());
+                System.err.println("Erro ao adicionar conexao: " + e.getMessage());
             }
         }
-        
+
+        // Adicionando os itens
+        String[][] itens = {
+            {"WC", "20", "kit de vida"},
+            {"Escritorio 1", "15", "kit de vida"},
+            {"Escada 2", "25", "colete"}
+        };
+
+        for (String[] itemData : itens) {
+            Division division = divisionMap.get(itemData[0]);
+            int points = Integer.parseInt(itemData[1]);
+            typeItem itemType = itemData[2].equals("kit de vida") ? typeItem.KIT_LIFE : typeItem.VEST;
+            Item item = new ItemImpl(itemType, points, division);
+            try {
+                division.addItem(item);
+            } catch (ItemNullException e) {
+                System.err.println("Erro ao adicionar item: " + e.getMessage());
+            }
+        }
+
+        // Adicionando os inimigos
+        String[][] inimigos = {
+            {"badguy1", "5", "Heliporto"},
+            {"badguy2", "15", "Heliporto"},
+            {"badguy3", "20", "Camaratas"},
+            {"badguy4", "15", "Seguranca"},
+            {"badguy5", "15", "Corredor 1"}
+        };
+
+        for (String[] inimigoData : inimigos) {
+            String name = inimigoData[0];
+            int power = Integer.parseInt(inimigoData[1]);
+            Division division = divisionMap.get(inimigoData[2]);
+            Enemy enemy = new EnemyImpl(name, power, division, 100);  // Assuming life is 100 for all enemies
+            try {
+                division.addPerson(enemy);
+            } catch (PersonNullException e) {
+                System.err.println("Erro ao adicionar inimigo: " + e.getMessage());
+            }
+        }
+
+        // Adicionando o alvo
+        Target target = new TargetImpl(typeTarget.CHEMICAL, divisionMap.get("Laboratorio"));
+        divisionMap.get("Laboratorio").setTarget(target);
+
+        // Simulating the mission
         mission.manualSimulation();
     }
 }

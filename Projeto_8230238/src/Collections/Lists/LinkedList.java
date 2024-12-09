@@ -13,7 +13,7 @@ import java.util.Iterator;
 /**
  * @author Miguel Rocha
  */
-public class LinkedList<T> implements ListADT<T> {
+public abstract class LinkedList<T> implements ListADT<T> {
     protected LinearNode<T> head, tail;
     protected int count, modCount;
 
@@ -217,6 +217,7 @@ public class LinkedList<T> implements ListADT<T> {
     private class BasicIterator<E> implements Iterator<T> { 
         private int expectedModCount;
         private boolean okToRemove;
+        private T toRemove;
         private LinearNode<T> current;
         
         /**
@@ -226,6 +227,7 @@ public class LinkedList<T> implements ListADT<T> {
             this.expectedModCount = modCount;
             this.okToRemove = false;
             this.current = head;
+            this.toRemove = null;
         }
 
         /**
@@ -252,6 +254,7 @@ public class LinkedList<T> implements ListADT<T> {
             }
             
             T element = current.getElement();
+            toRemove = element;
             okToRemove = true;
             current = current.getNext();
             
@@ -271,7 +274,7 @@ public class LinkedList<T> implements ListADT<T> {
                 throw new IllegalStateException();
             }
             
-            LinkedList.this.remove(current.getElement());
+            LinkedList.this.remove(toRemove);
             expectedModCount++;
             
             okToRemove = false;

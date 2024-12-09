@@ -4,13 +4,8 @@
  */
 package GameMenus;
 
-import Collections.Lists.ArrayUnorderedList;
-import Collections.Lists.LinkedUnorderedList;
-import Collections.Lists.UnorderedListADT;
 import Collections.Queues.LinkedQueue;
 import Collections.Queues.QueueADT;
-import Collections.Stacks.LinkedStack;
-import Collections.Stacks.StackADT;
 import Game.GameImpl.BuildingImpl;
 import Game.GameImpl.Game;
 import Game.GameImpl.MissionImpl;
@@ -44,7 +39,7 @@ public class Menu {
             System.out.println("----------- Menu Mission -----------");
             System.out.println("|[1] Manual Mission                |");
             System.out.println("|[2] Automatic Mission             |");
-            System.out.println("|[0] Leave                         |");
+            System.out.println("|[0] Leave Game                    |");
             System.out.println("------------------------------------");
             System.out.print("Option: ");
             
@@ -88,14 +83,17 @@ public class Menu {
 
         do {
             System.out.println("----------- Menu Mission -----------");
+            
             while (iteratorNetworkDivisions.hasNext()) {
                 Division div = (Division) iteratorNetworkDivisions.next();
+                
                 if (div.isEntranceExit()) {
                     System.out.println("[" + ++counter + "] " + div.getName());
                     divisoes.enqueue(div);
                 }
             }
-            System.out.println("[0] Sair");
+            
+            System.out.println("[0] Leave Game");
             System.out.println("------------------------------------");
             System.out.print("Option: ");
 
@@ -121,7 +119,7 @@ public class Menu {
                 game.startGame(isManual, division);
             }
 
-        } while (option >= 0 && option <= counter);
+        } while (option != 0 && option <= counter);
 
         scanner.close();
 
