@@ -13,11 +13,6 @@ public class EnemyImpl extends PersonImpl implements Enemy {
 
     @Override
     public void atack() {
-        /*
-        for (Person person : getDivision().getPersonsInDivision()) {
-            if (person instanceof Player) {
-                person.setLife(person.getLife() - getPower());
-            }
-        }*/
+        getDivision().getPlayer().setLife(getDivision().getPlayer().getLife() - getPower());
     }
 }

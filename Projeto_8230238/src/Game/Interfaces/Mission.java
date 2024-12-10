@@ -64,8 +64,8 @@ public interface Mission {
      * 
      * @param player the player to set
      */
-    public void setPlayer(Person player);
-    
+    void setPlayer(Player player);
+
     public void manualSimulation();
     
     public void automaticSimulation();

@@ -48,4 +48,8 @@ public interface Player extends Person{
      * Pick the item and save it or use it.
      */
     public void pickItem();
+
+    public void useVest();
+
+    int getMaxLife();
 }

@@ -8,11 +8,7 @@ import Collections.Lists.LinkedUnorderedList;
 import Collections.Lists.UnorderedListADT;
 import Game.Exceptions.ItemNullException;
 import Game.Exceptions.PersonNullException;
-import Game.Interfaces.Division;
-import Game.Interfaces.Enemy;
-import Game.Interfaces.Item;
-import Game.Interfaces.Person;
-import Game.Interfaces.Target;
+import Game.Interfaces.*;
 
 /**
  * Implementation of the Division interface, representing a division in the game.
@@ -24,10 +20,11 @@ public class DivisionImpl implements Division {
     private static final int MAX_ITENS = 2;
     
     private String name;
-    private UnorderedListADT<Person> persons;
+    private UnorderedListADT<Enemy> enemies;
     private UnorderedListADT<Item> itens;
     private boolean entranceExit;
-    private Target target; 
+    private Target target;
+    private Player player;
     
     /**
      * Constructor for the division class.
@@ -38,7 +35,7 @@ public class DivisionImpl implements Division {
     public DivisionImpl(String name, boolean entranceExit) {
         this.name = name;
         this.entranceExit = entranceExit;
-        this.persons = new LinkedUnorderedList<>();
+        this.enemies = new LinkedUnorderedList<>();
         this.itens = new LinkedUnorderedList<>();
         this.target = null;
     }
@@ -53,7 +50,7 @@ public class DivisionImpl implements Division {
     public DivisionImpl(String name, boolean entranceExit, Target target) {
         this.name = name;
         this.entranceExit = entranceExit;
-        this.persons = new LinkedUnorderedList<>();
+        this.enemies = new LinkedUnorderedList<>();
         this.itens = new LinkedUnorderedList<>();
         this.target = target;
     }
@@ -105,15 +102,7 @@ public class DivisionImpl implements Division {
      */
     @Override
     public UnorderedListADT<Enemy> getEnemysInDivision() {
-        UnorderedListADT<Enemy> enemiesInDivision = new LinkedUnorderedList<>();
-
-        for (Person person : persons) {
-            if (person instanceof EnemyImpl) {
-                enemiesInDivision.addToRear((Enemy) person);
-            }
-        }
-
-        return enemiesInDivision;
+        return enemies;
     }
 
     /**
@@ -143,12 +132,21 @@ public class DivisionImpl implements Division {
      * @throws PersonNullException if the person in null
      */
     @Override
-    public void addPerson(Person person) throws PersonNullException {
-        if (person == null) {
-            throw new PersonNullException("Person is null!");
+    public void addEnemy(Enemy enemy) throws PersonNullException {
+        if (enemy == null) {
+            throw new PersonNullException("Enemy is null!");
         }
         
-        persons.addToRear(person);
+        enemies.addToRear(enemy);
+    }
+
+    @Override
+    public void addPlayer(Player player) {
+        if (player == null) {
+            throw new PersonNullException("Player is null!");
+        }
+
+        this.player = player;
     }
     
     /**
@@ -158,12 +156,21 @@ public class DivisionImpl implements Division {
      * @throws PersonNullException if the person in null
      */
     @Override
-    public void removePerson(Person person) throws PersonNullException {
-        if (person == null) {
+    public void removeEnemy(Enemy enemy) throws PersonNullException {
+        if (enemy == null) {
             throw new PersonNullException("Person is null!");
         }
         
-        persons.remove(person);
+        enemies.remove(enemy);
+    }
+
+    @Override
+    public void removePlayer(Player player) {
+        if (player == null) {
+            throw new PersonNullException("Player is null!");
+        }
+
+        this.player = null;
     }
     
     /**
@@ -216,6 +223,11 @@ public class DivisionImpl implements Division {
     @Override
     public void setTarget(Target target) {
         this.target = target;
+    }
+
+    @Override
+    public Player getPlayer() {
+        return player;
     }
 
     @Override

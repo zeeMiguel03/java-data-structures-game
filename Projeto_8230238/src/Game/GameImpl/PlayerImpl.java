@@ -14,7 +14,7 @@ import java.util.Iterator;
  * @author Miguel Rocha
  */
 public class PlayerImpl extends PersonImpl implements Player {
-    private static final int MAX_LIFE = 100;
+    private static final int MAX_LIFE = 200;
     private static final int MAX_ITEMS = 3;
     private static final int POWER_PLAYER = 20;
     private static final String PLAYER_NAME = "Tó Cruz";
@@ -108,9 +108,8 @@ public class PlayerImpl extends PersonImpl implements Player {
             
         if (getLife() + item.getPoints() > MAX_LIFE) {
             setLife(MAX_LIFE);
-            return;
         }
-        
+
         setLife(getLife() + item.getPoints());
     }
 
@@ -124,9 +123,23 @@ public class PlayerImpl extends PersonImpl implements Player {
                 if (backpack.size() < MAX_ITEMS) {
                     backpack.push(item);
                 }
-            } else {
-                setLife(getLife() + item.getPoints());
+                getDivision().removeItem(item);
             }
         }
+    }
+
+    @Override
+    public void useVest() {
+        for (Item item : getDivision().getItemsInDivision()) {
+            if (item.getType().equals(typeItem.VEST)) {
+                setLife(getLife() + item.getPoints());
+                getDivision().removeItem(item);
+            }
+        }
+    }
+
+    @Override
+    public int getMaxLife() {
+        return MAX_LIFE;
     }
 }

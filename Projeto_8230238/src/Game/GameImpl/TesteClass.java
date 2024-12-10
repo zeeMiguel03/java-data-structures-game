@@ -122,7 +122,7 @@ public class TesteClass {
             Division division = divisionMap.get(inimigoData[2]);
             Enemy enemy = new EnemyImpl(name, power, division, 100);  // Assuming life is 100 for all enemies
             try {
-                division.addPerson(enemy);
+                division.addEnemy(enemy);
             } catch (PersonNullException e) {
                 System.err.println("Erro ao adicionar inimigo: " + e.getMessage());
             }

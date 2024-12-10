@@ -64,23 +64,15 @@ public interface Division {
      * @return true if the division is a division that you can use as input or output
      */
     public boolean isEntranceExit();
-    
-    /**
-     * Adds a new enemy to the division.
-     * 
-     * @param person person to add in division
-     * @throws PersonNullException if the enemy in null
-     */
-    public void addPerson(Person person) throws PersonNullException;
-    
-    /**
-     * Remove a enemy of the division.
-     * 
-     * @param person person to remove
-     * @throws PersonNullException if the person in null
-     */
-    public void removePerson(Person person) throws PersonNullException;
-    
+
+    void addEnemy(Enemy enemy) throws PersonNullException;
+
+    void addPlayer(Player player);
+
+    void removeEnemy(Enemy enemy) throws PersonNullException;
+
+    void removePlayer(Player player);
+
     /**
      * Adds a new item to the division.
      * 
@@ -110,4 +102,6 @@ public interface Division {
      * @param target the division target
      */
     public void setTarget(Target target);
+
+    public Player getPlayer();
 }

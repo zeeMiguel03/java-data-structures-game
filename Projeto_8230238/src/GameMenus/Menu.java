@@ -11,11 +11,9 @@ import Collections.Queues.LinkedQueue;
 import Collections.Queues.QueueADT;
 import Collections.Stacks.LinkedStack;
 import Collections.Stacks.StackADT;
+import Game.Enums.typeItem;
 import Game.GameImpl.*;
-import Game.Interfaces.Building;
-import Game.Interfaces.Division;
-import Game.Interfaces.Mission;
-import Game.Interfaces.Player;
+import Game.Interfaces.*;
 import Game.Json.KeyNotFoundException;
 import org.json.simple.parser.ParseException;
 
@@ -179,11 +177,27 @@ public class Menu {
             }
 
             if (!divPlayer.getItemsInDivision().isEmpty()) {
-                System.out.println("[" + ++counter + "] Pegar Item!");
-                opcoes.enqueue("pegar");
+                boolean itemColete = false;
+                boolean itemKit = false;
+                for (Item item : divPlayer.getItemsInDivision()) {
+                    if (item.getType() == typeItem.VEST) {
+                        itemColete = true;
+                    }
+                    if (item.getType() == typeItem.KIT_LIFE) {
+                        itemKit = true;
+                    }
+                }
+
+                if (itemColete) {
+                    System.out.println("[" + ++counter + "] Equipar colete!");
+                    opcoes.enqueue("colete");
+                } else if (itemKit) {
+                    System.out.println("[" + ++counter + "] Pegar Kit!");
+                    opcoes.enqueue("pegar");
+                }
             }
 
-            if (player.getLife() < 100 && !player.getBackpack().isEmpty()) {
+            if (player.getLife() < player.getMaxLife() && !player.getBackpack().isEmpty()) {
                 System.out.println("[" + ++counter + "] Usar Kit Medico");
                 opcoes.enqueue("kit");
             }
@@ -191,6 +205,8 @@ public class Menu {
             if (divPlayer.isEntranceExit()) {
                 System.out.println("[" + ++counter + "] Sair do edificio/Missao!");
                 opcoes.enqueue("sair");
+                System.out.println("[" + ++counter + "] Continuar no edificio!");
+                opcoes.enqueue("continuar");
             }
 
             System.out.println("[0] Leave Game");
@@ -218,6 +234,14 @@ public class Menu {
 
             if (opcao != null) {
                 switch (opcao) {
+                    case "continuar":
+                        Manual.setContinuarNoEdificio();
+                        break;
+
+                    case "colete":
+                        player.useVest();
+                        break;
+
                     case "ataque":
                         player.atack();
                         break;

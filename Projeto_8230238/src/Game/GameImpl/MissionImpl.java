@@ -5,14 +5,10 @@
 package Game.GameImpl;
 
 import Collections.Exceptions.ElementNotFoundException;
-import Collections.Lists.LinkedUnorderedList;
 import Game.Exceptions.EndOfMissionException;
 import Game.Exceptions.InvalidEntranceException;
-import Game.Interfaces.Building;
-import Game.Interfaces.Division;
-import Game.Interfaces.Enemy;
-import Game.Interfaces.Mission;
-import Game.Interfaces.Person;
+import Game.Interfaces.*;
+
 import java.util.Scanner;
 
 /**
@@ -23,7 +19,7 @@ public class MissionImpl implements Mission {
     private String codMission;
     private int version;
     private Building building;
-    private Person player;
+    private Player player;
     private boolean missionStarted;
     
     /**
@@ -130,7 +126,7 @@ public class MissionImpl implements Mission {
      * @param player the player to set
      */
     @Override
-    public void setPlayer(Person player) {
+    public void setPlayer(Player player) {
         this.player = player;
     }
         
@@ -201,7 +197,7 @@ public class MissionImpl implements Mission {
 
                 if (division.getEntranceExit()) {
                     player.setDivision(division);
-                    division.addPerson(player);
+                    division.addPlayer(player);
                     validEntrance = true;
                 } else {
                     System.out.println("Invalid entrance. This division is not an entry. Try again.");
@@ -242,7 +238,7 @@ public class MissionImpl implements Mission {
         }
 
         player.setDivision(newDivision);
-        newDivision.addPerson(player);
+        newDivision.addPlayer(player);
     }
     
     /**

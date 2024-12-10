@@ -27,7 +27,7 @@ public class Game {
     private UnorderedListADT<Division> divisions;
     private Iterator<Division> iterator;
     private UnorderedListADT<Enemy> enemies;
-    private Person ToCruz;
+    private Player ToCruz;
 
     /**
      * Game class Constructor.
@@ -89,14 +89,14 @@ public class Game {
      */
     private void setEnemy() throws IOException, ParseException, KeyNotFoundException {
         JSONArray jArray = (JSONArray) JsonHandler.getFromFile("inimigos");
-        Person newEnemy;
+        Enemy newEnemy;
 
         for (Object enemiesJson : jArray) {
             JSONObject enemy = (JSONObject) enemiesJson;
             long poder = (long) enemy.get("poder");
 
             newEnemy = new EnemyImpl(enemy.get("nome").toString(), (int) poder, building.searchDivisionByName(enemy.get("divisao").toString()), 100);
-            building.searchDivisionByName(enemy.get("divisao").toString()).addPerson(newEnemy);
+            building.searchDivisionByName(enemy.get("divisao").toString()).addEnemy(newEnemy);
             enemies.addToRear((Enemy) newEnemy);
         }
 
@@ -233,10 +233,10 @@ public class Game {
 
     public void updatePlayer(Division division) {
         if (ToCruz.getDivision() != null) {
-            ToCruz.getDivision().removePerson(ToCruz);
+            ToCruz.getDivision().removePlayer(ToCruz);
         }
 
         ToCruz.setDivision(division);
-        division.addPerson(ToCruz);
+        division.addPlayer(ToCruz);
     }
 }
