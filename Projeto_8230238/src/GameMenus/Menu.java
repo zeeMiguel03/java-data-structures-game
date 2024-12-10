@@ -15,6 +15,7 @@ import Game.Enums.typeItem;
 import Game.GameImpl.*;
 import Game.Interfaces.*;
 import Game.Json.KeyNotFoundException;
+import Game.Reports.Reports;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
@@ -31,15 +32,18 @@ public class Menu {
     public Menu() {
     }
 
-    public void mainMenu(Game game) throws IOException, ParseException, KeyNotFoundException {
+    public void mainMenu() throws IOException, ParseException, KeyNotFoundException {
         int option;
         Scanner scanner = new Scanner(System.in);
         do {
+            Game game = new Game();
+            game.loadGame();
             option = 0;
 
             System.out.println("----------- Menu Mission -----------");
             System.out.println("|[1] Manual Mission                |");
             System.out.println("|[2] Automatic Mission             |");
+            System.out.println("|[3] Reports                       |");
             System.out.println("|[0] Leave Game                    |");
             System.out.println("------------------------------------");
             System.out.print("Option: ");
@@ -58,6 +62,8 @@ public class Menu {
                     break;
                 case 2:  
                     break;
+                case 3:
+                    Reports.printReports();
                 case 0:
                     System.out.println("Leaving...");
                     break;

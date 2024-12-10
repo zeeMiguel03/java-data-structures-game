@@ -23,6 +23,7 @@ import java.util.Iterator;
  * @author Miguel
  */
 public class Game {
+    Mission mission;
     private Building building;
     private UnorderedListADT<Division> divisions;
     private Iterator<Division> iterator;
@@ -41,6 +42,7 @@ public class Game {
         enemies = new LinkedUnorderedList<>();
         items = new LinkedUnorderedList<>();
         target = null;
+
     }
 
     /**
@@ -55,6 +57,7 @@ public class Game {
         setItems();
         setEnemy();
         setAlvo();
+        mission = new MissionImpl();
     }
 
     /**
@@ -167,30 +170,6 @@ public class Game {
     }
 
     /**
-     * Gets the version of the game from the JSON data.
-     * 
-     * @return the version number.
-     * @throws IOException if an I/O error occurs.
-     * @throws ParseException if a parsing error occurs.
-     * @throws KeyNotFoundException if a required key is not found in the JSON data.
-     */
-    private int getVersion() throws IOException, ParseException, KeyNotFoundException {
-        return JsonHandler.getInt("versao");
-    }
-
-    /**
-     * Gets the mission code from the JSON data.
-     * 
-     * @return the mission code.
-     * @throws IOException if an I/O error occurs.
-     * @throws ParseException if a parsing error occurs.
-     * @throws KeyNotFoundException if a required key is not found in the JSON data.
-     */
-    private String getCode() throws IOException, ParseException, KeyNotFoundException {
-        return (String) JsonHandler.getFromFile("cod-missao");
-    }
-
-    /**
      * Creates the divisions by reading from the JSON file and adding them to the building.
      * 
      * @throws IOException if an I/O error occurs.
@@ -262,5 +241,9 @@ public class Game {
             }
         }
 
+    }
+
+    public Mission getMission() {
+        return mission;
     }
 }

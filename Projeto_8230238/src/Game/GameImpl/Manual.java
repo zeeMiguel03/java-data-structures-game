@@ -9,6 +9,8 @@ import Game.Interfaces.Enemy;
 import Game.Interfaces.Item;
 import Game.Interfaces.Player;
 import Game.Json.KeyNotFoundException;
+import Game.Reports.Report;
+import Game.Reports.Reports;
 import GameMenus.Menu;
 import org.json.simple.parser.ParseException;
 
@@ -39,7 +41,7 @@ public class Manual {
         while (!isEndTrue) {
             informationsAboutDivision(game);
 
-            if (!player.getDivision().getEnemysInDivision().isEmpty() || !player.getDivision().getItemsInDivision().isEmpty() || player.getLife() < 100 && !player.getBackpack().isEmpty() || player.getDivision().isEntranceExit() && !continuarNoEdificio || player.getDivision().getTarget() != null) {
+            if (!player.getDivision().getEnemysInDivision().isEmpty() || !player.getDivision().getItemsInDivision().isEmpty() || player.getLife() < player.getMaxLife() && !player.getBackpack().isEmpty() || player.getDivision().isEntranceExit() && !continuarNoEdificio || player.getDivision().getTarget() != null) {
                 if (player.getLife() > 0) {
                     pegouKit = false;
                     menu.menuDuringFase(game);
@@ -54,18 +56,22 @@ public class Manual {
                     updateEnemy(game);
                 }
             } else {
-                updateEnemy(game);
-                informationsAboutDivision(game);
-                continuarNoEdificio = false;
-                pathDivisions.addToRear(player.getDivision().getName());
-                menu.menuChangeDivision(game, player.getDivision());
+                if (player.getLife() > 0) {
+                    updateEnemy(game);
+                    informationsAboutDivision(game);
+                    continuarNoEdificio = false;
+                    pathDivisions.addToRear(player.getDivision().getName());
+                    menu.menuChangeDivision(game, player.getDivision());
+                } else {
+                    setIsEndTrue();
+                }
             }
         }
-        if (player.getHaveTarget()) {
-            System.out.println("Bom trabalho to cruz");
-        } else {
-            System.out.println("O que anda a fazerrr!");
+        if (!player.getHaveTarget()) {
+            player.setLife(0);
         }
+        Reports reports = new Reports();
+        Reports.generateReport(game, game.getMission(), this);
     }
 
 
@@ -140,7 +146,9 @@ public class Manual {
         }
 
         for (Item item : game.getItems()) {
-            System.out.println("Item: " + item.getType() + " Pontos: " + item.getPoints() + " Division: " + item.getDivision().getName());
+            if (item.getDivision() != null) {
+                System.out.println("Item: " + item.getType() + " Pontos: " + item.getPoints() + " Division: " + item.getDivision().getName());
+            }
         }
 
         if (game.getTarget() != null && !game.getPlayer().getHaveTarget()) {
@@ -164,5 +172,9 @@ public class Manual {
             System.out.println("Tu estás na divisão do alvo ---> Alvo: " + game.getPlayer().getDivision().getTarget().getType());
         }
         System.out.println("Player: " + game.getPlayer().getName() + " Life: " + game.getPlayer().getLife());
+    }
+
+    public UnorderedListADT<String> getPathDivisions() {
+        return pathDivisions;
     }
 }

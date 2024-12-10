@@ -124,6 +124,7 @@ public class PlayerImpl extends PersonImpl implements Player {
                     backpack.push(item);
                 }
                 getDivision().removeItem(item);
+                item.setDivision(null);
             }
         }
     }
@@ -134,6 +135,7 @@ public class PlayerImpl extends PersonImpl implements Player {
             if (item.getType().equals(typeItem.VEST)) {
                 setLife(getLife() + item.getPoints());
                 getDivision().removeItem(item);
+                item.setDivision(null);
             }
         }
     }
