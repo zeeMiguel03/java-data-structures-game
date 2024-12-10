@@ -75,11 +75,12 @@ public class Menu {
     public void menuStartGame(Game game, boolean isManualOption) throws IOException, ParseException, KeyNotFoundException {
         boolean isManual = isManualOption;
         int option = 0;
-        BuildingImpl build = (BuildingImpl) game.getBuilding();
+        BuildingImpl build;
         QueueADT<Division> divisoes;
         Division division = null;
 
         do {
+            build = (BuildingImpl) game.getBuilding();
             System.out.println("----------- Menu Mission -----------");
             
             divisoes = build.printEntranceExit();
@@ -160,12 +161,16 @@ public class Menu {
 
     public void menuDuringFase(Game game) {
         int option = 0;
-        int counter = 0;
-        Division divPlayer = game.getPlayer().getDivision();
-        Player player = (Player) game.getPlayer();
-        QueueADT<String> opcoes = new LinkedQueue<>();
+        int counter;
+        Division divPlayer;
+        Player player;
+        QueueADT<String> opcoes;
 
         do {
+            divPlayer = game.getPlayer().getDivision();
+            player =  (Player) game.getPlayer();
+            counter = 0;
+            opcoes = new LinkedQueue<>();
             System.out.println("----------- Menu Mission -----------");
 
             if (!divPlayer.getEnemysInDivision().isEmpty()) {
@@ -205,8 +210,10 @@ public class Menu {
             }
 
             String opcao = null;
-            for (int i = 0; i < option; i++) {
-                opcao = opcoes.dequeue();
+            if (option <= counter && option > 0) {
+                for (int i = 0; i < option; i++) {
+                    opcao = opcoes.dequeue();
+                }
             }
 
             if (opcao != null) {
