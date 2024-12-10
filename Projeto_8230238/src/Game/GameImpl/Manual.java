@@ -61,6 +61,11 @@ public class Manual {
                 menu.menuChangeDivision(game, player.getDivision());
             }
         }
+        if (player.getHaveTarget()) {
+            System.out.println("Bom trabalho to cruz");
+        } else {
+            System.out.println("O que anda a fazerrr!");
+        }
     }
 
 
