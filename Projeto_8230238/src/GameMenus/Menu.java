@@ -112,7 +112,7 @@ public class Menu {
                 System.out.println("Invalid option. Please select a valid option.");
             }
 
-        } while (option < 0 && option > divisoes.size());
+        } while (option < 0 || option > divisoes.size());
     }
 
     public void menuChangeDivision(Game game, Division division) {
@@ -154,7 +154,7 @@ public class Menu {
                 System.out.println("Invalid option. Please select a valid option.");
             }
             
-        } while (option < 0 && option > divisoes.size());
+        } while (option < 0 || option > divisoes.size());
 
     }
 
@@ -231,6 +231,6 @@ public class Menu {
             }
 
 
-        } while (option < 0 && option > counter);
+        } while (option < 0 || option > counter);
     }
 }
