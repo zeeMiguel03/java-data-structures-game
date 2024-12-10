@@ -1,16 +1,20 @@
 package Game;
 
+import Game.GameImpl.Game;
 import GameMenus.Menu;
 
 
 public class main {
-    static Menu menu = new Menu();
-
+    static Menu menu;
     public static void main(String[] args) {
+        Game game = new Game();
         try {
-            menu.mainMenu();
+            game.loadGame();
+            menu = new Menu();
+            menu.mainMenu(game);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println(e.getMessage() + "!");
+            e.printStackTrace();
         }
     }
 }

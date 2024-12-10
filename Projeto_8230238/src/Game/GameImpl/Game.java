@@ -24,20 +24,28 @@ import java.util.Iterator;
  */
 public class Game {
     private Building building;
-    private Mission mission;
     private UnorderedListADT<Division> divisions;
     private Iterator<Division> iterator;
+    private UnorderedListADT<Enemy> enemies;
     private Person ToCruz;
 
-
+    /**
+     * Game class Constructor.
+     */
     public Game() {
-        mission = null;
-        ToCruz = null;
+        ToCruz = new PlayerImpl(null);
         building = new BuildingImpl();
         divisions = new LinkedUnorderedList<>();
-        new LinkedUnorderedList<>();
+        enemies = new LinkedUnorderedList<>();
     }
 
+    /**
+     * Loads the game data.
+     * 
+     * @throws IOException if an I/O error occurs
+     * @throws ParseException if a parsing error occurs
+     * @throws KeyNotFoundException if a required key is not found in the JSON data
+     */
     public void loadGame() throws IOException, ParseException, KeyNotFoundException {
         setBuilding();
         setItems();
@@ -45,6 +53,13 @@ public class Game {
         setAlvo();
     }
 
+    /**
+     * Sets the items in the game by reading from a JSON file and placing them in the correct divisions.
+     * 
+     * @throws IOException if an I/O error occurs.
+     * @throws ParseException if a parsing error occurs.
+     * @throws KeyNotFoundException if a required key is not found in the JSON data.
+     */
     private void setItems() throws IOException, ParseException, KeyNotFoundException {
         JSONArray jArray = (JSONArray) JsonHandler.getFromFile("itens");
         Item mewItem;
@@ -65,20 +80,35 @@ public class Game {
 
     }
 
+    /**
+     * Sets the enemies in the game by reading from a JSON file and placing them in the correct divisions.
+     * 
+     * @throws IOException if an I/O error occurs.
+     * @throws ParseException if a parsing error occurs.
+     * @throws KeyNotFoundException if a required key is not found in the JSON data.
+     */
     private void setEnemy() throws IOException, ParseException, KeyNotFoundException {
         JSONArray jArray = (JSONArray) JsonHandler.getFromFile("inimigos");
         Person newEnemy;
 
-        for (Object enemies : jArray) {
-            JSONObject enemy = (JSONObject) enemies;
+        for (Object enemiesJson : jArray) {
+            JSONObject enemy = (JSONObject) enemiesJson;
             long poder = (long) enemy.get("poder");
 
             newEnemy = new EnemyImpl(enemy.get("nome").toString(), (int) poder, building.searchDivisionByName(enemy.get("divisao").toString()), 100);
             building.searchDivisionByName(enemy.get("divisao").toString()).addPerson(newEnemy);
+            enemies.addToRear((Enemy) newEnemy);
         }
 
     }
 
+    /**
+     * Sets up the building layout by creating divisions and their connections.
+     * 
+     * @throws IOException if an I/O error occurs.
+     * @throws ParseException if a parsing error occurs.
+     * @throws KeyNotFoundException if a required key is not found in the JSON data.
+     */
     private void setBuilding() throws IOException, ParseException, KeyNotFoundException {
         JSONArray ligacoes = (JSONArray) JsonHandler.getFromFile("ligacoes");
 
@@ -103,6 +133,13 @@ public class Game {
         }
     }
 
+    /**
+     * Sets the target in the game by reading from a JSON file and placing it in the correct division.
+     * 
+     * @throws IOException if an I/O error occurs.
+     * @throws ParseException if a parsing error occurs.
+     * @throws KeyNotFoundException if a required key is not found in the JSON data.
+     */
     private void setAlvo() throws IOException, ParseException, KeyNotFoundException {
         JSONObject alvo = (JSONObject) JsonHandler.getFromFile("alvo");
         Division alvoDivision = building.searchDivisionByName((String) alvo.get("divisao"));
@@ -123,29 +160,37 @@ public class Game {
         alvoDivision.setTarget(alvoImpl);
     }
 
-    public void startGame(Boolean isManual, Division divisionPlayer) {
-        ToCruz = new PlayerImpl(divisionPlayer);
-        divisionPlayer.addPerson(ToCruz);
-
-        if (isManual) {
-            return;
-        } else {
-            return;
-        }
-    }
-
-    public Building getBuilding() {
-        return building;
-    }
-
+    /**
+     * Gets the version of the game from the JSON data.
+     * 
+     * @return the version number.
+     * @throws IOException if an I/O error occurs.
+     * @throws ParseException if a parsing error occurs.
+     * @throws KeyNotFoundException if a required key is not found in the JSON data.
+     */
     private int getVersion() throws IOException, ParseException, KeyNotFoundException {
         return JsonHandler.getInt("versao");
     }
 
+    /**
+     * Gets the mission code from the JSON data.
+     * 
+     * @return the mission code.
+     * @throws IOException if an I/O error occurs.
+     * @throws ParseException if a parsing error occurs.
+     * @throws KeyNotFoundException if a required key is not found in the JSON data.
+     */
     private String getCode() throws IOException, ParseException, KeyNotFoundException {
         return (String) JsonHandler.getFromFile("cod-missao");
     }
 
+    /**
+     * Creates the divisions by reading from the JSON file and adding them to the building.
+     * 
+     * @throws IOException if an I/O error occurs.
+     * @throws ParseException if a parsing error occurs.
+     * @throws KeyNotFoundException if a required key is not found in the JSON data.
+     */
     private void createDivisions() throws IOException, ParseException, KeyNotFoundException {
         JSONArray divisionsJson = (JSONArray) JsonHandler.getFromFile("edificio");
         JSONArray entryExits = (JSONArray) JsonHandler.getFromFile("entradas-saidas");
@@ -162,5 +207,36 @@ public class Game {
             divisions.addToFront(div);
             building.addDivision(div);
         }
+    }
+    
+    public void startGame(Boolean isManual) throws IOException, ParseException, KeyNotFoundException {
+
+        if (isManual) {
+            Manual manual = new Manual();
+            manual.startGameManual(this);
+        } else {
+            return;
+        }
+    }
+
+    public Building getBuilding() {
+        return building;
+    }
+    
+    public Person getPlayer() {
+        return ToCruz;
+    }
+
+    public UnorderedListADT<Enemy> getEnemies() {
+        return enemies;
+    }
+
+    public void updatePlayer(Division division) {
+        if (ToCruz.getDivision() != null) {
+            ToCruz.getDivision().removePerson(ToCruz);
+        }
+
+        ToCruz.setDivision(division);
+        division.addPerson(ToCruz);
     }
 }

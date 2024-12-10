@@ -5,6 +5,8 @@
 package Game.GameImpl;
 
 import Collections.Exceptions.ElementNotFoundException;
+import Collections.Queues.LinkedQueue;
+import Collections.Queues.QueueADT;
 import Game.Exceptions.DivisionNullException;
 import Game.Interfaces.Building;
 import Game.Interfaces.Division;
@@ -82,6 +84,7 @@ public class BuildingImpl implements Building {
             firstDivision = division;
         }
 
+
         divisions.addVertex(division);
     }
 
@@ -151,37 +154,50 @@ public class BuildingImpl implements Building {
 
     /**
      * This method print the divisions that are a entrance or a exit.
+     * 
+     * @return the queue of divisions.
      */
     @Override
-    public void printEntranceExit() {
+    public QueueADT<Division> printEntranceExit() {
+        int counter = 0;
+        QueueADT<Division> queueDivisions = new LinkedQueue<>();
+        
         Iterator<Division> iterator = divisions.iteratorBFS(firstDivision);
-
-        System.out.println("\nEntrace or exit Divisions:");
 
         while (iterator.hasNext()) {
             Division currentDivision = iterator.next();
 
             if (currentDivision.getEntranceExit()) {
-                System.out.print(currentDivision.getName() + " " + "\n");
+                System.out.println("[" + ++counter + "] " + currentDivision.getName());
+                queueDivisions.enqueue(currentDivision);
             }
         }
+        
+        return queueDivisions;
     }
 
     /**
      * This method print the divisions with adjacent to a specific division.
      *
      * @param division the division to search adjacent
+     * @return 
      */
     @Override
-    public void printNextDivisions(Division division) {
+    public QueueADT<Division> printNextDivisions(Division division) {
+        int counter = 0;
+        QueueADT<Division> queueDivisions = new LinkedQueue<>();
+        
         Iterator<Division> iterator = divisions.iteratorAdjacent(division);
 
         System.out.println("\nConnect Divisions:");
 
         while (iterator.hasNext()) {
             Division currentDivision = iterator.next();
-            System.out.print(currentDivision.getName() + " " + "\n");
+            System.out.println("[" + ++counter + "] " + currentDivision.getName());
+            queueDivisions.enqueue(currentDivision);
         }
+        
+        return queueDivisions;
     }
 
     /**

@@ -9,6 +9,7 @@ import Collections.Exceptions.EmptyCollectionException;
 import Collections.Lists.ArrayUnorderedList;
 import Collections.Queues.LinkedQueue;
 import Collections.Stacks.LinkedStack;
+
 import java.util.Iterator;
 
 /**
@@ -99,7 +100,7 @@ public class Graph<T> implements GraphADT<T> {
      * @param vertex the vertex to search
      * @return the index of the vertex if it was found, -1 otherwise.
      */
-    protected int getIndex(T vertex) { 
+    protected int getIndex(T vertex) {
         for (int i = 0; i < numVertices; i++) {
             if (vertices[i].equals(vertex)) {
                 return i;
@@ -169,7 +170,7 @@ public class Graph<T> implements GraphADT<T> {
      * Returns an iterator that performs a breadth first search
      * traversal starting at the given index.
      *
-     * @param startVertex the index to begin the search from
+     * @param startIndex the index to begin the search from
      * @return an iterator that performs a breadth first traversal
      */
     private Iterator<T> iteratorBFS(int startIndex) {

@@ -8,6 +8,7 @@ import Collections.Exceptions.ElementNotFoundException;
 import Collections.Graph.Network;
 import Collections.Lists.ArrayUnorderedList;
 import Collections.Lists.UnorderedListADT;
+import Game.Interfaces.Division;
 import Game.Interfaces.GameNetworkADT;
 import java.util.Iterator;
 
@@ -31,11 +32,11 @@ public class GameNetwork<T> extends Network<T> implements GameNetworkADT<T> {
      * @return the connections
      */
     @Override
-    public Iterator<T> iteratorAdjacent(T vertex) { 
+    public Iterator<T> iteratorAdjacent(T vertex) {
         int index = getIndex(vertex);
 
         if (!indexIsValid(index)) {
-            return new ArrayUnorderedList<T>().iterator();
+            throw new ElementNotFoundException("Invalid Index");
         }
 
         UnorderedListADT<T> adjacentVertices = new ArrayUnorderedList<>();

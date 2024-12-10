@@ -217,4 +217,13 @@ public class DivisionImpl implements Division {
     public void setTarget(Target target) {
         this.target = target;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        DivisionImpl other = (DivisionImpl) obj;
+
+        return this.name.equals(other.name);
+    }
 }

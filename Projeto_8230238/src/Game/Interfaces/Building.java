@@ -9,6 +9,7 @@ package Game.Interfaces;
  */
 
 import Collections.Exceptions.ElementNotFoundException;
+import Collections.Queues.QueueADT;
 import Game.Exceptions.DivisionNullException;
 
 /**
@@ -82,15 +83,17 @@ public interface Building {
 
     /**
      * This method print the divisions that are a entrance or a exit.
+     * 
+     * @return the queue of divisions.
      */
-    public void printEntranceExit();
+    public QueueADT<Division> printEntranceExit();
 
     /**
      * This method print the divisions with adjacent to a specific division.
      *
      * @param division the division to search adjacent
      */
-    public void printNextDivisions(Division division);
+    public QueueADT<Division> printNextDivisions(Division division);
 
     /**
      * Searchs for a specific division.

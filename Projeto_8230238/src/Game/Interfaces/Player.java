@@ -9,7 +9,7 @@ import Collections.Stacks.StackADT;
 /**
  * @author Miguel Rocha
  */
-public interface Player {
+public interface Player extends Person{
 
     /**
      * Returns the player backpack.
