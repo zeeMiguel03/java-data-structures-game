@@ -11,6 +11,8 @@ import Collections.Stacks.StackADT;
  */
 public interface Player extends Person{
 
+    void setHaveTarget();
+
     /**
      * Returns the player backpack.
      *
@@ -31,13 +33,6 @@ public interface Player extends Person{
      * @return return if the player have the target
      */
     public boolean getHaveTarget();
-
-    /**
-     * Sets if the player have the target or not
-     *
-     * @param haveTarget true or false
-     */
-    public void setHaveTarget(boolean haveTarget);
 
     /**
      * Use the last item of the backpack.

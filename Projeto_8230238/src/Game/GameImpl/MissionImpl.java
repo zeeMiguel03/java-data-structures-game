@@ -163,7 +163,7 @@ public class MissionImpl implements Mission {
                     
                     PlayerImpl playerImpl = (PlayerImpl) player;
                     
-                    playerImpl.setHaveTarget(true);
+                    playerImpl.setHaveTarget();
                 }
                 
             }

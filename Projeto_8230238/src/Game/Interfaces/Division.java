@@ -104,4 +104,5 @@ public interface Division {
     public void setTarget(Target target);
 
     public Player getPlayer();
+
 }

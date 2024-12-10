@@ -118,6 +118,7 @@ public class Menu {
         int option = 0;
 
         QueueADT<Division> divisoes;
+        int divisoesSize = 0;
         
         do {
             System.out.println("----------- Menu Mission -----------");
@@ -142,7 +143,8 @@ public class Menu {
                     break;
             }
             
-            if (option > 0 && option <= divisoes.size()) {
+            divisoesSize = divisoes.size();
+            if (option > 0 && option <= divisoesSize) {
                 for (int i = 0; i < option; i++) {
                     division = divisoes.dequeue();
                 }
@@ -153,7 +155,7 @@ public class Menu {
                 System.out.println("Invalid option. Please select a valid option.");
             }
             
-        } while (option < 0 || option > divisoes.size());
+        } while (option < 0 || option > divisoesSize);
 
     }
 
@@ -202,11 +204,16 @@ public class Menu {
                 opcoes.enqueue("kit");
             }
 
-            if (divPlayer.isEntranceExit()) {
+            if (divPlayer.isEntranceExit() && player.getDivision().getEnemysInDivision().isEmpty()) {
                 System.out.println("[" + ++counter + "] Sair do edificio/Missao!");
                 opcoes.enqueue("sair");
                 System.out.println("[" + ++counter + "] Continuar no edificio!");
                 opcoes.enqueue("continuar");
+            }
+
+            if(divPlayer.getTarget() != null && !player.getHaveTarget()) {
+                System.out.println("[" + ++counter + "] Pegar Alvo!");
+                opcoes.enqueue("alvo");
             }
 
             System.out.println("[0] Leave Game");
@@ -234,6 +241,12 @@ public class Menu {
 
             if (opcao != null) {
                 switch (opcao) {
+                    case "alvo":
+                        player.setHaveTarget();
+                        player.getDivision().getTarget().setDivision(null);
+                        player.getDivision().setTarget(null);
+                        break;
+
                     case "continuar":
                         Manual.setContinuarNoEdificio();
                         break;
@@ -248,6 +261,7 @@ public class Menu {
 
                     case "pegar":
                         player.pickItem();
+                        Manual.setPegouKit();
                         break;
 
                     case "kit":

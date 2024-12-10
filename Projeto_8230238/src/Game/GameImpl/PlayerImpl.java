@@ -60,8 +60,8 @@ public class PlayerImpl extends PersonImpl implements Player {
      * @param haveTarget true or false
      */
     @Override
-    public void setHaveTarget(boolean haveTarget) {
-        this.haveTarget = haveTarget;
+    public void setHaveTarget() {
+        haveTarget = true;
     }
     
     /**

@@ -8,7 +8,6 @@ import Collections.Exceptions.ElementNotFoundException;
 import Collections.Graph.Network;
 import Collections.Lists.ArrayUnorderedList;
 import Collections.Lists.UnorderedListADT;
-import Game.Interfaces.Division;
 import Game.Interfaces.GameNetworkADT;
 import java.util.Iterator;
 
@@ -67,5 +66,27 @@ public class GameNetwork<T> extends Network<T> implements GameNetworkADT<T> {
         }
 
         return adjMatrix[index1][index2] != Double.POSITIVE_INFINITY;
+    }
+
+    @Override
+    public int getDistance(T whereStartVertex, T whereEndVertex) {
+        int startIndex = getIndex(whereEndVertex);
+        int targetIndex = getIndex(whereEndVertex);
+        int counter = 0;
+
+        if (startIndex == -1 || targetIndex == -1) {
+            return -1;
+        }
+
+        Iterator bf = iteratorBFS(whereStartVertex);
+
+        while (bf.hasNext()) {
+            T vertex = (T) bf.next();
+            counter++;
+            if (vertex.equals(whereEndVertex)) {
+                break;
+            }
+        }
+        return counter;
     }
 }

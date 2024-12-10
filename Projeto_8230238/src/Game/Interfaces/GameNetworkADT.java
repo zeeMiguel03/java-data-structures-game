@@ -28,4 +28,6 @@ public interface GameNetworkADT<T> extends NetworkADT<T> {
      * @return true if they are connected, false otherwise
      */
     public boolean verifyConnection(T vertex1, T vertex2);
+
+    int getDistance(T whereStartVertex, T whereEndVertex);
 }

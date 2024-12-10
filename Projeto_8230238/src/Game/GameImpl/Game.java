@@ -26,8 +26,10 @@ public class Game {
     private Building building;
     private UnorderedListADT<Division> divisions;
     private Iterator<Division> iterator;
+    private UnorderedListADT<Item> items;
     private UnorderedListADT<Enemy> enemies;
     private Player ToCruz;
+    private Target target;
 
     /**
      * Game class Constructor.
@@ -37,6 +39,8 @@ public class Game {
         building = new BuildingImpl();
         divisions = new LinkedUnorderedList<>();
         enemies = new LinkedUnorderedList<>();
+        items = new LinkedUnorderedList<>();
+        target = null;
     }
 
     /**
@@ -76,6 +80,7 @@ public class Game {
                 mewItem = new ItemImpl(typeItem.VEST, (int)pontosExtra, building.searchDivisionByName(item.get("divisao").toString()));
                 building.searchDivisionByName(item.get("divisao").toString()).addItem(mewItem);
             }
+            items.addToRear(mewItem);
         }
 
     }
@@ -158,6 +163,7 @@ public class Game {
         }
 
         alvoDivision.setTarget(alvoImpl);
+        target = alvoImpl;
     }
 
     /**
@@ -223,7 +229,7 @@ public class Game {
         return building;
     }
     
-    public Person getPlayer() {
+    public Player getPlayer() {
         return ToCruz;
     }
 
@@ -238,5 +244,23 @@ public class Game {
 
         ToCruz.setDivision(division);
         division.addPlayer(ToCruz);
+    }
+
+    public UnorderedListADT<Item> getItems() {
+        return items;
+    }
+
+    public Target getTarget() {
+        return target;
+    }
+
+    public void removeEnemy(Enemy enemy) {
+        Iterator enemiesIterator = enemies.iterator();
+        while (enemiesIterator.hasNext()) {
+            if (enemiesIterator.next().equals(enemy)) {
+                enemiesIterator.remove();
+            }
+        }
+
     }
 }

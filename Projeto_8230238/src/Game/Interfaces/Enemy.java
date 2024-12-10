@@ -10,4 +10,5 @@ package Game.Interfaces;
  */
 public interface Enemy extends Person{
 
+    Division getInicialDivision();
 }
