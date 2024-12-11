@@ -23,7 +23,7 @@ import java.util.Iterator;
  * @author Miguel
  */
 public class Game {
-    Mission mission;
+    private Mission mission;
     private Building building;
     private UnorderedListADT<Division> divisions;
     private Iterator<Division> iterator;
@@ -228,7 +228,7 @@ public class Game {
 
         if (isManual) {
             Manual manual = new Manual();
-            manual.startGameManual(this);
+            manual.startGameManual(this, getMission());
         } else {
             return;
         }

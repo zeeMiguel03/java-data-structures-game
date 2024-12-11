@@ -219,5 +219,16 @@ public class LinkedHeap<T> extends LinkedBinaryTree<T>  implements HeapADT<T>  {
 
         return root.getElement();
     }
+
+    /**
+     * This method was taken from the internet on the user's github https://github.com/joaopsoliveira03.
+     *
+     * Source: https://github.com/joaopsoliveira03-school/estg-ed/blob/main/src/main/java/Collections/Trees/LinkedHeap.java
+     */
+    public void removeAllElements() {
+        root = null;
+        lastNode = null;
+        count = 0;
+    }
 }
 

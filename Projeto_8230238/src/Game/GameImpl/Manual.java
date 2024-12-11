@@ -4,30 +4,22 @@ import Collections.Lists.LinkedUnorderedList;
 import Collections.Lists.UnorderedListADT;
 import Collections.Queues.LinkedQueue;
 import Collections.Queues.QueueADT;
-import Game.Interfaces.Division;
-import Game.Interfaces.Enemy;
-import Game.Interfaces.Item;
-import Game.Interfaces.Player;
-import Game.Json.KeyNotFoundException;
-import Game.Reports.Report;
+import Game.Enums.typeItem;
+import Game.Interfaces.*;
 import Game.Reports.Reports;
 import GameMenus.Menu;
-import org.json.simple.parser.ParseException;
-
-import java.io.IOException;
 import java.util.Iterator;
-import java.util.Queue;
 import java.util.Random;
 
 public class Manual {
     private Menu menu;
-    private static boolean isEndTrue;
-    private static boolean continuarNoEdificio;
-    private static boolean pegouKit;
+    private boolean isEndTrue;
+    private boolean continuarNoEdificio;
+    private boolean pegouKit;
     private UnorderedListADT<String> pathDivisions;
 
 
-    public Manual() throws IOException, ParseException, KeyNotFoundException {
+    public Manual() {
         menu = new Menu();
         isEndTrue = false;
         continuarNoEdificio = false;
@@ -35,8 +27,9 @@ public class Manual {
         pathDivisions = new LinkedUnorderedList<>();
     }
 
-    public void startGameManual(Game game)  {
+    public void startGameManual(Game game, Mission mission)  {
         Player player = game.getPlayer();
+        pathDivisions.addToRear(player.getDivision().getName());
 
         while (!isEndTrue) {
             informationsAboutDivision(game);
@@ -49,6 +42,7 @@ public class Manual {
                     game.getBuilding().updateConnections(player);
                     enemyAtack(player.getDivision());
                 }
+
             } else if (player.getDivision().getEnemysInDivision().isEmpty() && !player.getDivision().getItemsInDivision().isEmpty() || player.getLife() < player.getMaxLife() && !player.getBackpack().isEmpty() || player.getDivision().isEntranceExit() && !continuarNoEdificio || player.getDivision().getTarget() != null) {
                 menu.menuDuringFase(game, this);
 
@@ -63,6 +57,7 @@ public class Manual {
                 updateEnemy(game);
                 game.getBuilding().updateConnections(player);
                 menu.menuChangeDivision(game, player.getDivision(), this);
+                pathDivisions.addToRear(player.getDivision().getName());
             }
 
             if (player.getLife() <= 0) {
@@ -72,7 +67,7 @@ public class Manual {
         if (!player.getHaveTarget()) {
             player.setLife(0);
         }
-        Reports.generateReport(game, game.getMission(), this);
+        Reports.generateReport(game, mission, this);
     }
 
 
@@ -90,9 +85,6 @@ public class Manual {
 
     private void enemyAtack(Division division) {
         for (Enemy enemy : division.getEnemysInDivision()) {
-            if (enemy.getLife() < 0) {
-                division.removeEnemy(enemy);
-            }
             enemy.atack();
         }
     }
@@ -125,10 +117,10 @@ public class Manual {
                         }
 
                         int nDequeu = rd.nextInt((counter - 1) + 1) + 1;
+
                         for (int i = 0; i < nDequeu; i++) {
                             divisionEnemyToGO = divisionsAdj.dequeue();
                         }
-
 
                         enemy.getDivision().removeEnemy(enemy);
                         enemy.setDivision(divisionEnemyToGO);
@@ -155,7 +147,64 @@ public class Manual {
         if (game.getTarget() != null && !game.getPlayer().getHaveTarget()) {
             System.out.println("Alvo: " + game.getTarget().getType() + " Division: " + game.getTarget().getDivision().getName());
         }
-        System.out.println("--------------------------------------------------");
+
+        System.out.println("\n\n----------------Shortest Path---------------------");
+        Iterator shortestPath = game.getBuilding().getDivisions().iteratorShortestPath(game.getPlayer().getDivision(), game.getTarget().getDivision());
+        Iterator shortestPathToKit = null;
+        Item itemMaisProximo = null;
+        int distancia = 0;
+
+        for (Item item : game.getItems()) {
+            if (item.getDivision() == null) {
+                continue;
+            }
+
+            if (item.getType() == typeItem.KIT_LIFE){
+                if (itemMaisProximo == null) {
+                    itemMaisProximo = item;
+                    distancia = game.getBuilding().getDivisions().getDistance(game.getPlayer().getDivision(), item.getDivision());
+                } else {
+                    int distanciaTmp = game.getBuilding().getDivisions().getDistance(game.getPlayer().getDivision(), item.getDivision());
+
+                    if (distanciaTmp < distancia) {
+                        distancia = distanciaTmp;
+                        itemMaisProximo = item;
+                    }
+                }
+            }
+        }
+        if (itemMaisProximo != null) {
+            shortestPathToKit = game.getBuilding().getDivisions().iteratorShortestPath(game.getPlayer().getDivision(), itemMaisProximo.getDivision());
+        }
+
+        System.out.print("Shortest Path to Target: ");
+        while (shortestPath.hasNext()) {
+            Division div = (Division) shortestPath.next();
+            System.out.print(div.getName());
+
+            if (shortestPath.hasNext()) {
+                System.out.print(" ---> ");
+            }
+        }
+        if (game.getPlayer().getHaveTarget()) {
+            System.out.print("Already Have Target!");
+        }
+
+        System.out.print("\nShortest Path to kit: ");
+        if (shortestPathToKit == null) {
+            System.out.print("No path to kit!");
+        } else {
+            while (shortestPathToKit.hasNext()) {
+                Division div = (Division) shortestPathToKit.next();
+                System.out.print(div.getName());
+
+                if (shortestPathToKit.hasNext()) {
+                    System.out.print(" ---> ");
+                }
+            }
+        }
+
+        System.out.println("\n--------------------------------------------------\n\n");
 
         if (!game.getPlayer().getDivision().getEnemysInDivision().isEmpty()) {
             for (Enemy enemy : game.getPlayer().getDivision().getEnemysInDivision()) {

@@ -29,6 +29,7 @@ public class Menu {
 
     Scanner scanner = new Scanner(System.in);
 
+
     public Menu() {
     }
 
@@ -44,6 +45,7 @@ public class Menu {
             System.out.println("|[1] Manual Mission                |");
             System.out.println("|[2] Automatic Mission             |");
             System.out.println("|[3] Reports                       |");
+            System.out.println("|[4] Export Data                   |");
             System.out.println("|[0] Leave Game                    |");
             System.out.println("------------------------------------");
             System.out.print("Option: ");
@@ -51,9 +53,9 @@ public class Menu {
             try {
                 option = scanner.nextInt();
             } catch (InputMismatchException e) {
-                System.out.println("Invalid character!");
+                System.out.println("Invalid option!");
+                mainMenu();
                 scanner.next();
-                continue;
             }
             
             switch (option) {
@@ -64,6 +66,8 @@ public class Menu {
                     break;
                 case 3:
                     Reports.printReports();
+                case 4:
+                    Reports.exportPathInSimulation();
                 case 0:
                     System.out.println("Leaving...");
                     break;
@@ -97,8 +101,8 @@ public class Menu {
                 option = scanner.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("Invalid character!");
+                menuStartGame(game, isManualOption);
                 scanner.next();
-                continue;
             }
 
             switch (option) {
@@ -140,8 +144,8 @@ public class Menu {
                 option = scanner.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("Invalid character!");
+                menuChangeDivision(game, division, manual);
                 scanner.next();
-                continue;
             }
 
 
@@ -157,7 +161,7 @@ public class Menu {
                 manual.setIsEndTrue();
                 System.out.println("Leaving...");
 
-            }else {
+            } else {
                 System.out.println("Invalid option. Please select a valid option.");
             }
 
@@ -231,8 +235,8 @@ public class Menu {
                 option = scanner.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("Invalid character!");
+                menuDuringFase(game, manual);
                 scanner.next();
-                continue;
             }
 
             if (option == 0) {

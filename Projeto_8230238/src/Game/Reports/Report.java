@@ -25,6 +25,10 @@ public class Report implements Comparable<Report>{
         this.lifePlayer = lifePlayer;
     }
 
+    public int getIdSimulation() {
+        return idSimulation;
+    }
+
     public String getCodMission() {
         return codMission;
     }
@@ -49,7 +53,7 @@ public class Report implements Comparable<Report>{
         return enemiesKilled;
     }
 
-    public int getItmsPicked() {
+    public int getItemsPicked() {
         return itemsPicked;
     }
 
