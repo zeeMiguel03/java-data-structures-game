@@ -36,14 +36,13 @@ public class Manual {
     }
 
     public void startGameManual(Game game)  {
-        Player player = (Player) game.getPlayer();
+        Player player = game.getPlayer();
 
         while (!isEndTrue) {
             informationsAboutDivision(game);
-            System.out.println(game.getBuilding().getDivisions().toString());
 
             if (!player.getDivision().getEnemysInDivision().isEmpty()) {
-                menu.menuDuringFase(game);
+                menu.menuDuringFase(game, this);
 
                 if (!player.getDivision().getEnemysInDivision().isEmpty() && !pegouKit && !continuarNoEdificio) {
                     updateEnemy(game);
@@ -51,7 +50,7 @@ public class Manual {
                     enemyAtack(player.getDivision());
                 }
             } else if (player.getDivision().getEnemysInDivision().isEmpty() && !player.getDivision().getItemsInDivision().isEmpty() || player.getLife() < player.getMaxLife() && !player.getBackpack().isEmpty() || player.getDivision().isEntranceExit() && !continuarNoEdificio || player.getDivision().getTarget() != null) {
-                menu.menuDuringFase(game);
+                menu.menuDuringFase(game, this);
 
 
                 if (!pegouKit && !continuarNoEdificio) {
@@ -63,7 +62,7 @@ public class Manual {
                 continuarNoEdificio = false;
                 updateEnemy(game);
                 game.getBuilding().updateConnections(player);
-                menu.menuChangeDivision(game, player.getDivision());
+                menu.menuChangeDivision(game, player.getDivision(), this);
             }
 
             if (player.getLife() <= 0) {
@@ -77,15 +76,15 @@ public class Manual {
     }
 
 
-    public static void setIsEndTrue() {
+    public void setIsEndTrue() {
         isEndTrue = true;
     }
 
-    public static void setContinuarNoEdificio() {
+    public void setContinuarNoEdificio() {
         continuarNoEdificio = true;
     }
 
-    public static void setPegouKit() {
+    public void setPegouKit() {
         pegouKit = true;
     }
 

@@ -8,7 +8,6 @@ import GameMenus.Menu;
 public class main {
     static Menu menu;
     public static void main(String[] args) {
-        Reports reports = new Reports();
         try {
             menu = new Menu();
             menu.mainMenu();

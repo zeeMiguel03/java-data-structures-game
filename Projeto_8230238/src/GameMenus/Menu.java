@@ -121,7 +121,7 @@ public class Menu {
         } while (option < 0 || option > nDivisoesInDivision);
     }
 
-    public void menuChangeDivision(Game game, Division division) {
+    public void menuChangeDivision(Game game, Division division, Manual manual) {
         int option = 0;
 
         QueueADT<Division> divisoes;
@@ -154,7 +154,7 @@ public class Menu {
                 game.updatePlayer(division);
                 
             } else if (option == 0) {
-                Manual.setIsEndTrue();
+                manual.setIsEndTrue();
                 System.out.println("Leaving...");
 
             }else {
@@ -166,7 +166,7 @@ public class Menu {
 
     }
 
-    public void menuDuringFase(Game game) {
+    public void menuDuringFase(Game game, Manual manual) {
         int option = 0;
         int counter;
         Division divPlayer;
@@ -236,7 +236,7 @@ public class Menu {
             }
 
             if (option == 0) {
-                Manual.setIsEndTrue();
+                manual.setIsEndTrue();
             }
 
             String opcao = null;
@@ -255,7 +255,7 @@ public class Menu {
                         break;
 
                     case "continuar":
-                        Manual.setContinuarNoEdificio();
+                        manual.setContinuarNoEdificio();
                         break;
 
                     case "colete":
@@ -268,7 +268,7 @@ public class Menu {
 
                     case "pegar":
                         player.pickItem();
-                        Manual.setPegouKit();
+                        manual.setPegouKit();
                         break;
 
                     case "kit":
@@ -276,7 +276,7 @@ public class Menu {
                         break;
 
                     case "sair":
-                        Manual.setIsEndTrue();
+                        manual.setIsEndTrue();
                         break;
 
                 }
