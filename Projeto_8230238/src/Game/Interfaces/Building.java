@@ -103,4 +103,6 @@ public interface Building {
      * @throws ElementNotFoundException if the division was not found
      */
     public Division searchDivisionByName(String name) throws ElementNotFoundException;
+
+    void updateConnections(Player player);
 }

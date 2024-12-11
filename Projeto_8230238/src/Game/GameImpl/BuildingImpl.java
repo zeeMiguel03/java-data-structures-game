@@ -8,9 +8,8 @@ import Collections.Exceptions.ElementNotFoundException;
 import Collections.Queues.LinkedQueue;
 import Collections.Queues.QueueADT;
 import Game.Exceptions.DivisionNullException;
-import Game.Interfaces.Building;
-import Game.Interfaces.Division;
-import Game.Interfaces.GameNetworkADT;
+import Game.Interfaces.*;
+
 import java.util.Iterator;
 
 /**
@@ -220,6 +219,39 @@ public class BuildingImpl implements Building {
         }
 
         throw new ElementNotFoundException("Division with name " + name + " not found.");
+    }
+
+    @Override
+    public void updateConnections(Player player) {
+        Iterator<Division> iterator = divisions.iteratorBFS(firstDivision);
+
+        while (iterator.hasNext()) {
+            Division currentDivision = iterator.next();
+
+            Iterator<Division> iterator2 = divisions.iteratorAdjacent(currentDivision);
+            while (iterator2.hasNext()) {
+                Division currentDivision2 = iterator2.next();
+
+                removeConnection(currentDivision, currentDivision2);
+
+                int weight1To2 = 0;
+
+                if (!currentDivision2.getEnemysInDivision().isEmpty()) {
+                    for (Enemy enemy : currentDivision2.getEnemysInDivision()) {
+                        if (player.getPower() > 0) {
+                            weight1To2 += Math.min((enemy.getPower() * ((enemy.getLife() / player.getPower()) - 1)), player.getLife());
+
+                        } else {
+                            weight1To2 += player.getMaxLife();
+
+                        }
+                    }
+                }
+
+                addConection(currentDivision, currentDivision2, weight1To2);
+
+            }
+        }
     }
 }
 

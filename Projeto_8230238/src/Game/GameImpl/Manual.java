@@ -41,7 +41,7 @@ public class Manual {
         while (!isEndTrue) {
             informationsAboutDivision(game);
 
-            if (!player.getDivision().getEnemysInDivision().isEmpty() || !player.getDivision().getItemsInDivision().isEmpty() || player.getLife() < player.getMaxLife() && !player.getBackpack().isEmpty() || player.getDivision().isEntranceExit() && !continuarNoEdificio || player.getDivision().getTarget() != null) {
+            if (!player.getDivision().getEnemysInDivision().isEmpty() || !player.getDivision().getItemsInDivision().isEmpty() || player.getLife() < player.getMaxLife() && !player.getBackpack().isEmpty() || player.getDivision().isEntranceExit() && !continuarNoEdificio || player.getDivision().getTarget() != null && !continuarNoEdificio) {
                 if (player.getLife() > 0) {
                     pegouKit = false;
                     menu.menuDuringFase(game);
@@ -51,13 +51,16 @@ public class Manual {
 
                 if (!player.getDivision().getEnemysInDivision().isEmpty() && !pegouKit) {
                     updateEnemy(game);
+                    game.getBuilding().updateConnections(player);
                     enemyAtack(player.getDivision());
                 } else if (!pegouKit) {
                     updateEnemy(game);
+                    game.getBuilding().updateConnections(player);
                 }
             } else {
                 if (player.getLife() > 0) {
                     updateEnemy(game);
+                    game.getBuilding().updateConnections(player);
                     informationsAboutDivision(game);
                     continuarNoEdificio = false;
                     pathDivisions.addToRear(player.getDivision().getName());
@@ -70,7 +73,6 @@ public class Manual {
         if (!player.getHaveTarget()) {
             player.setLife(0);
         }
-        Reports reports = new Reports();
         Reports.generateReport(game, game.getMission(), this);
     }
 

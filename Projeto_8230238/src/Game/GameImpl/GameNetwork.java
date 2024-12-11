@@ -82,7 +82,9 @@ public class GameNetwork<T> extends Network<T> implements GameNetworkADT<T> {
 
         while (bf.hasNext()) {
             T vertex = (T) bf.next();
-            counter++;
+            if (!vertex.equals(whereStartVertex)) {
+                counter++;
+            }
             if (vertex.equals(whereEndVertex)) {
                 break;
             }

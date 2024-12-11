@@ -47,24 +47,25 @@ public class Game {
 
     /**
      * Loads the game data.
-     * 
-     * @throws IOException if an I/O error occurs
-     * @throws ParseException if a parsing error occurs
+     *
+     * @throws IOException          if an I/O error occurs
+     * @throws ParseException       if a parsing error occurs
      * @throws KeyNotFoundException if a required key is not found in the JSON data
      */
     public void loadGame() throws IOException, ParseException, KeyNotFoundException {
-        setBuilding();
-        setItems();
+        createDivisions();
         setEnemy();
+        setBuilding();
         setAlvo();
+        setItems();
         mission = new MissionImpl();
     }
 
     /**
      * Sets the items in the game by reading from a JSON file and placing them in the correct divisions.
-     * 
-     * @throws IOException if an I/O error occurs.
-     * @throws ParseException if a parsing error occurs.
+     *
+     * @throws IOException          if an I/O error occurs.
+     * @throws ParseException       if a parsing error occurs.
      * @throws KeyNotFoundException if a required key is not found in the JSON data.
      */
     private void setItems() throws IOException, ParseException, KeyNotFoundException {
@@ -74,13 +75,13 @@ public class Game {
         for (Object itens : jArray) {
             JSONObject item = (JSONObject) itens;
             long pontosVida = item.get("pontos-recuperados") != null ? (long) item.get("pontos-recuperados") : 0;
-            long pontosExtra = item.get("pontos-extra") != null ? ((long)item.get("pontos-extra")) : 0;
+            long pontosExtra = item.get("pontos-extra") != null ? ((long) item.get("pontos-extra")) : 0;
 
             if (item.get("tipo").equals("kit de vida")) {
-                mewItem = new ItemImpl(typeItem.KIT_LIFE, (int)pontosVida, building.searchDivisionByName(item.get("divisao").toString()));
+                mewItem = new ItemImpl(typeItem.KIT_LIFE, (int) pontosVida, building.searchDivisionByName(item.get("divisao").toString()));
                 building.searchDivisionByName(item.get("divisao").toString()).addItem(mewItem);
             } else {
-                mewItem = new ItemImpl(typeItem.VEST, (int)pontosExtra, building.searchDivisionByName(item.get("divisao").toString()));
+                mewItem = new ItemImpl(typeItem.VEST, (int) pontosExtra, building.searchDivisionByName(item.get("divisao").toString()));
                 building.searchDivisionByName(item.get("divisao").toString()).addItem(mewItem);
             }
             items.addToRear(mewItem);
@@ -90,9 +91,9 @@ public class Game {
 
     /**
      * Sets the enemies in the game by reading from a JSON file and placing them in the correct divisions.
-     * 
-     * @throws IOException if an I/O error occurs.
-     * @throws ParseException if a parsing error occurs.
+     *
+     * @throws IOException          if an I/O error occurs.
+     * @throws ParseException       if a parsing error occurs.
      * @throws KeyNotFoundException if a required key is not found in the JSON data.
      */
     private void setEnemy() throws IOException, ParseException, KeyNotFoundException {
@@ -103,31 +104,35 @@ public class Game {
             JSONObject enemy = (JSONObject) enemiesJson;
             long poder = (long) enemy.get("poder");
 
-            newEnemy = new EnemyImpl(enemy.get("nome").toString(), (int) poder, building.searchDivisionByName(enemy.get("divisao").toString()), 100);
-            building.searchDivisionByName(enemy.get("divisao").toString()).addEnemy(newEnemy);
-            enemies.addToRear((Enemy) newEnemy);
+            for (Division division : divisions) {
+                if (division.getName().equals(enemy.get("divisao").toString())) {
+                    newEnemy = new EnemyImpl(enemy.get("nome").toString(), (int) poder, division, 100);
+                    division.addEnemy(newEnemy);
+                    enemies.addToRear(newEnemy);
+                }
+            }
         }
-
     }
 
     /**
      * Sets up the building layout by creating divisions and their connections.
-     * 
-     * @throws IOException if an I/O error occurs.
-     * @throws ParseException if a parsing error occurs.
+     *
+     * @throws IOException          if an I/O error occurs.
+     * @throws ParseException       if a parsing error occurs.
      * @throws KeyNotFoundException if a required key is not found in the JSON data.
      */
     private void setBuilding() throws IOException, ParseException, KeyNotFoundException {
         JSONArray ligacoes = (JSONArray) JsonHandler.getFromFile("ligacoes");
 
-        createDivisions();
 
         for (Object ligacao : ligacoes) {
+            int weight1To2 = 0;
+            int weight2To1 = 0;
             JSONArray array = (JSONArray) ligacao;
             Division div1 = null, div2 = null;
             iterator = divisions.iterator();
 
-            while (iterator.hasNext()) {
+            while (iterator.hasNext() && div1 == null || div2 == null) {
                 Division div = iterator.next();
                 if (div.getName().equals(array.get(0))) {
                     div1 = div;
@@ -136,10 +141,35 @@ public class Game {
                     div2 = div;
                 }
             }
+            if (!div1.getEnemysInDivision().isEmpty()) {
+                for (Enemy enemy : div1.getEnemysInDivision()) {
+                    if (getPlayer().getPower() > 0) {
+                        weight2To1 += enemy.getPower() * ((enemy.getLife() / getPlayer().getPower()) - 1);
 
-            building.addConection(div1, div2);
+                    } else {
+                        weight2To1 += getPlayer().getMaxLife();
+
+                    }
+                }
+            }
+
+            if (!div2.getEnemysInDivision().isEmpty()) {
+                for (Enemy enemy : div2.getEnemysInDivision()) {
+                    if (getPlayer().getPower() > 0) {
+                        weight1To2 += enemy.getPower() * ((enemy.getLife()/ getPlayer().getPower()) - 1);
+
+                    } else {
+                        weight1To2 += getPlayer().getMaxLife();
+
+                    }
+                }
+            }
+
+            building.addConection(div1, div2, weight1To2);
+            building.addConection(div2, div1, weight2To1);
         }
     }
+
 
     /**
      * Sets the target in the game by reading from a JSON file and placing it in the correct division.

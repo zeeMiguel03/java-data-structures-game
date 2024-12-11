@@ -46,7 +46,6 @@ public class Reports {
     }
 
     public static void printReports() {
-        System.out.println(reports.size());
         for (Report report : reports) {
             System.out.println(report);
         }

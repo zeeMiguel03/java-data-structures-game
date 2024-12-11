@@ -217,7 +217,7 @@ public class Menu {
                 opcoes.enqueue("continuar");
             }
 
-            if(divPlayer.getTarget() != null && !player.getHaveTarget()) {
+            if(divPlayer.getTarget() != null && !player.getHaveTarget() && divPlayer.getEnemysInDivision().isEmpty()) {
                 System.out.println("[" + ++counter + "] Pegar Alvo!");
                 opcoes.enqueue("alvo");
             }
