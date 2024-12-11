@@ -16,7 +16,7 @@ public class Report implements Comparable<Report>{
 
     public Report(UnorderedListADT<String> path, int enemiesKilled, int itemsPicked, boolean targetOut, int lifePlayer, String codMission, int version) {
         this.path = path;
-        idSimulation = simulationManual++;
+        idSimulation = ++simulationManual;
         this.enemiesKilled = enemiesKilled;
         this.itemsPicked = itemsPicked;
         this.targetOut = targetOut;

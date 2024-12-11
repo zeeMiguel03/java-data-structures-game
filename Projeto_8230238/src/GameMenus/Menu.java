@@ -82,7 +82,7 @@ public class Menu {
         BuildingImpl build;
         QueueADT<Division> divisoes;
         Division division = null;
-
+        int nDivisoesInDivision = 0;
         do {
             build = (BuildingImpl) game.getBuilding();
             System.out.println("----------- Menu Mission -----------");
@@ -107,6 +107,7 @@ public class Menu {
                     break;
             }
 
+            nDivisoesInDivision = divisoes.size();
             if (option > 0 && option <= divisoes.size()) {
                 for (int i = 0; i < option; i++) {
                     division = divisoes.dequeue();
@@ -117,7 +118,7 @@ public class Menu {
                 System.out.println("Invalid option. Please select a valid option.");
             }
 
-        } while (option < 0 || option > divisoes.size());
+        } while (option < 0 || option > nDivisoesInDivision);
     }
 
     public void menuChangeDivision(Game game, Division division) {
@@ -143,12 +144,7 @@ public class Menu {
                 continue;
             }
 
-            switch (option) {
-                case 0:
-                    System.out.println("Leaving...");
-                    break;
-            }
-            
+
             divisoesSize = divisoes.size();
             if (option > 0 && option <= divisoesSize) {
                 for (int i = 0; i < option; i++) {
@@ -157,9 +153,14 @@ public class Menu {
 
                 game.updatePlayer(division);
                 
-            } else {
+            } else if (option == 0) {
+                Manual.setIsEndTrue();
+                System.out.println("Leaving...");
+
+            }else {
                 System.out.println("Invalid option. Please select a valid option.");
             }
+
             
         } while (option < 0 || option > divisoesSize);
 

@@ -41,33 +41,32 @@ public class Manual {
         while (!isEndTrue) {
             informationsAboutDivision(game);
 
-            if (!player.getDivision().getEnemysInDivision().isEmpty() || !player.getDivision().getItemsInDivision().isEmpty() || player.getLife() < player.getMaxLife() && !player.getBackpack().isEmpty() || player.getDivision().isEntranceExit() && !continuarNoEdificio || player.getDivision().getTarget() != null && !continuarNoEdificio) {
-                if (player.getLife() > 0) {
-                    pegouKit = false;
-                    menu.menuDuringFase(game);
-                } else {
-                    setIsEndTrue();
-                }
+            if (!player.getDivision().getEnemysInDivision().isEmpty()) {
+                menu.menuDuringFase(game);
 
-                if (!player.getDivision().getEnemysInDivision().isEmpty() && !pegouKit) {
+                if (!player.getDivision().getEnemysInDivision().isEmpty() && !pegouKit && !continuarNoEdificio) {
                     updateEnemy(game);
                     game.getBuilding().updateConnections(player);
                     enemyAtack(player.getDivision());
-                } else if (!pegouKit) {
+                }
+            } else if (player.getDivision().getEnemysInDivision().isEmpty() && !player.getDivision().getItemsInDivision().isEmpty() || player.getLife() < player.getMaxLife() && !player.getBackpack().isEmpty() || player.getDivision().isEntranceExit() && !continuarNoEdificio || player.getDivision().getTarget() != null) {
+                menu.menuDuringFase(game);
+
+
+                if (!pegouKit && !continuarNoEdificio) {
                     updateEnemy(game);
                     game.getBuilding().updateConnections(player);
                 }
             } else {
-                if (player.getLife() > 0) {
-                    updateEnemy(game);
-                    game.getBuilding().updateConnections(player);
-                    informationsAboutDivision(game);
-                    continuarNoEdificio = false;
-                    pathDivisions.addToRear(player.getDivision().getName());
-                    menu.menuChangeDivision(game, player.getDivision());
-                } else {
-                    setIsEndTrue();
-                }
+                pegouKit = false;
+                continuarNoEdificio = false;
+                updateEnemy(game);
+                game.getBuilding().updateConnections(player);
+                menu.menuChangeDivision(game, player.getDivision());
+            }
+
+            if (player.getLife() <= 0) {
+                setIsEndTrue();
             }
         }
         if (!player.getHaveTarget()) {
@@ -173,7 +172,7 @@ public class Manual {
         if (game.getPlayer().getDivision().getTarget() != null) {
             System.out.println("Tu estás na divisão do alvo ---> Alvo: " + game.getPlayer().getDivision().getTarget().getType());
         }
-        System.out.println("Player: " + game.getPlayer().getName() + " Life: " + game.getPlayer().getLife());
+        System.out.println("Player: " + game.getPlayer().getName() + " Life: " + game.getPlayer().getLife() + " Division: " + game.getPlayer().getDivision().getName());
     }
 
     public UnorderedListADT<String> getPathDivisions() {
