@@ -40,6 +40,7 @@ public class Manual {
 
         while (!isEndTrue) {
             informationsAboutDivision(game);
+            System.out.println(game.getBuilding().getDivisions().toString());
 
             if (!player.getDivision().getEnemysInDivision().isEmpty()) {
                 menu.menuDuringFase(game);
