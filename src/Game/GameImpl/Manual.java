@@ -85,6 +85,9 @@ public class Manual extends Game {
         }
         if (!player.getHaveTarget()) {
             player.setLife(0);
+            System.out.println("Mission Failed");
+        } else {
+            System.out.println("Mission Passed");
         }
         Reports.generateReport(this);
     }
@@ -110,8 +113,11 @@ public class Manual extends Game {
 
     protected void informationsAboutDivision (){
         informationGame();
+        Iterator shortestPath = null;
 
-        Iterator shortestPath = getBuilding().getDivisions().iteratorShortestPath(getPlayer().getDivision(), getTarget().getDivision());
+        if (getTarget().getDivision() != null) {
+            shortestPath = getBuilding().getDivisions().iteratorShortestPath(getPlayer().getDivision(), getTarget().getDivision());
+        }
         Iterator shortestPathToKit = null;
         Item itemMaisProximo = null;
         int distancia = 0;
@@ -140,16 +146,16 @@ public class Manual extends Game {
         }
 
         System.out.println("\n\n----------------Shortest Path To Target---------------------");
-        while (shortestPath.hasNext()) {
-            Division div = (Division) shortestPath.next();
-            System.out.print(div.getName());
+        if (!getPlayer().getHaveTarget()) {
+            while (shortestPath.hasNext()) {
+                Division div = (Division) shortestPath.next();
+                System.out.print(div.getName());
 
-            if (shortestPath.hasNext()) {
-                System.out.print(" ---> ");
+                if (shortestPath.hasNext()) {
+                    System.out.print(" ---> ");
+                }
             }
-        }
-
-        if (getPlayer().getHaveTarget()) {
+        } else {
             System.out.print("Already Have Target!");
         }
 

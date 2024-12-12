@@ -269,11 +269,73 @@ public class Graph<T> implements GraphADT<T> {
         return resultList.iterator();
     }
 
+    /**
+     * Returns an iterator that performs a shortest path traversal
+     * between two vertices in the graph.
+     *
+     * @param startVertex the vertex to start the traversal from
+     * @param targetVertex the vertex to reach
+     * @return an iterator containing the shortest path from startVertex to targetVertex
+     * @throws ElementNotFoundException if any of the vertices are not found
+     */
     @Override
-    public Iterator iteratorShortestPath(T startVertex, T targetVertex) {
-        return null;
+    public Iterator<T> iteratorShortestPath(T startVertex, T targetVertex) throws ElementNotFoundException {
+        int startIndex = getIndex(startVertex);
+        int targetIndex = getIndex(targetVertex);
+
+        if (startIndex == -1 || targetIndex == -1) {
+            throw new ElementNotFoundException("One or both vertices not found.");
+        }
+
+        LinkedQueue<Integer> traversalQueue = new LinkedQueue<>();
+        ArrayUnorderedList<T> resultList = new ArrayUnorderedList<>();
+        boolean[] visited = new boolean[numVertices];
+        int[] previous = new int[numVertices];
+
+        for (int i = 0; i < numVertices; i++) {
+            visited[i] = false;
+            previous[i] = -1;
+        }
+
+        traversalQueue.enqueue(startIndex);
+        visited[startIndex] = true;
+
+        while (!traversalQueue.isEmpty()) {
+            int current = traversalQueue.dequeue();
+
+            if (current == targetIndex) {
+                break; // Path to target found
+            }
+
+            for (int i = 0; i < numVertices; i++) {
+                if (adjMatrix[current][i] && !visited[i]) {
+                    traversalQueue.enqueue(i);
+                    visited[i] = true;
+                    previous[i] = current;
+                }
+            }
+        }
+
+        if (!visited[targetIndex]) {
+            return resultList.iterator();
+        }
+
+        LinkedStack<T> pathStack = new LinkedStack<>();
+        int current = targetIndex;
+        while (current != -1) {
+            pathStack.push(vertices[current]);
+            current = previous[current];
+        }
+
+        while (!pathStack.isEmpty()) {
+            resultList.addToRear(pathStack.pop());
+        }
+
+        return resultList.iterator();
     }
-    
+
+
+
     /**
      * Verify if the index is valid.
      * 

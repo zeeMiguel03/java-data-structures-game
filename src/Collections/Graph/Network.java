@@ -9,7 +9,8 @@ import Collections.Exceptions.EmptyCollectionException;
 import Collections.Lists.ArrayUnorderedList;
 import Collections.Queues.LinkedQueue;
 import Collections.Stacks.LinkedStack;
-import Collections.Trees.LinkedHeap;
+import Collections.Trees.PriorityQueue;
+
 import java.util.Iterator;
 
 /**
@@ -263,23 +264,7 @@ public class Network<T> extends Graph<T> implements NetworkADT<T> {
         return resultList.iterator();
     }
 
-    /**
-     * Returns the shortest path between two vertices.
-     *
-     * This code is adapted from a repository by João Oliveira.
-     *
-     * @Author João Oliveira
-     * @Source https://github.com/joaopsoliveira03
-     * Repository: https://github.com/joaopsoliveira03-school/estg-ed/blob/main/src/main/java/Collections/Graphs/Network.java
-     *
-     * @param vertex1 the starting vertex
-     * @param vertex2 the target vertex
-     * @return the shortest path between the vertices
-     */
-    @Override
-    public double shortestPathWeight(T vertex1, T vertex2) {
-        return shortestPathWeight(getIndex(vertex1), getIndex(vertex2));
-    }
+
 
     /**
      * Returns an iterator that performs a traversal of the indices
@@ -295,108 +280,77 @@ public class Network<T> extends Graph<T> implements NetworkADT<T> {
      * @return an iterator that performs a traversal of the indices of
      *         the vertices along the shortest path
      */
-    protected Iterator<Integer> iteratorShortestPathIndices(int startIndex, int targetIndex) {
-        int index;
-        double weight;
-        int[] predecessor = new int[numVertices];
-        LinkedHeap<Double> traversalMinHeap = new LinkedHeap<>();
-        ArrayUnorderedList<Integer> resultList = new ArrayUnorderedList<>();
-        LinkedStack<Integer> stack = new LinkedStack<>();
+    protected Iterator<T> iteratorShortestPathNet(T startVertex, T targetVertex) {
+        int startIndex = getIndex(startVertex);
+        int targetIndex = getIndex(targetVertex);
 
-        int[] pathIndex = new int[numVertices];
-        double[] pathWeight = new double[numVertices];
-        for (int i = 0; i < numVertices; i++) {
-            pathWeight[i] = Double.POSITIVE_INFINITY;
+        if (startIndex == -1 || targetIndex == -1) {
+            throw new ElementNotFoundException("One or both vertices not found.");
         }
 
+        double[] distances = new double[numVertices];
+        int[] previous = new int[numVertices];
         boolean[] visited = new boolean[numVertices];
+
+
         for (int i = 0; i < numVertices; i++) {
+            distances[i] = Double.POSITIVE_INFINITY;
+            previous[i] = -1;
             visited[i] = false;
         }
 
-        if (!indexIsValid(startIndex) || !indexIsValid(targetIndex)
-                || (startIndex == targetIndex) || isEmpty()) {
+
+        distances[startIndex] = 0;
+
+        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>();
+        priorityQueue.addElement(startIndex, 0);
+
+        while (!priorityQueue.isEmpty()) {
+            int current = priorityQueue.removeNext();
+            visited[current] = true;
+
+            if (current == targetIndex) {
+                break;
+            }
+
+            for (int i = 0; i < numVertices; i++) {
+                if (adjMatrix[current][i] >= 0 && !visited[i]) {
+                    double newDist = distances[current] + adjMatrix[current][i];
+
+                    if (newDist < distances[i]) {
+                        distances[i] = newDist;
+                        previous[i] = current;
+                        priorityQueue.addElement(i, (int) newDist);
+                    }
+                }
+            }
+        }
+
+        ArrayUnorderedList<T> resultList = new ArrayUnorderedList<>();
+        if (distances[targetIndex] == Double.POSITIVE_INFINITY) {
             return resultList.iterator();
         }
 
-        pathWeight[startIndex] = 0;
-        predecessor[startIndex] = -1;
-        visited[startIndex] = true;
-
-        //Update the pathWeight for each vertex except the startVertex. Notice
-        //that all vertices not adjacent to the startVertex will have a
-        //pathWeight of infinity for now
-        for (int i = 0; i < numVertices; i++) {
-            if (!visited[i]) {
-                pathWeight[i] = pathWeight[startIndex] + adjMatrix[startIndex][i];
-                predecessor[i] = startIndex;
-                traversalMinHeap.addElement(pathWeight[i]);
-            }
+        LinkedStack<T> pathStack = new LinkedStack<>();
+        int current = targetIndex;
+        while (current != -1) {
+            pathStack.push(vertices[current]);
+            current = previous[current];
         }
 
-        do {
-            weight = traversalMinHeap.removeMin();
-            traversalMinHeap.removeAllElements();
-            if (weight == Double.POSITIVE_INFINITY) // no possible path
-            {
-                return resultList.iterator();
-            } else {
-                index = getIndexOfAdjVertexWithWeightOf(visited, pathWeight, weight);
-                visited[index] = true;
-            }
-
-            //Update the pathWeight for each vertex that has not been
-            //visited and is adjacent to the last vertex that was visited.
-            //Also, add each unvisited vertex to the heap
-            for (int i = 0; i < numVertices; i++) {
-                if (!visited[i]) {
-                    if ((adjMatrix[index][i] < Double.POSITIVE_INFINITY)
-                            && (pathWeight[index] + adjMatrix[index][i]) < pathWeight[i]) {
-                        pathWeight[i] = pathWeight[index] + adjMatrix[index][i];
-                        predecessor[i] = index;
-                    }
-                    traversalMinHeap.addElement(pathWeight[i]);
-                }
-            }
-        } while (!traversalMinHeap.isEmpty() && !visited[targetIndex]);
-
-        index = targetIndex;
-        stack.push(index);
-        do {
-            index = predecessor[index];
-            stack.push(index);
-        } while (index != startIndex);
-
-        while (!stack.isEmpty()) {
-            resultList.addToRear((stack.pop()));
+        while (!pathStack.isEmpty()) {
+            resultList.addToRear(pathStack.pop());
         }
 
         return resultList.iterator();
-    }
-
-    public Iterator<T> iteratorShortestPath(int startIndex, int targetIndex) {
-        ArrayUnorderedList<T> templist = new ArrayUnorderedList<>();
-        if (!indexIsValid(startIndex) || !indexIsValid(targetIndex)) {
-            return templist.iterator();
-        }
-
-        Iterator<Integer> it = iteratorShortestPathIndices(startIndex, targetIndex);
-
-        while (it.hasNext()) {
-            templist.addToRear(vertices[it.next()]);
-        }
-
-        return templist.iterator();
     }
 
     /**
      * Returns an iterator that performs a traversal of the shortest path
      * between two vertices, starting at the given vertex.
      *
-     * @Author João Oliveira
-     * @Source https://github.com/joaopsoliveira03
-     * Repository: https://github.com/joaopsoliveira03-school/estg-ed/blob/main/src/main/java/Collections/Graphs/Network.java
      *
+     * @Source
      *
      * @param startVertex the vertex to begin the traversal from
      * @param targetVertex the target vertex
@@ -404,47 +358,10 @@ public class Network<T> extends Graph<T> implements NetworkADT<T> {
      */
     @Override
     public Iterator<T> iteratorShortestPath(T startVertex, T targetVertex) {
-        return iteratorShortestPath(getIndex(startVertex),getIndex(targetVertex));
+        return iteratorShortestPathNet(startVertex,targetVertex);
     }
 
-    protected int getIndexOfAdjVertexWithWeightOf(boolean[] visited, double[] pathWeight, double weight) {
-        for (int i = 0; i < numVertices; i++) {
-            if ((pathWeight[i] == weight) && !visited[i]) {
-                for (int j = 0; j < numVertices; j++) {
-                    if ((adjMatrix[i][j] < Double.POSITIVE_INFINITY) && visited[j]) {
-                        return i;
-                    }
-                }
-            }
-        }
 
-        return -1;  // should never get to here
-    }
-
-    public double shortestPathWeight(int startIndex, int targetIndex) {
-        double result = 0;
-
-        if (!indexIsValid(startIndex) || !indexIsValid(targetIndex)) {
-            return Double.POSITIVE_INFINITY;
-        }
-
-        int index1, index2;
-        Iterator<Integer> it = iteratorShortestPathIndices(startIndex, targetIndex);
-
-        if (it.hasNext()) {
-            index1 = it.next();
-        } else {
-            return Double.POSITIVE_INFINITY;
-        }
-
-        while (it.hasNext()) {
-            index2 = it.next();
-            result += adjMatrix[index1][index2];
-            index1 = index2;
-        }
-
-        return result;
-    }
 
     /**
      * Expands the capacity of the Graph.
@@ -501,6 +418,34 @@ public class Network<T> extends Graph<T> implements NetworkADT<T> {
                 result += (int) adjMatrix[i][j] + "   ";
             }
             result += "\n";
+        }
+
+        return result;
+    }
+
+    @Override
+    public double shortestPathWeight(T startVertex, T targetVertex) {
+        double result = 0;
+        int startIndex = getIndex(startVertex);
+        int targetIndex = getIndex(targetVertex);
+
+        if (!indexIsValid(startIndex) || !indexIsValid(targetIndex)) {
+            return Double.POSITIVE_INFINITY;
+        }
+
+        int index1, index2;
+        Iterator<T> it = iteratorShortestPath(startVertex, targetVertex);
+
+        if (it.hasNext()) {
+            index1 = getIndex(it.next());
+        } else {
+            return Double.POSITIVE_INFINITY;
+        }
+
+        while (it.hasNext()) {
+            index2 = getIndex(it.next());
+            result += adjMatrix[index1][index2];
+            index1 = index2;
         }
 
         return result;

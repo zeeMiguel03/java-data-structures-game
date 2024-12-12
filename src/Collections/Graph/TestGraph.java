@@ -5,6 +5,7 @@
 package Collections.Graph;
 
 import java.util.Iterator;
+import Collections.Exceptions.ElementNotFoundException;
 
 /**
  *
@@ -16,31 +17,33 @@ public class TestGraph {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        GraphADT<Integer> graph = new Network<>();
-        
-        try {
-            graph.addVertex(0);
-            graph.addVertex(1);
-            graph.addVertex(2);
-            graph.addVertex(3);
-            graph.addVertex(4);
-            graph.addVertex(5);
-            
-            graph.addEdge(0,1);
-            graph.addEdge(1, 2);
+        Graph<String> graph = new Graph<>();
 
-            
-            
-            System.out.println("BFS (Iniciando no vértice 0): ");
-            Iterator<Integer> bfsIterator = graph.iteratorBFS(0);
-            while (bfsIterator.hasNext()) {
-                System.out.print(bfsIterator.next() + " ");
+        graph.addVertex("A");
+        graph.addVertex("B");
+        graph.addVertex("C");
+        graph.addVertex("D");
+        graph.addVertex("E");
+
+        // Adicionar arestas
+        graph.addEdge("A", "B");
+        graph.addEdge("A", "C");
+        graph.addEdge("B", "C");
+        graph.addEdge("C", "D");
+        graph.addEdge("D", "E");
+
+
+        try {
+            Iterator<String> path = graph.iteratorShortestPath("A", "E");
+            System.out.print("Caminho mais curto de A para E: ");
+            while (path.hasNext()) {
+                System.out.print(path.next() + " ");
             }
-            
+        } catch (ElementNotFoundException e) {
+            System.err.println("Erro: " + e.getMessage());
+        }
            
             
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+
     }
 }

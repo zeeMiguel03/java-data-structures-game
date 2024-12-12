@@ -84,8 +84,8 @@ public class Menu {
                     menuStartGame(manual);
                     break;
                 case 2:
-                    //AutomaticImpl automatic = new AutomaticImpl();
-                    //automatic.startGameAutomatic();
+                    AutomaticImpl automatic = new AutomaticImpl();
+                    automatic.startGameAutomatic();
                     break;
                 case 3:
                     menuSelectVersion();

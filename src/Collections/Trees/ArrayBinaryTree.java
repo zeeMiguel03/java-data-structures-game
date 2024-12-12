@@ -17,7 +17,7 @@ import java.util.Iterator;
  */
 
 public class ArrayBinaryTree<T> implements BinaryTreeADT<T> {
-    private final int CAPACITY = 2;
+    private final int CAPACITY = 10;
     
     protected int count;
     protected T[] tree;

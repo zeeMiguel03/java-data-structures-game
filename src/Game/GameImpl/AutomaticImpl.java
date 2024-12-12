@@ -5,6 +5,7 @@
 package Game.GameImpl;
 
 import Collections.Queues.QueueADT;
+import Collections.Stacks.LinkedStack;
 import Collections.Stacks.StackADT;
 import Game.Enums.typeItem;
 import Game.Exceptions.EndOfMissionException;
@@ -24,38 +25,64 @@ import java.util.Iterator;
  */
 public class AutomaticImpl extends Game{
     private Division bestEntrance;
+    private Division bestExit;
     private String result;
     Enemy enemyEncontrado;
+    Division divisionExit;
     
     public AutomaticImpl() throws IOException, ParseException, KeyNotFoundException {
         super();
         super.loadGame();
         this.result = " ";
         enemyEncontrado = null;
+        divisionExit = null;
     }
     
     public void startGameAutomatic() {
         Player player = getPlayer();
-        Division division1 = getBestEntrance();
+        Division divisionEntrance = getBestEntrance();
+        divisionExit = getBestExit();
         Division division2 = getTarget().getDivision();
         
-        Iterator<Division> iterator = getBuilding().getDivisions().iteratorShortestPath(division1, division2);
-        player.setDivision(division1);
+        Iterator<Division> iteratorEntrance = getBuilding().getDivisions().iteratorShortestPath(divisionEntrance, division2);
+        player.setDivision(divisionEntrance);
         
-        while (iterator.hasNext()) {
-            Division division = iterator.next();
+        while (iteratorEntrance.hasNext()) {
+            Division division = iteratorEntrance.next();
             playerTurn();
             
             if (player.getLife() <= 0) {
                 System.out.println("Tó Cruz died int the position: " + player.getDivision().getName());
                 bestPathPrint(division);
                 return;
-            } else if (!iterator.hasNext()){
+            } else if (!iteratorEntrance.hasNext()){
                 System.out.println("\n" + "Tó Cruz, successfully reached the target!");
+                getPlayer().setHaveTarget();
             }
 
             bestPathPrint(division);
             player.setDivision(division);
+            division.addPlayer(player);
+        }
+        result += "/ He found the target now the way out/";
+        Iterator<Division> iteratorExit = getBuilding().getDivisions().iteratorShortestPath(division2, divisionExit);
+        player.setDivision(divisionEntrance);
+
+        while (iteratorExit.hasNext()) {
+            Division division = iteratorExit.next();
+            playerTurn();
+
+            if (player.getLife() <= 0) {
+                System.out.println("Tó Cruz died in the position: " + player.getDivision().getName());
+                reversePathPrint(division);
+                return;
+            } else if (!iteratorExit.hasNext()){
+                System.out.println("\n" + "Tó Cruz, successfully exit the building with target!");
+            }
+
+            divisionExit = getBestExit();
+            player.setDivision(division);
+            reversePathPrint(division);
             division.addPlayer(player);
         }
 
@@ -86,10 +113,6 @@ public class AutomaticImpl extends Game{
                     player.useVest();
                 }
             }
-        }
-
-        if (player.getDivision().getTarget() != null) {
-            player.setHaveTarget();
         }
     }
 
@@ -136,24 +159,41 @@ public class AutomaticImpl extends Game{
         return bestEntrance;
     }
 
+    private Division getBestExit() {
+        QueueADT<Division> entrance = getBuilding().getEntranceExit();
+
+        double lessDamage = 1000;
+        int size = entrance.size();
+
+        for (int i = 0; i < size; i++) {
+            Division currentDivision = entrance.dequeue();
+
+            double pathLife = getBuilding().getDivisions().shortestPathWeight(getTarget().getDivision(), currentDivision);
+
+            if (pathLife < lessDamage) {
+                lessDamage = pathLife;
+                bestExit = currentDivision;
+            }
+        }
+
+        return bestExit;
+    }
+
     private void bestPathPrint(Division division) {
         result += " --> " + division.getName();
-        //reversePathPrint(division, game);
 
-        if (division.getTarget() != null || getPlayer().getLife() <= 0) {
+
+        /*if (division.getTarget() != null || getPlayer().getLife() <= 0) {
+            System.out.println("The best path was: " + result);
+        }*/
+    }
+
+    private void reversePathPrint(Division division) {
+        result += " --> " + division.getName();
+
+
+        if (getPlayer().getHaveTarget() && getPlayer().getDivision().equals(divisionExit) || getPlayer().getLife() <= 0) {
             System.out.println("The best path was: " + result + "\nTó Cruz life was: " + Math.max(getPlayer().getLife(), 0));
         }
     }
-
-    /*private void reversePathPrint(Division division) {
-        StackADT<String> divisionsPathReverse = mew linkedStack<>();
-
-        divisionsPathReverse.push(division.getName());
-
-        if (division.getTarget() != null || getPlayer().getLife() <= 0) {
-            while (!divisionsPathReverse.isEmpty()) {
-                result += " --> " + divisionsPathReverse.pop();
-            }
-        }
-    }*/
 }

@@ -76,6 +76,7 @@ public class ArrayHeap<T> extends ArrayBinaryTree<T> implements HeapADT<T>  {
         
         T minElement = tree[0];
         tree[0] = tree[count - 1];
+        tree[count - 1] = null;
         heapifyRemove();
         count--;
         
@@ -92,38 +93,35 @@ public class ArrayHeap<T> extends ArrayBinaryTree<T> implements HeapADT<T>  {
         int right = 2;
         int next;
 
-        if ((tree[left] == null) && (tree[right] == null)) {
+        if ((tree[left] == null) && (tree[right] == null))
             next = count;
-        } else if (tree[left] == null) {
+        else if (tree[left] == null)
             next = right;
-        } else if (tree[right] == null) {
+        else if (tree[right] == null)
             next = left;
-        } else if (((Comparable)tree[left]).compareTo(tree[right]) < 0) {
+        else if (((Comparable) tree[left]).compareTo(tree[right]) < 0)
             next = left;
-        } else
+        else
             next = right;
-        
         temp = tree[node];
-        
-        while ((next < count) && (((Comparable)tree[next]).compareTo(temp) < 0)) {
+
+        while ((next < count) && (((Comparable) tree[next]).compareTo
+                (temp) < 0)) {
             tree[node] = tree[next];
             node = next;
-            left = 2*node+1;
-            right = 2*(node+1);
-            
-            if ((tree[left] == null) && (tree[right] == null)) {
+            left = 2 * node + 1;
+            right = 2 * (node + 1);
+            if ((tree[left] == null) && (tree[right] == null))
                 next = count;
-            } else if (tree[left] == null) {
+            else if (tree[left] == null)
                 next = right;
-            } else if (tree[right] == null) {
+            else if (tree[right] == null)
                 next = left;
-            } else if (((Comparable)tree[left]).compareTo(tree[right]) < 0) {
+            else if (((Comparable) tree[left]).compareTo(tree[right]) < 0)
                 next = left;
-            } else {
+            else
                 next = right;
-            }
         }
-        
         tree[node] = temp;
     }
 
