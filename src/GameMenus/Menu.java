@@ -9,6 +9,7 @@ import Collections.Queues.QueueADT;
 import Game.Enums.typeItem;
 import Game.GameImpl.*;
 import Game.Interfaces.*;
+import Game.Json.JsonHandler;
 import Game.Json.KeyNotFoundException;
 import Game.Reports.Reports;
 import org.json.simple.parser.ParseException;
@@ -28,6 +29,32 @@ public class Menu {
     public Menu() {
     }
 
+    public void menuSelectVersion() throws IOException, ParseException, KeyNotFoundException {
+        int option = 0;
+
+        do {
+            option = 0;
+
+            System.out.println("-----------" + JsonHandler.getFromFile("cod-missao") + "-----------");
+            System.out.println("[1] Version " + JsonHandler.getInt("versao"));
+            System.out.println("------------------------------------");
+            System.out.print("Option: ");
+
+            try {
+                option = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid option!");
+                menuSelectVersion();
+                scanner.next();
+            }
+
+            switch (option) {
+                case 1:
+                    Reports.printReports();
+            }
+
+        }while (option < 0 || option > 1);
+    }
     public void mainMenu() throws IOException, ParseException, KeyNotFoundException {
         int option;
         Scanner scanner = new Scanner(System.in);
@@ -57,11 +84,11 @@ public class Menu {
                     menuStartGame(manual);
                     break;
                 case 2:
-                    AutomaticImpl automatic = new AutomaticImpl();
-                    automatic.startGameAutomatic();
+                    //AutomaticImpl automatic = new AutomaticImpl();
+                    //automatic.startGameAutomatic();
                     break;
                 case 3:
-                    Reports.printReports();
+                    menuSelectVersion();
                 case 4:
                     Reports.exportPathInSimulation();
                 case 0:
