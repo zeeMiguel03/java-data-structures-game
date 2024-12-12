@@ -350,7 +350,9 @@ public class Network<T> extends Graph<T> implements NetworkADT<T> {
      * between two vertices, starting at the given vertex.
      *
      *
-     * @Source
+     * @Source https://www.w3schools.com/dsa/dsa_algo_graphs_dijkstra.php
+     * @Source https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-in-java-using-priorityqueue/
+     * @Source https://www.softwaretestinghelp.com/dijkstras-algorithm-in-java/
      *
      * @param startVertex the vertex to begin the traversal from
      * @param targetVertex the target vertex

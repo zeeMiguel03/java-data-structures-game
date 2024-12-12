@@ -14,6 +14,7 @@ import Game.Json.KeyNotFoundException;
 import Game.Reports.Reports;
 import org.json.simple.parser.ParseException;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -29,6 +30,42 @@ public class Menu {
     public Menu() {
     }
 
+    public void menuSelectMissionImport() {
+        int count = 0;
+        int option = 0;
+
+        do {
+            File folder = new File("Json");
+            File[] files = folder.listFiles();
+            QueueADT<String> filesQueue = new LinkedQueue<>();
+
+            if (files != null && files.length > 0) {
+                System.out.println("----------Select a file:-----------------");
+                for (File file : files) {
+                    System.out.println("[" + ++count + "]" + ". " + file.getName());
+                    filesQueue.enqueue(file.getName());
+                }
+                System.out.println("------------------------------------");
+                System.out.print("Option: ");
+            }
+
+            try {
+                option = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid option!");
+                menuSelectMissionImport();
+                scanner.next();
+            }
+
+            String file = null;
+            for (int i = 0; i < option; i++) {
+                file = filesQueue.dequeue();
+            }
+
+            JsonHandler.setFile(file);
+
+        } while (option < 0 || option > count);
+    }
     public void menuSelectVersion() throws IOException, ParseException, KeyNotFoundException {
         int option = 0;
 
