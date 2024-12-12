@@ -79,15 +79,24 @@ public class Menu {
     public void menuStartGame(Game game, boolean isManualOption) throws IOException, ParseException, KeyNotFoundException {
         boolean isManual = isManualOption;
         int option = 0;
-        BuildingImpl build;
         QueueADT<Division> divisoes;
         Division division = null;
         int nDivisoesInDivision = 0;
+        QueueADT<Division> divisionsEntranceExit;
+
         do {
-            build = (BuildingImpl) game.getBuilding();
+            divisionsEntranceExit = game.getBuilding().getEntranceExit();
+            divisoes = new LinkedQueue<>();
+            int divisionsInQueue = divisionsEntranceExit.size();
+            int count = 0;
+
             System.out.println("----------- Menu Mission -----------");
             
-            divisoes = build.printEntranceExit();
+            for (int i = 0; i < divisionsInQueue; i++) {
+                Division divisionInQueue = divisionsEntranceExit.dequeue();
+                divisoes.enqueue(divisionInQueue);
+                System.out.println("[" + ++count + "] " + divisionInQueue.getName());
+            }
             
             System.out.println("[0] Leave Game");
             System.out.println("------------------------------------");

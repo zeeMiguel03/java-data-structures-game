@@ -18,6 +18,7 @@ import java.util.Iterator;
  */
 public class BuildingImpl implements Building {
     private GameNetworkADT<Division> divisions;
+    QueueADT<Division> queueDivisions;
     private Division firstDivision;
     private Division itemDivision;
 
@@ -26,6 +27,7 @@ public class BuildingImpl implements Building {
      */
     public BuildingImpl() {
         this.divisions = new GameNetwork<>();
+        this.queueDivisions = new LinkedQueue<>();
     }
 
     /**
@@ -152,41 +154,18 @@ public class BuildingImpl implements Building {
         divisions.removeEdge(division1, division2);
     }
 
-    /**
-     * This method print the divisions that are a entrance or a exit.
-     * 
-     * @return the queue of divisions.
-     */
-    @Override
-    public QueueADT<Division> printEntranceExit() {
-        int counter = 0;
-        QueueADT<Division> queueDivisions = new LinkedQueue<>();
-        
-        Iterator<Division> iterator = divisions.iteratorBFS(firstDivision);
-
-        while (iterator.hasNext()) {
-            Division currentDivision = iterator.next();
-
-            if (currentDivision.getEntranceExit()) {
-                System.out.println("[" + ++counter + "] " + currentDivision.getName());
-                queueDivisions.enqueue(currentDivision);
-            }
-        }
-        
-        return queueDivisions;
-    }
-    
     @Override
     public QueueADT<Division> getEntranceExit() {
-        QueueADT<Division> queueDivisions = new LinkedQueue<>();
-        
-        Iterator<Division> iterator = divisions.iteratorBFS(firstDivision);
 
-        while (iterator.hasNext()) {
-            Division currentDivision = iterator.next();
+        if (queueDivisions.isEmpty()) {
+            Iterator iterator = divisions.iteratorBFS(firstDivision);
 
-            if (currentDivision.getEntranceExit()) {
-                queueDivisions.enqueue(currentDivision);
+            while (iterator.hasNext()) {
+                Division currentDivision = (Division) iterator.next();
+
+                if (currentDivision.getEntranceExit()) {
+                    queueDivisions.enqueue(currentDivision);
+                }
             }
         }
         
@@ -257,7 +236,7 @@ public class BuildingImpl implements Building {
                 if (!currentDivision2.getEnemysInDivision().isEmpty()) {
                     for (Enemy enemy : currentDivision2.getEnemysInDivision()) {
                         if (player.getPower() > 0) {
-                            weight1To2 += Math.min(((int) (enemy.getPower() * (Math.ceil((float)enemy.getLife() / player.getPower()) - 1))), player.getLife());
+                            weight1To2 += (int) (enemy.getPower() * (Math.ceil((float)enemy.getLife() / player.getPower()) - 1));
 
                         } else {
                             weight1To2 += player.getMaxLife();
@@ -265,7 +244,7 @@ public class BuildingImpl implements Building {
                         }
                     }
                 }
-                System.out.println("Div1: " + currentDivision + " Div2: " + currentDivision2 + " Wei: " + weight1To2);
+
                 addConection(currentDivision, currentDivision2, weight1To2);
             }
         }

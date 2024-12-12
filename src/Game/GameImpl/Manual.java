@@ -75,6 +75,7 @@ public class Manual {
             if (player.getLife() <= 0) {
                 setIsEndTrue();
             }
+
         }
         if (!player.getHaveTarget()) {
             player.setLife(0);

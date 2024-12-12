@@ -18,7 +18,7 @@ import java.util.Iterator;
 public class PlayerImpl extends PersonImpl implements Player {
     private static final int MAX_LIFE = 100;
     private static final int MAX_ITEMS = 3;
-    private static final int POWER_PLAYER = 20;
+    private static final int POWER_PLAYER = 35;
     private static final String PLAYER_NAME = "Tó Cruz";
 
     private StackADT<Item> backpack;

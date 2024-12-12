@@ -81,12 +81,6 @@ public interface Building {
      */
     public void removeConnection(Division division1, Division division2) throws DivisionNullException;
 
-    /**
-     * This method print the divisions that are a entrance or a exit.
-     * 
-     * @return the queue of divisions.
-     */
-    public QueueADT<Division> printEntranceExit();
     
     public QueueADT<Division> getEntranceExit();
 

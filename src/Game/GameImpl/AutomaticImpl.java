@@ -17,28 +17,31 @@ import java.util.Iterator;
  * @author Miguel Rocha
  * @author António Monteiro
  */
-public class AutomaticImpl extends Game{
+public class AutomaticImpl {
     private Division bestEntrance;
+    private String result;
     
     public AutomaticImpl() {
         super();
+        this.result = " ";
     }
     
     public void startGameAutomatic(Game game) {
-        Player player = getPlayer();
-        Division division1 = getBestEntrance();
+        Player player = game.getPlayer();
+        Division division1 = getBestEntrance(game);
         Division division2 = game.getTarget().getDivision();
         
-        Iterator<Division> iterator = getBuilding().getDivisions().iteratorShortestPath(division1, division2);
+        Iterator<Division> iterator = game.getBuilding().getDivisions().iteratorShortestPath(division1, division2);
         player.setDivision(division1);
         
         while (iterator.hasNext()) {
             Division division = iterator.next();
-            bestPathPrint(division);
-            playerTurn();
+            bestPathPrint(division, game);
+            playerTurn(game);
             
             if (player.getLife() <= 0) {
-                throw new EndOfMissionException("T Cruz died!");
+                System.out.println("Tó Cruz died int the position: " + player.getDivision().getName());
+                return;
             } else if (!iterator.hasNext()){
                 System.out.println("\n" + "Tó Cruz, successfully reached the target!");
             }
@@ -49,8 +52,8 @@ public class AutomaticImpl extends Game{
 
     }
     
-    private void playerTurn() {
-        Player player = getPlayer();
+    private void playerTurn(Game game) {
+        Player player = game.getPlayer();
 
         if (!player.getDivision().getEnemysInDivision().isEmpty()){
             
@@ -62,12 +65,7 @@ public class AutomaticImpl extends Game{
                     player.atack();
                 }
 
-                for (Enemy enemy : player.getDivision().getEnemysInDivision()) {
-                    enemy.atack();
-                }
-
-                updateEnemy();
-                getBuilding().updateConnections(player);
+                enemyTurn(game, player);
             }
         }
 
@@ -85,34 +83,47 @@ public class AutomaticImpl extends Game{
             player.setHaveTarget();
         }
     }
+
+    private void enemyTurn(Game game, Player player) {
+        for (Enemy enemy : player.getDivision().getEnemysInDivision()) {
+            enemy.atack();
+
+            if (enemy.getLife() <= 0) {
+                System.out.println(player.getName() + " killed " + enemy.getName() + " in the position: " + enemy.getDivision().getName());
+            }
+
+        }
+
+        game.updateEnemy();
+        game.getBuilding().updateConnections(player);
+    }
         
-    public Division getBestEntrance() {
-        QueueADT<Division> entrance = getBuilding().getEntranceExit();
+    private Division getBestEntrance(Game game) {
+        QueueADT<Division> entrance = game.getBuilding().getEntranceExit();
         
         double lessDamage = 1000;
         int size = entrance.size();
-        
+        int distance = 0;
+
         for (int i = 0; i < size; i++) {
             Division currentDivision = entrance.dequeue();
             
-            double pathLife = getBuilding().getDivisions().shortestPathWeight(currentDivision, getBuilding().getItemDivision());
-            
+            double pathLife = game.getBuilding().getDivisions().shortestPathWeight(currentDivision, game.getTarget().getDivision());
+
             if (pathLife < lessDamage) {
                 lessDamage = pathLife;
                 bestEntrance = currentDivision;
-            }              
+            }
         }
-                
+
         return bestEntrance;
     }
 
-    public void bestPathPrint(Division division) {
-        String result = " ";
+    private void bestPathPrint(Division division, Game game) {
+        result += " --> " + division.getName();
 
         if (division.getTarget() != null) {
-            System.out.println("The best path was: " + result + " and Tó Cruz life was: " + getPlayer().getLife());
-        } else {
-            result += " " + division.toString();
+            System.out.println("The best path was: " + result + " and Tó Cruz life was: " + game.getPlayer().getLife());
         }
     }
 }
