@@ -5,6 +5,7 @@
 package Game.GameImpl;
 
 import Collections.Queues.QueueADT;
+import Collections.Stacks.StackADT;
 import Game.Enums.typeItem;
 import Game.Exceptions.EndOfMissionException;
 import Game.Interfaces.Division;
@@ -20,10 +21,12 @@ import java.util.Iterator;
 public class AutomaticImpl {
     private Division bestEntrance;
     private String result;
+    Enemy enemyEncontrado;
     
     public AutomaticImpl() {
         super();
         this.result = " ";
+        enemyEncontrado = null;
     }
     
     public void startGameAutomatic(Game game) {
@@ -36,16 +39,17 @@ public class AutomaticImpl {
         
         while (iterator.hasNext()) {
             Division division = iterator.next();
-            bestPathPrint(division, game);
             playerTurn(game);
             
             if (player.getLife() <= 0) {
                 System.out.println("Tó Cruz died int the position: " + player.getDivision().getName());
+                bestPathPrint(division, game);
                 return;
             } else if (!iterator.hasNext()){
                 System.out.println("\n" + "Tó Cruz, successfully reached the target!");
             }
-            
+
+            bestPathPrint(division, game);
             player.setDivision(division);
             division.addPlayer(player);
         }
@@ -86,6 +90,15 @@ public class AutomaticImpl {
 
     private void enemyTurn(Game game, Player player) {
         for (Enemy enemy : player.getDivision().getEnemysInDivision()) {
+
+            if (enemyEncontrado != null && !enemyEncontrado.equals(enemy)) {
+                enemyEncontrado = enemy;
+                System.out.println("Player encontrou " + enemy.getName() + "!");
+            } else if (enemyEncontrado == null) {
+                enemyEncontrado = enemy;
+                System.out.println("Player encontrou " + enemy.getName() + "!");
+            }
+
             enemy.atack();
 
             if (enemy.getLife() <= 0) {
@@ -103,7 +116,6 @@ public class AutomaticImpl {
         
         double lessDamage = 1000;
         int size = entrance.size();
-        int distance = 0;
 
         for (int i = 0; i < size; i++) {
             Division currentDivision = entrance.dequeue();
@@ -121,9 +133,22 @@ public class AutomaticImpl {
 
     private void bestPathPrint(Division division, Game game) {
         result += " --> " + division.getName();
+        //reversePathPrint(division, game);
 
-        if (division.getTarget() != null) {
-            System.out.println("The best path was: " + result + " and Tó Cruz life was: " + game.getPlayer().getLife());
+        if (division.getTarget() != null || game.getPlayer().getLife() <= 0) {
+            System.out.println("The best path was: " + result + "\nTó Cruz life was: " + Math.max(game.getPlayer().getLife(), 0));
         }
     }
+
+    /*private void reversePathPrint(Division division, Game game) {
+        StackADT<String> divisionsPathReverse = mew linkedStack<>();
+
+        divisionsPathReverse.push(division.getName());
+
+        if (division.getTarget() != null || game.getPlayer().getLife() <= 0) {
+            while (!divisionsPathReverse.isEmpty()) {
+                result += " --> " + divisionsPathReverse.pop();
+            }
+        }
+    }*/
 }
