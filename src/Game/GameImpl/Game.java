@@ -225,17 +225,6 @@ public class Game {
             building.addDivision(div);
         }
     }
-    
-    public void startGame(Boolean isManual) throws IOException, ParseException, KeyNotFoundException {
-
-        if (isManual) {
-            Manual manual = new Manual();
-            manual.startGameManual(this, getMission());
-        } else {
-            AutomaticImpl automatic = new AutomaticImpl();
-            automatic.startGameAutomatic(this);
-        }
-    }
 
     public Building getBuilding() {
         return building;

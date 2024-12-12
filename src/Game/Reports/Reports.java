@@ -20,8 +20,8 @@ public class Reports {
     static OrderedListADT<Report> reports = new DoubleLinkedOrderedList<>();
 
 
-    public static void generateReport(Game game, Mission mission, Manual manual) {
-        Report newReport = new Report(manual.getPathDivisions(), enemiesKilled(game), itemPicked(game), game.getPlayer().getHaveTarget(), game.getPlayer().getLife(), mission.getCodMission(), mission.getVersion());
+    public static void generateReport(Manual manual) {
+        Report newReport = new Report(manual.getPathDivisions(), enemiesKilled(manual), itemPicked(manual), manual.getPlayer().getHaveTarget(), manual.getPlayer().getLife(), manual.getMission().getCodMission(), manual.getMission().getVersion());
 
         reports.add(newReport);
     }

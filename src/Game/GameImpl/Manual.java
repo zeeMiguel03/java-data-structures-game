@@ -6,12 +6,16 @@ import Collections.Queues.LinkedQueue;
 import Collections.Queues.QueueADT;
 import Game.Enums.typeItem;
 import Game.Interfaces.*;
+import Game.Json.KeyNotFoundException;
 import Game.Reports.Reports;
 import GameMenus.Menu;
+import org.json.simple.parser.ParseException;
+
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.Random;
 
-public class Manual {
+public class Manual extends Game {
     private Menu menu;
     private boolean isEndTrue;
     private boolean continuarNoEdificio;
@@ -21,7 +25,9 @@ public class Manual {
     /**
      * Constructor for Manual Mission class.
      */
-    public Manual() {
+    public Manual() throws IOException, ParseException, KeyNotFoundException {
+        super();
+        super.loadGame();
         menu = new Menu();
         isEndTrue = false;
         continuarNoEdificio = false;
@@ -30,45 +36,45 @@ public class Manual {
     }
     
 
-    public void startGameManual(Game game, Mission mission)  {
-        Player player = game.getPlayer();
+    public void startGameManual()  {
+        Player player = getPlayer();
         pathDivisions.addToRear(player.getDivision().getName());
 
         while (!isEndTrue) {
-            informationsAboutDivision(game);
+            informationsAboutDivision();
 
             if (!player.getDivision().getEnemysInDivision().isEmpty()) {
-                menu.menuDuringFase(game, this);
+                menu.menuDuringFase(this);
 
                 if (!player.getDivision().getEnemysInDivision().isEmpty() && !pegouKit && !continuarNoEdificio) {
-                    game.updateEnemy();
-                    game.getBuilding().updateConnections(player);
+                    updateEnemy();
+                    getBuilding().updateConnections(player);
                     enemyAtack(player.getDivision());
                 }
 
             } else if (player.getDivision().getEnemysInDivision().isEmpty() && !player.getDivision().getItemsInDivision().isEmpty() || player.getLife() < player.getMaxLife() && !player.getBackpack().isEmpty() || player.getDivision().isEntranceExit() && !continuarNoEdificio || player.getDivision().getTarget() != null) {
-                game.updateEnemy();
-                menu.menuDuringFase(game, this);
+                updateEnemy();
+                menu.menuDuringFase(this);
 
                 if (!pegouKit && !continuarNoEdificio) {
-                    game.updateEnemy();
-                    game.getBuilding().updateConnections(player);
+                    updateEnemy();
+                    getBuilding().updateConnections(player);
                 }
 
             } else {
                 pegouKit = false;
                 continuarNoEdificio = false;
-                game.updateEnemy();
-                game.getBuilding().updateConnections(player);
+                updateEnemy();
+                getBuilding().updateConnections(player);
 
                 if (!player.getDivision().getEnemysInDivision().isEmpty() && !pegouKit && !continuarNoEdificio) {
-                    game.updateEnemy();
-                    game.getBuilding().updateConnections(player);
+                    updateEnemy();
+                    getBuilding().updateConnections(player);
                     enemyAtack(player.getDivision());
                     continue;
                 }
 
-                menu.menuChangeDivision(game, player.getDivision(), this);
+                menu.menuChangeDivision(player.getDivision(), this);
                 pathDivisions.addToRear(player.getDivision().getName());
             }
 
@@ -80,7 +86,7 @@ public class Manual {
         if (!player.getHaveTarget()) {
             player.setLife(0);
         }
-        Reports.generateReport(game, mission, this);
+        Reports.generateReport(this);
     }
 
 
@@ -102,15 +108,15 @@ public class Manual {
         }
     }
 
-    protected void informationsAboutDivision (Game game){
-        game.informationGame();
+    protected void informationsAboutDivision (){
+        informationGame();
 
-        Iterator shortestPath = game.getBuilding().getDivisions().iteratorShortestPath(game.getPlayer().getDivision(), game.getTarget().getDivision());
+        Iterator shortestPath = getBuilding().getDivisions().iteratorShortestPath(getPlayer().getDivision(), getTarget().getDivision());
         Iterator shortestPathToKit = null;
         Item itemMaisProximo = null;
         int distancia = 0;
 
-        for (Item item : game.getItems()) {
+        for (Item item : getItems()) {
             if (item.getDivision() == null) {
                 continue;
             }
@@ -118,9 +124,9 @@ public class Manual {
             if (item.getType() == typeItem.KIT_LIFE){
                 if (itemMaisProximo == null) {
                     itemMaisProximo = item;
-                    distancia = game.getBuilding().getDivisions().getDistance(game.getPlayer().getDivision(), item.getDivision());
+                    distancia = getBuilding().getDivisions().getDistance(getPlayer().getDivision(), item.getDivision());
                 } else {
-                    int distanciaTmp = game.getBuilding().getDivisions().getDistance(game.getPlayer().getDivision(), item.getDivision());
+                    int distanciaTmp = getBuilding().getDivisions().getDistance(getPlayer().getDivision(), item.getDivision());
 
                     if (distanciaTmp < distancia) {
                         distancia = distanciaTmp;
@@ -130,7 +136,7 @@ public class Manual {
             }
         }
         if (itemMaisProximo != null) {
-            shortestPathToKit = game.getBuilding().getDivisions().iteratorShortestPath(game.getPlayer().getDivision(), itemMaisProximo.getDivision());
+            shortestPathToKit = getBuilding().getDivisions().iteratorShortestPath(getPlayer().getDivision(), itemMaisProximo.getDivision());
         }
 
         System.out.println("\n\n----------------Shortest Path To Target---------------------");
@@ -143,7 +149,7 @@ public class Manual {
             }
         }
 
-        if (game.getPlayer().getHaveTarget()) {
+        if (getPlayer().getHaveTarget()) {
             System.out.print("Already Have Target!");
         }
 
@@ -165,23 +171,23 @@ public class Manual {
 
         System.out.println("\n--------------------------------------------------\n\n");
 
-        if (!game.getPlayer().getDivision().getEnemysInDivision().isEmpty()) {
-            for (Enemy enemy : game.getPlayer().getDivision().getEnemysInDivision()) {
+        if (!getPlayer().getDivision().getEnemysInDivision().isEmpty()) {
+            for (Enemy enemy : getPlayer().getDivision().getEnemysInDivision()) {
                 System.out.println("Enemy: " + enemy.getName() + " Life: " + enemy.getLife());
             }
         }
 
-        if (!game.getPlayer().getDivision().getItemsInDivision().isEmpty()) {
-            for (Item item : game.getPlayer().getDivision().getItemsInDivision()) {
+        if (!getPlayer().getDivision().getItemsInDivision().isEmpty()) {
+            for (Item item : getPlayer().getDivision().getItemsInDivision()) {
                 System.out.println("Item: " + item.getType() + " Pontos: " + item.getPoints());
             }
         }
 
-        if (game.getPlayer().getDivision().getTarget() != null) {
-            System.out.println("Tu estás na divisão do alvo ---> Alvo: " + game.getPlayer().getDivision().getTarget().getType());
+        if (getPlayer().getDivision().getTarget() != null) {
+            System.out.println("Tu estás na divisão do alvo ---> Alvo: " + getPlayer().getDivision().getTarget().getType());
         }
         
-        System.out.println("Player: " + game.getPlayer().getName() + " Life: " + game.getPlayer().getLife() + " Division: " + game.getPlayer().getDivision().getName());
+        System.out.println("Player: " + getPlayer().getName() + " Life: " + getPlayer().getLife() + " Division: " + getPlayer().getDivision().getName());
     }
 
     public UnorderedListADT<String> getPathDivisions() {
