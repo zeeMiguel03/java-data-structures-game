@@ -41,34 +41,38 @@ public class MenuImpl implements Menu{
         do {
             File folder = new File("Json");
             File[] files = folder.listFiles();
-            QueueADT<String> filesQueue = new LinkedQueue<>();
 
             if (files != null && files.length > 0) {
                 System.out.println("----------Select a file:-----------------");
                 for (File file : files) {
-                    System.out.println("[" + ++count + "]" + ". " + file.getName());
-                    filesQueue.enqueue(file.getName());
+                    System.out.println("[" + (count + 1) + "]" + ". " + file.getName());
                 }
+
                 System.out.println("------------------------------------");
                 System.out.print("Option: ");
+            } else {
+                System.out.println("No files found.");
+                return;
             }
 
             try {
                 option = scanner.nextInt();
+
+                if (option < 1 || option > files.length) {
+                    System.out.println("Invalid option!");
+                } else {
+                    String file = files[option - 1].getName();
+                    JsonHandler.setFile(file);
+                    System.out.println("File selected: " + file);
+                    break;
+                }
+
             } catch (InputMismatchException e) {
                 System.out.println("Invalid option!");
-                menuSelectMissionImport();
                 scanner.next();
             }
 
-            String file = null;
-            for (int i = 0; i < option; i++) {
-                file = filesQueue.dequeue();
-            }
-
-            JsonHandler.setFile(file);
-
-        } while (option < 0 || option > count);
+        } while (true);
     }
 
     /**
