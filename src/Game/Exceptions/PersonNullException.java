@@ -5,21 +5,20 @@
 package Game.Exceptions;
 
 /**
+ * Custom exception to handle Person null errors in the game.
  *
- * @author Miguel
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
 public class PersonNullException extends RuntimeException {
-    /**
-     * Creates an PersonNullException with no message
-     */
-    public PersonNullException() {
-        super();
-    }
 
     /**
-     * Creates an PersonNullException with the specified message
+     * Creates an PersonNullException.
      *
-     * @param message the message to be displayed with the exception
+     * @param message the message to show
      */
     public PersonNullException(String message) {
         super(message);

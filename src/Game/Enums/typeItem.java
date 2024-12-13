@@ -5,11 +5,22 @@
 package Game.Enums;
 
 /**
- * @author Miguel Rocha
+ * Enumeration representing the types of items available in the game.
+ *
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
 public enum typeItem {
     KIT_LIFE, VEST;
-    
+
+    /**
+     * String representation of the item
+     *
+     * @return the item representation
+     */
     @Override
     public String toString() {
         switch(this) {

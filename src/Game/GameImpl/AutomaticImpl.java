@@ -5,14 +5,8 @@
 package Game.GameImpl;
 
 import Collections.Queues.QueueADT;
-import Collections.Stacks.LinkedStack;
-import Collections.Stacks.StackADT;
 import Game.Enums.typeItem;
-import Game.Exceptions.EndOfMissionException;
-import Game.Interfaces.Division;
-import Game.Interfaces.Enemy;
-import Game.Interfaces.Item;
-import Game.Interfaces.Player;
+import Game.Interfaces.*;
 import Game.Json.KeyNotFoundException;
 import org.json.simple.parser.ParseException;
 
@@ -20,24 +14,42 @@ import java.io.IOException;
 import java.util.Iterator;
 
 /**
- * @author Miguel Rocha
- * @author António Monteiro
+ *  A class representing a automatic mode in the game.
+ *
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
-public class AutomaticImpl extends Game{
+public class AutomaticImpl extends Game implements Automatic {
     private Division bestEntrance;
     private Division bestExit;
     private String result;
-    Enemy enemyEncontrado;
+    Enemy enemyFound;
     Division divisionExit;
-    
+
+    /**
+     * Constructor for the AutomaticImpl class.
+     *
+     * @throws IOException if an I/O error occurs.
+     * @throws ParseException if a parsing error occurs.
+     * @throws KeyNotFoundException if a required key is not found in the JSON data.
+     */
     public AutomaticImpl() throws IOException, ParseException, KeyNotFoundException {
         super();
         super.loadGame();
         this.result = " ";
-        enemyEncontrado = null;
+        enemyFound = null;
         divisionExit = null;
     }
-    
+
+    /**
+     * Starts the game automatically, where the player begins in the best entrance and navigates
+     * through the building until reach the target and doing is turns, and once he gets the target,
+     * he proceeds to the exit.
+     */
+    @Override
     public void startGameAutomatic() {
         Player player = getPlayer();
         Division divisionEntrance = getBestEntrance();
@@ -53,14 +65,14 @@ public class AutomaticImpl extends Game{
             
             if (player.getLife() <= 0) {
                 System.out.println("Tó Cruz died int the position: " + player.getDivision().getName());
-                bestPathPrint(division);
+                bestPathToTarget(division);
                 return;
             } else if (!iteratorEntrance.hasNext()){
                 System.out.println("\n" + "Tó Cruz, successfully reached the target!");
                 getPlayer().setHaveTarget();
             }
 
-            bestPathPrint(division);
+            bestPathToTarget(division);
             player.setDivision(division);
             division.addPlayer(player);
         }
@@ -85,9 +97,11 @@ public class AutomaticImpl extends Game{
             reversePathPrint(division);
             division.addPlayer(player);
         }
-
     }
-    
+
+    /**
+     * Represents the player turn, where  there are several scenarios.
+     */
     private void playerTurn() {
         Player player = getPlayer();
 
@@ -116,15 +130,19 @@ public class AutomaticImpl extends Game{
         }
     }
 
+    /**
+     * Represents the enemy's turn, where he can attack the player if he is on it
+     * division, or otherwise change the division.
+     */
     private void enemyTurn() {
         for (Enemy enemy : getPlayer().getDivision().getEnemysInDivision()) {
 
-            if (enemyEncontrado != null && !enemyEncontrado.equals(enemy)) {
-                enemyEncontrado = enemy;
-                System.out.println("Player encontrou " + enemy.getName() + "!");
-            } else if (enemyEncontrado == null) {
-                enemyEncontrado = enemy;
-                System.out.println("Player encontrou " + enemy.getName() + "!");
+            if (enemyFound != null && !enemyFound.equals(enemy)) {
+                enemyFound = enemy;
+                System.out.println("Player found " + enemy.getName() + "!");
+            } else if (enemyFound == null) {
+                enemyFound = enemy;
+                System.out.println("Player found " + enemy.getName() + "!");
             }
 
             enemy.atack();
@@ -138,7 +156,12 @@ public class AutomaticImpl extends Game{
         updateEnemy();
         getBuilding().updateConnections(getPlayer());
     }
-        
+
+    /**
+     * Returns the best entrance possible in the building.
+     *
+     * @return the best entrance division
+     */
     private Division getBestEntrance() {
         QueueADT<Division> entrance = getBuilding().getEntranceExit();
         
@@ -159,6 +182,11 @@ public class AutomaticImpl extends Game{
         return bestEntrance;
     }
 
+    /**
+     * Returns the best exit possible in the building.
+     *
+     * @return the best exit division
+     */
     private Division getBestExit() {
         QueueADT<Division> entrance = getBuilding().getEntranceExit();
 
@@ -179,18 +207,22 @@ public class AutomaticImpl extends Game{
         return bestExit;
     }
 
-    private void bestPathPrint(Division division) {
+    /**
+     * Returns the best Path to the target.
+     *
+     * @param division the actual Division
+     */
+    private void bestPathToTarget(Division division) {
         result += " --> " + division.getName();
-
-
-        /*if (division.getTarget() != null || getPlayer().getLife() <= 0) {
-            System.out.println("The best path was: " + result);
-        }*/
     }
 
+    /**
+     * Returns the best reverse Path until the exit.
+     *
+     * @param division the actual division
+     */
     private void reversePathPrint(Division division) {
         result += " --> " + division.getName();
-
 
         if (getPlayer().getHaveTarget() && getPlayer().getDivision().equals(divisionExit) || getPlayer().getLife() <= 0) {
             System.out.println("The best path was: " + result + "\nTó Cruz life was: " + Math.max(getPlayer().getLife(), 0));

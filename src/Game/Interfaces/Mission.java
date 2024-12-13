@@ -4,34 +4,28 @@
  */
 package Game.Interfaces;
 
-import Game.Json.KeyNotFoundException;
-import org.json.simple.parser.ParseException;
-
-import java.io.IOException;
-
 /**
- * @author Miguel Rocha
- * @author António Monteiro
+ * The interface representing for the target in the game.
+ *
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
 public interface Mission {
 
-    int setVersion() throws IOException, ParseException, KeyNotFoundException;
-
-    String setCodMission() throws IOException, ParseException, KeyNotFoundException;
-
     /**
      * Returns the code of the mission.
-     * 
+     *
      * @return the mission code
      */
-    public String getCodMission();
-    
+    String getCodMission();
+
     /**
      * Returns the version of the mission.
      * 
      * @return the version of the mission
      */
-    public int getVersion();
-    
-
+    int getVersion();
 }

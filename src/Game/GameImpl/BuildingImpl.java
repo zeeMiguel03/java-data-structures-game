@@ -13,8 +13,13 @@ import Game.Interfaces.*;
 import java.util.Iterator;
 
 /**
- * @author Miguel Rocha
- * @author António Monteiro
+ *  A class representing a building in the game.
+ *
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
 public class BuildingImpl implements Building {
     private GameNetworkADT<Division> divisions;
@@ -154,6 +159,11 @@ public class BuildingImpl implements Building {
         divisions.removeEdge(division1, division2);
     }
 
+    /**
+     * This method print the divisions who are entrance or exit.
+     *
+     * @return a queue with all the entrance or exit
+     */
     @Override
     public QueueADT<Division> getEntranceExit() {
 
@@ -176,7 +186,7 @@ public class BuildingImpl implements Building {
      * This method print the divisions with adjacent to a specific division.
      *
      * @param division the division to search adjacent
-     * @return 
+     * @return a queue with all the next possible divisions
      */
     @Override
     public QueueADT<Division> printNextDivisions(Division division) {
@@ -197,7 +207,7 @@ public class BuildingImpl implements Building {
     }
 
     /**
-     * Searchs for a specific division.
+     * Search for a specific division, by the name.
      *
      * @param name the division name to search for
      * @return the division if it was found
@@ -218,6 +228,11 @@ public class BuildingImpl implements Building {
         throw new ElementNotFoundException("Division with name " + name + " not found.");
     }
 
+    /**
+     * Updates the connections between divisions based on the player power.
+     *
+     * @param player the player whose power is used to update the connections
+     */
     @Override
     public void updateConnections(Player player) {
         Iterator<Division> iterator = divisions.iteratorBFS(firstDivision);
@@ -237,10 +252,8 @@ public class BuildingImpl implements Building {
                     for (Enemy enemy : currentDivision2.getEnemysInDivision()) {
                         if (player.getPower() > 0) {
                             weight1To2 += (int) (enemy.getPower() * (Math.ceil((float)enemy.getLife() / player.getPower()) - 1));
-
                         } else {
                             weight1To2 += player.getMaxLife();
-
                         }
                     }
                 }
@@ -248,21 +261,6 @@ public class BuildingImpl implements Building {
                 addConection(currentDivision, currentDivision2, weight1To2);
             }
         }
-    }
-    
-    @Override
-    public Division getItemDivision() {
-        Iterator<Division> iterator = divisions.iteratorBFS(firstDivision);
-        
-        while (iterator.hasNext()) {
-            Division division = iterator.next();
-            
-            if (division.getTarget() != null) {
-                return division;
-            }   
-        }
-        
-        return null;
     }
 }
 

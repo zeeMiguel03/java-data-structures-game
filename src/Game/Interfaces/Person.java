@@ -13,66 +13,59 @@ public interface Person {
      * 
      * @return person name
      */
-    public String getName();
+    String getName();
     
     /**
      * Sets the name of the person.
      * 
      * @param name name to set
      */
-    public void setName(String name);
+    void setName(String name);
     
     /**
      * Returns the position of the person.
      * 
      * @return person position
      */
-    public Division getDivision();
+    Division getDivision();
     
     /**
      * Sets the division of the person.
      * 
      * @param division person division
      */
-    public void setDivision(Division division);
+    void setDivision(Division division);
     
     /**
      * Return the Power of the person.
      * 
      * @return person power.
      */
-    public int getPower();
+    int getPower();
     
     /**
      * Sets the power of the person.
      * 
      * @param power the person power
      */
-    public void setPower(int power);
+    void setPower(int power);
 
     /**
      * Returns the life of the person.
      *
      * @return the player life
      */
-    public int getLife();
+    int getLife();
 
     /**
      * Sets the life of the person.
      *
      * @param life life to set
      */
-    public void setLife(int life);
+    void setLife(int life);
 
     /**
      * Atacks.
      */
-    public abstract void atack();
-
-    /**
-     * Change the divison of the person
-     *
-     * @param division where the person will go
-     */
-    public void changeDivision(Division division);
+    void atack();
 }

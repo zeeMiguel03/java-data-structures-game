@@ -68,6 +68,13 @@ public class GameNetwork<T> extends Network<T> implements GameNetworkADT<T> {
         return adjMatrix[index1][index2] != Double.POSITIVE_INFINITY;
     }
 
+    /**
+     * Calculates the distance between two vertices.
+     *
+     * @param whereStartVertex the starting vertex for the search
+     * @param whereEndVertex the target vertex for the search
+     * @return the number of edges between the two vertices, or -1 if no path exists.
+     */
     @Override
     public int getDistance(T whereStartVertex, T whereEndVertex) {
         int startIndex = getIndex(whereEndVertex);

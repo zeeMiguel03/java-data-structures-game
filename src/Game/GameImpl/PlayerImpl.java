@@ -7,13 +7,17 @@ package Game.GameImpl;
 import Collections.Stacks.LinkedStack;
 import Collections.Stacks.StackADT;
 import Game.Enums.typeItem;
-import Game.Exceptions.FullBackPackException;
-import Game.Exceptions.ItemNullException;
 import Game.Interfaces.*;
 import java.util.Iterator;
 
 /**
- * @author Miguel Rocha
+ *  A class representing the player in the game.
+ *
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
 public class PlayerImpl extends PersonImpl implements Player {
     private static final int MAX_LIFE = 100;
@@ -117,7 +121,8 @@ public class PlayerImpl extends PersonImpl implements Player {
     }
 
     /**
-     * Pick the item and save it or use it.
+     * Search for medic kits in the player division, if the player backpack isn´t full he
+     * puts the item on the backpack and removes the item of the division.
      */
     @Override
     public void pickItem() {
@@ -125,9 +130,9 @@ public class PlayerImpl extends PersonImpl implements Player {
             if (item.getType().equals(typeItem.KIT_LIFE)) {
                 if (backpack.size() < MAX_ITEMS) {
                     backpack.push(item);
+                    getDivision().removeItem(item);
+                    item.setDivision(null);
                 }
-                getDivision().removeItem(item);
-                item.setDivision(null);
             }
         }
     }

@@ -8,7 +8,13 @@ import Game.Interfaces.Division;
 import Game.Interfaces.Person;
 
 /**
- * @author Miguel Rocha
+ *  A class representing the person in the game.
+ *
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
 public abstract class PersonImpl implements Person {
     private String name;
@@ -130,16 +136,6 @@ public abstract class PersonImpl implements Person {
      */
     @Override
     public abstract void atack();
-
-    /**
-     * Change the divison of the person.
-     *
-     * @param division where the person will go
-     */
-    @Override
-    public void changeDivision(Division division) {
-        setDivision(division);
-    }
 
     /**
      * String representation of the person.

@@ -10,9 +10,12 @@ import Game.Interfaces.Item;
 
 /**
  * Implementation of the item interface, representing a item in the game.
- * 
- * @author Miguel Rocha
- * @author António Monteiro
+ *
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
 public class ItemImpl implements Item {
     private typeItem type;

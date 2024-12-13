@@ -18,9 +18,18 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+/*
+ * Nome: António Miguel Cunha Monteiro
+ * Número: 8230230
+ * Turma: T3
+ *
+ * Nome: José Miguel Monteiro da Rocha
+ * Número: 8230238
+ * Turma: T3
+ */
+
 /**
  *
- * @author Miguel
  */
 public class Menu {
 
@@ -117,8 +126,8 @@ public class Menu {
             
             switch (option) {
                 case 1:
-                    Manual manual = new Manual();
-                    menuStartGame(manual);
+                    ManualImpl manualImpl = new ManualImpl();
+                    menuStartGame(manualImpl);
                     break;
                 case 2:
                     AutomaticImpl automatic = new AutomaticImpl();
@@ -140,7 +149,7 @@ public class Menu {
         scanner.close();
     }
 
-    public void menuStartGame(Manual manual) throws IOException, ParseException, KeyNotFoundException {
+    public void menuStartGame(ManualImpl manualImpl) throws IOException, ParseException, KeyNotFoundException {
         int option = 0;
         QueueADT<Division> divisoes;
         Division division = null;
@@ -148,7 +157,7 @@ public class Menu {
         QueueADT<Division> divisionsEntranceExit;
 
         do {
-            divisionsEntranceExit = manual.getBuilding().getEntranceExit();
+            divisionsEntranceExit = manualImpl.getBuilding().getEntranceExit();
             divisoes = new LinkedQueue<>();
             int divisionsInQueue = divisionsEntranceExit.size();
             int count = 0;
@@ -169,7 +178,7 @@ public class Menu {
                 option = scanner.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("Invalid character!");
-                menuStartGame(manual);
+                menuStartGame(manualImpl);
                 scanner.next();
             }
 
@@ -184,8 +193,8 @@ public class Menu {
                 for (int i = 0; i < option; i++) {
                     division = divisoes.dequeue();
                 }
-                manual.updatePlayer(division);
-                manual.startGameManual();
+                manualImpl.updatePlayer(division);
+                manualImpl.startGameManual();
             } else {
                 System.out.println("Invalid option. Please select a valid option.");
             }
@@ -193,7 +202,7 @@ public class Menu {
         } while (option < 0 || option > nDivisoesInDivision);
     }
 
-    public void menuChangeDivision(Division division, Manual manual) {
+    public void menuChangeDivision(Division division, ManualImpl manualImpl) {
         int option = 0;
 
         QueueADT<Division> divisoes;
@@ -202,7 +211,7 @@ public class Menu {
         do {
             System.out.println("----------- Menu Mission -----------");
             
-            divisoes = manual.getBuilding().printNextDivisions(division);
+            divisoes = manualImpl.getBuilding().printNextDivisions(division);
             
             System.out.println("[0] Leave Game");
             System.out.println("------------------------------------");
@@ -212,7 +221,7 @@ public class Menu {
                 option = scanner.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("Invalid character!");
-                menuChangeDivision(division, manual);
+                menuChangeDivision(division, manualImpl);
                 scanner.next();
             }
 
@@ -223,10 +232,10 @@ public class Menu {
                     division = divisoes.dequeue();
                 }
 
-                manual.updatePlayer(division);
+                manualImpl.updatePlayer(division);
                 
             } else if (option == 0) {
-                manual.setIsEndTrue();
+                manualImpl.setIsEndTrue();
                 System.out.println("Leaving...");
 
             } else {
@@ -238,7 +247,7 @@ public class Menu {
 
     }
 
-    public void menuDuringFase(Manual manual) {
+    public void menuDuringFase(ManualImpl manualImpl) {
         int option = 0;
         int counter;
         Division divPlayer;
@@ -246,8 +255,8 @@ public class Menu {
         QueueADT<String> opcoes;
 
         do {
-            divPlayer = manual.getPlayer().getDivision();
-            player =  manual.getPlayer();
+            divPlayer = manualImpl.getPlayer().getDivision();
+            player =  manualImpl.getPlayer();
             counter = 0;
             opcoes = new LinkedQueue<>();
             System.out.println("----------- Menu Mission -----------");
@@ -303,12 +312,12 @@ public class Menu {
                 option = scanner.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("Invalid character!");
-                menuDuringFase(manual);
+                menuDuringFase(manualImpl);
                 scanner.next();
             }
 
             if (option == 0) {
-                manual.setIsEndTrue();
+                manualImpl.setIsEndTrue();
             }
 
             String opcao = null;
@@ -327,7 +336,7 @@ public class Menu {
                         break;
 
                     case "continuar":
-                        manual.setContinuarNoEdificio();
+                        manualImpl.setContinuarNoEdificio();
                         break;
 
                     case "colete":
@@ -340,7 +349,7 @@ public class Menu {
 
                     case "pegar":
                         player.pickItem();
-                        manual.setPegouKit();
+                        manualImpl.setPegouKit();
                         break;
 
                     case "kit":
@@ -348,7 +357,7 @@ public class Menu {
                         break;
 
                     case "sair":
-                        manual.setIsEndTrue();
+                        manualImpl.setIsEndTrue();
                         break;
 
                 }

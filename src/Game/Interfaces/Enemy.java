@@ -15,5 +15,5 @@ public interface Enemy extends Person{
      * 
      * @return the initial division
      */
-    public Division getInicialDivision();
+    Division getInicialDivision();
 }

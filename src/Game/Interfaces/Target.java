@@ -15,26 +15,26 @@ public interface Target {
      * 
      * @return target type
      */
-    public typeTarget getType();
+    typeTarget getType();
     
     /**
      * Sets the type of the item.
      * 
      * @param type item to set
      */
-    public void setType(typeTarget type);
+    void setType(typeTarget type);
     
     /**
      * Return the division of the target.
      * 
      * @return the division
      */
-    public Division getDivision();
+    Division getDivision();
     
     /**
      * Sets the division of the target.
      * 
      * @param division the division to set
      */
-    public void setDivision(Division division);
+    void setDivision(Division division);
 }

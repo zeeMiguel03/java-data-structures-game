@@ -21,49 +21,49 @@ public interface Division {
      * 
      * @return division name
      */
-    public String getName();
+    String getName();
     
     /**
      * Sets the division name.
      * 
      * @param name name to set
      */
-    public void setName(String name);
+    void setName(String name);
     
     /**
      * Returns if the division is a entrance or a exit.
      * 
      * @return if the division is a entrance or a exit
      */
-    public boolean getEntranceExit();
+    boolean getEntranceExit();
     
     /**
      * Sets if the division is a entrance or a exit.
      * 
      * @param entranceExit option to set
      */
-    public void setEntranceExit(boolean entranceExit);
+    void setEntranceExit(boolean entranceExit);
     
     /**
      * Return the enemys in the division.
      * 
      * @return the enemys in the division
      */
-    public UnorderedListADT<Enemy> getEnemysInDivision();
+    UnorderedListADT<Enemy> getEnemysInDivision();
 
     /**
      * Returns the item in the division.
      * 
      * @return the items in division
      */
-    public UnorderedListADT<Item> getItemsInDivision();
+    UnorderedListADT<Item> getItemsInDivision();
 
     /**
      * Return true if the division is a division that you can use as input or output
      * 
      * @return true if the division is a division that you can use as input or output
      */
-    public boolean isEntranceExit();
+    boolean isEntranceExit();
 
     /**
      * Adds a new enemy to the division.
@@ -101,7 +101,7 @@ public interface Division {
      * @param item item to add in division
      * @throws ItemNullException if the person in null
      */
-    public void addItem(Item item) throws ItemNullException;
+    void addItem(Item item) throws ItemNullException;
     
     /**
      * Remove a item of the division.
@@ -109,26 +109,26 @@ public interface Division {
      * @param item item to remove 
      * @throws ItemNullException if the person in null
      */
-    public void removeItem(Item item) throws ItemNullException;
+    void removeItem(Item item) throws ItemNullException;
     
     /**
      * Returns the target of the division.
      * 
      * @return the division target
      */
-    public Target getTarget();
+    Target getTarget();
     
     /**
      * Sets the target of the division.
      * 
      * @param target the division target
      */
-    public void setTarget(Target target);
+    void setTarget(Target target);
 
     /**
      * Returns the player.
      * 
      * @return the player
      */
-    public Player getPlayer();
+    Player getPlayer();
 }

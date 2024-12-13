@@ -12,8 +12,13 @@ import org.json.simple.parser.ParseException;
 import java.io.IOException;
 
 /**
- * @author Miguel Rocha
- * @author António Monteiro
+ *  A class representing a mission in the game.
+ *
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
 public class MissionImpl implements Mission {
     private String codMission;
@@ -22,17 +27,24 @@ public class MissionImpl implements Mission {
     /**
      * Creates a new MissionImpl class.
      * 
-     * @throws IOException
-     * @throws ParseException
-     * @throws KeyNotFoundException 
+     * @throws IOException if an I/O error occurs.
+     * @throws ParseException if a parsing error occurs.
+     * @throws KeyNotFoundException if a required key is not found in the JSON data.
      */
     public MissionImpl() throws IOException, ParseException, KeyNotFoundException {
         version = setVersion();
         codMission = setCodMission();
     }
 
-    @Override
-    public int setVersion() throws IOException, ParseException, KeyNotFoundException {
+    /**
+     * Sets the version of the mission by retrieving it from a JSON file.
+     *
+     * @return the version of the mission as an integer.
+     * @throws IOException if an I/O error occurs.
+     * @throws ParseException if a parsing error occurs.
+     * @throws KeyNotFoundException if a required key is not found in the JSON data.
+     */
+    private int setVersion() throws IOException, ParseException, KeyNotFoundException {
         return JsonHandler.getInt("versao");
     }
 
@@ -44,8 +56,7 @@ public class MissionImpl implements Mission {
      * @throws ParseException       if a parsing error occurs.
      * @throws KeyNotFoundException if a required key is not found in the JSON data.
      */
-    @Override
-    public String setCodMission() throws IOException, ParseException, KeyNotFoundException {
+    private String setCodMission() throws IOException, ParseException, KeyNotFoundException {
         return (String) JsonHandler.getFromFile("cod-missao");
     }
     

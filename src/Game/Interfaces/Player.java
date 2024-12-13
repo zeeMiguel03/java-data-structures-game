@@ -5,8 +5,6 @@
 package Game.Interfaces;
 
 import Collections.Stacks.StackADT;
-import Game.Exceptions.FullBackPackException;
-import Game.Exceptions.ItemNullException;
 
 /**
  * @author Miguel Rocha
@@ -24,42 +22,42 @@ public interface Player extends Person{
      *
      * @return the backpack
      */
-    public StackADT<Item> getBackpack();
+    StackADT<Item> getBackpack();
 
     /**
      * Sets the player backpack.
      *
      * @param itens itens to set
      */
-    public void setBackpack(StackADT<Item> itens);
+    void setBackpack(StackADT<Item> itens);
 
     /**
      * Return if the player have the target
      *
      * @return return if the player have the target
      */
-    public boolean getHaveTarget();
+    boolean getHaveTarget();
 
     /**
      * Use the last item of the backpack.
      */
-    public void useMedicKit();
+    void useMedicKit();
 
     /**
      * Pick the item and save it or use it.
      */
-    public void pickItem();
+    void pickItem();
 
     /**
      * Player use the vest if the division have one.
      */
-    public void useVest();
+    void useVest();
 
     /**
      * Returns the player max life
      * 
      * @return player max life
      */
-    public int getMaxLife();
+    int getMaxLife();
 
 }

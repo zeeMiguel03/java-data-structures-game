@@ -2,8 +2,6 @@ package Game.GameImpl;
 
 import Collections.Lists.LinkedUnorderedList;
 import Collections.Lists.UnorderedListADT;
-import Collections.Queues.LinkedQueue;
-import Collections.Queues.QueueADT;
 import Game.Enums.typeItem;
 import Game.Interfaces.*;
 import Game.Json.KeyNotFoundException;
@@ -13,9 +11,8 @@ import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.Random;
 
-public class Manual extends Game {
+public class ManualImpl extends Game implements Manual{
     private Menu menu;
     private boolean isEndTrue;
     private boolean continuarNoEdificio;
@@ -25,7 +22,7 @@ public class Manual extends Game {
     /**
      * Constructor for Manual Mission class.
      */
-    public Manual() throws IOException, ParseException, KeyNotFoundException {
+    public ManualImpl() throws IOException, ParseException, KeyNotFoundException {
         super();
         super.loadGame();
         menu = new Menu();
@@ -34,8 +31,12 @@ public class Manual extends Game {
         pegouKit = false;
         pathDivisions = new LinkedUnorderedList<>();
     }
-    
 
+
+    /**
+     * Starts the game manually.
+     */
+    @Override
     public void startGameManual()  {
         Player player = getPlayer();
         pathDivisions.addToRear(player.getDivision().getName());
@@ -92,26 +93,44 @@ public class Manual extends Game {
         Reports.generateReport(this);
     }
 
-
+    /**
+     * Sets the game end to true.
+     */
+    @Override
     public void setIsEndTrue() {
         isEndTrue = true;
     }
 
+    /**
+     * Sets true that the player will remain in the building.
+     */
+    @Override
     public void setContinuarNoEdificio() {
         continuarNoEdificio = true;
     }
 
+    /**
+     * Sets true that the player has picked up a kit.
+     */
+    @Override
     public void setPegouKit() {
         pegouKit = true;
     }
 
+    /*
+    * Executes enemy attacks in the specified division.
+    * @param division the division where the player is.
+    */
     private void enemyAtack(Division division) {
         for (Enemy enemy : division.getEnemysInDivision()) {
             enemy.atack();
         }
     }
 
-    protected void informationsAboutDivision (){
+    /**
+     * Displays information about the current division and about the rest, including paths to the target and kits.
+     */
+    private void informationsAboutDivision (){
         informationGame();
         Iterator shortestPath = null;
 
@@ -196,6 +215,12 @@ public class Manual extends Game {
         System.out.println("Player: " + getPlayer().getName() + " Life: " + getPlayer().getLife() + " Division: " + getPlayer().getDivision().getName());
     }
 
+    /**
+     * returns the divisions traversed during the game.
+     *
+     * @return an unordered list containing the names of the divisions
+     */
+    @Override
     public UnorderedListADT<String> getPathDivisions() {
         return pathDivisions;
     }

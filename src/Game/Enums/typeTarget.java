@@ -5,11 +5,22 @@
 package Game.Enums;
 
 /**
- * @author Miguel Rocha
+ * Enumeration representing the types of targets available in the game.
+ *
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
 public enum typeTarget {
     CHEMICAL, PERSON, GUN;
-    
+
+    /**
+     * String representation of the target
+     *
+     * @return the target representation
+     */
     @Override
     public String toString() {
         switch(this) {

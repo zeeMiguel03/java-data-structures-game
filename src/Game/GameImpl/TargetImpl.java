@@ -9,8 +9,13 @@ import Game.Interfaces.Division;
 import Game.Interfaces.Target;
 
 /**
- * @author Miguel Rocha
- * @author António Monteiro
+ *  A class representing a target in the game.
+ *
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
 public class TargetImpl implements Target {
     private typeTarget type;

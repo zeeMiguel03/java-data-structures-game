@@ -7,10 +7,12 @@ package Game.Interfaces;
 import Game.Enums.typeItem;
 
 /**
- * Implementation of the Item interface, representing a item in the game.
- * 
- * @author Miguel Rocha
- * @author António Monteiro
+ * Implementation of the Item interface, representing a item in the game. *
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
 public interface Item {  
     
@@ -19,40 +21,40 @@ public interface Item {
      * 
      * @return the item division
      */
-    public Division getDivision();
+    Division getDivision();
     
     /**
      * Sets the item division.
      * 
      * @param division the division to set
      */
-    public void setDivision(Division division);
+    void setDivision(Division division);
     
     /**
      * Return the point of the item.
      * 
      * @return the points of the item
      */
-    public int getPoints();
+    int getPoints();
     
     /**
      * Sets the points of the item
      * 
      * @param points the points to set
      */
-    public void setPoints(int points);
+    void setPoints(int points);
     
     /**
      * Sets the type of the item.
      * 
      * @param type item type.
      */
-    public void setType(typeItem type);
+    void setType(typeItem type);
     
     /**
      * Return the type of the item.
      * 
      * @return type of the item
      */
-    public typeItem getType();
+    typeItem getType();
 }

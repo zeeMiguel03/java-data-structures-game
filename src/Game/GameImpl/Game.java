@@ -260,38 +260,24 @@ public class Game {
     }
 
     public void informationGame() {
-        System.out.println("""
-                       |--------------------------------------------------------------------------|
-                       |            |                                                             |
-                       |                                   Heliporto                              |
-                       |   Escada 6 |-------------------------------------------------------------|
-                       |            |                |          |           |                     |
-                       |            |    Camaratas              |               Armazém           |
-                       |------------|----------------|          | Escada 5  |---------------------|
-                       |                             |          |           |             |  E    | 
-                       |        Laboratório                                   Escritorio 3   S    |
-                       |-----------------------------|----------|-----------|-------------|  C    | 
-                       |            |                                                        A    |
-                       |  WC                    Corredor 2                                |  DA 4 |
-                       |------------|--   ------------------------------------------------|-------|
-                       |                             |                                    |       |
-                       |        Segurança                       Hall                           E  |
-        |--------------|-----------------------------|------------------------------------|    S  |
-        |              |                             |                                    |    C  |
-        |                       Escritório 1         |          Escritório 2                   A  |
-        |  Escada      |----------------------   ----|--------------   -------------------|    D  |
-        |              |            |                                                     |    A  |
-        |    De        |                                Corredor 1                             3  |
-        |              |  Escada 2  |-----------------------------------------------------|-------|
-        |  Emergência  |            |                                                     |   E   |
-        |              |                                Porteiro                              S   |
-        |              |------------|-----------------------------------------------------|   C   |
-        |              |                                                                  |   A   |
-        |                                            Garagem                                  DA 1|
-        |--------------|------------------------------------------------------------------|-------|
-                """);
-        System.out.println("--------------------------------------------------");
+        Iterator<Division> adj = building.getDivisions().iteratorAdjacent(getPlayer().getDivision());
 
+        System.out.println(String.format("""
+                    |--------------------------------------|
+                    |          You are here                |
+                    |              %s                             
+                    |--------------------------------------|
+                    """, getPlayer().getDivision().getName()));
+        while (adj.hasNext()) {
+            System.out.println(String.format("""
+                    |--------------------------------------|
+                    |         You can go here              |
+                    |              %s                             
+                    |--------------------------------------|
+                    """, adj.next().getName()));
+        }
+
+        System.out.println("--------------------------------------------------\n");
         for (Enemy enemy : getEnemies()) {
             if (enemy.getLife() > 0)
                 System.out.println("Enemy: " + enemy.getName() + " Life: " + enemy.getLife() + " Division: " + enemy.getDivision().getName());

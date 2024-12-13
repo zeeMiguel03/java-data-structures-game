@@ -5,21 +5,20 @@
 package Game.Exceptions;
 
 /**
+ * Custom exception to handle division null errors in the game.
  *
- * @author Miguel
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
 public class DivisionNullException extends RuntimeException {
-    /**
-     * Creates an DivisionNullException with no message
-     */
-    public DivisionNullException() {
-        super();
-    }
 
     /**
-     * Creates an DivisionNullException with the specified message
+     * Creates an DivisionNullException.
      *
-     * @param message the message to be displayed with the exception
+     * @param message the message to show
      */
     public DivisionNullException(String message) {
         super(message);

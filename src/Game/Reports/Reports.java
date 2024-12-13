@@ -3,25 +3,22 @@ package Game.Reports;
 import Collections.Lists.DoubleLinkedOrderedList;
 import Collections.Lists.OrderedListADT;
 import Game.GameImpl.Game;
-import Game.GameImpl.Manual;
+import Game.GameImpl.ManualImpl;
 import Game.Interfaces.Enemy;
 import Game.Interfaces.Item;
-import Game.Interfaces.Mission;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Iterator;
 
 public class Reports {
     static OrderedListADT<Report> reports = new DoubleLinkedOrderedList<>();
 
 
-    public static void generateReport(Manual manual) {
-        Report newReport = new Report(manual.getPathDivisions(), enemiesKilled(manual), itemPicked(manual), manual.getPlayer().getHaveTarget(), manual.getPlayer().getLife(), manual.getMission().getCodMission(), manual.getMission().getVersion());
+    public static void generateReport(ManualImpl manualImpl) {
+        Report newReport = new Report(manualImpl.getPathDivisions(), enemiesKilled(manualImpl), itemPicked(manualImpl), manualImpl.getPlayer().getHaveTarget(), manualImpl.getPlayer().getLife(), manualImpl.getMission().getCodMission(), manualImpl.getMission().getVersion());
 
         reports.add(newReport);
     }
