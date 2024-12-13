@@ -35,17 +35,17 @@ public class MenuImpl implements Menu{
      */
     @Override
     public void menuSelectMissionImport() {
-        int count = 0;
         int option = 0;
 
         do {
+            int count = 0;
             File folder = new File("Json");
             File[] files = folder.listFiles();
 
             if (files != null && files.length > 0) {
                 System.out.println("----------Select a file:-----------------");
                 for (File file : files) {
-                    System.out.println("[" + (count + 1) + "]" + ". " + file.getName());
+                    System.out.println("[" + (++count) + "]" + ". " + file.getName());
                 }
 
                 System.out.println("------------------------------------");
