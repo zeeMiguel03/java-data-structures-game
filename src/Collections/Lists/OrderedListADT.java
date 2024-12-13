@@ -16,5 +16,5 @@ public interface OrderedListADT<T> extends ListADT<T> {
      *
      * @param element the element to be added to this list
      */
-    public void add (T element);
+    void add (T element);
 }

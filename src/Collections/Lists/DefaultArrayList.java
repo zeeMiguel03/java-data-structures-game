@@ -21,7 +21,7 @@ public abstract class DefaultArrayList<T> implements ListADT<T> {
     protected int modCount;
     
     /**
-     * Creates an new DefaultArrayList with a specific initial capacity.
+     * Creates a new DefaultArrayList with a specific initial capacity.
      * @param initial the initial capacity
      */
     public DefaultArrayList(int initial) {
@@ -31,14 +31,14 @@ public abstract class DefaultArrayList<T> implements ListADT<T> {
     }
     
     /**
-     * Creates an new DefaultArrayList with the default initial capacity.
+     * Creates a new DefaultArrayList with the default initial capacity.
      */
     public DefaultArrayList() {
         this(INITIAL_CAPACITY);
     }
        
     /**
-     * This method strats by checking if the counter is equals 0 if it is, he throws a an
+     * This method starts by checking if the counter is equals 0 if it is, he throws a
      * EmptyCollectionException, otherwise the method shifts the elements to the right place, 
      * and delete the first element and then returns the removed element.
      * 
@@ -66,7 +66,7 @@ public abstract class DefaultArrayList<T> implements ListADT<T> {
     }
 
     /**
-     * This method strats by checking if the counter is equals 0 if it is, he throws a an
+     * This method starts by checking if the counter is equals 0 if it is, he throws a an
      * EmptyCollectionException, the method shifts the elements to the right place, 
      * and delete the last element and then returns the removed element.
      * 
@@ -88,7 +88,7 @@ public abstract class DefaultArrayList<T> implements ListADT<T> {
     }
 
     /**
-     * This method starts by checking if the counter is equals to 0 if it is, he throws a an
+     * This method starts by checking if the counter is equals to 0 if it is, he throws a
      * EmptyCollectionException, then he calls the method getElementIndex, to get the element index 
      * to remove, if the index is null he throws an ElementNotFoundException, otherwise
      * the method shifts the elements to the right place, and delete the element
@@ -124,7 +124,7 @@ public abstract class DefaultArrayList<T> implements ListADT<T> {
     }
     
     /**
-     * This method search a element in the Arraylist and return the element position.
+     * This method search for a element in the Arraylist and return the element position.
      * 
      * @param element the element to search
      * @return the element position
