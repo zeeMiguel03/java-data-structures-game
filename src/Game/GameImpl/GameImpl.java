@@ -309,19 +309,20 @@ public class GameImpl implements Game {
     public void informationGame() {
         Iterator<Division> adj = building.getDivisions().iteratorAdjacent(getPlayer().getDivision());
 
-        System.out.println(String.format("""
-                    |--------------------------------------|
-                    |          You are here                |
-                    |              %s                             
-                    |--------------------------------------|
-                    """, getPlayer().getDivision().getName()));
+        System.out.println(String.format(
+                        "|--------------------------------------|\n" +
+                        "|          You are here                |\n" +
+                        "|              %s                      \n" +
+                        "|--------------------------------------|",
+                         getPlayer().getDivision().getName()));
+
         while (adj.hasNext()) {
-            System.out.println(String.format("""
-                    |--------------------------------------|
-                    |         You can go here              |
-                    |              %s                             
-                    |--------------------------------------|
-                    """, adj.next().getName()));
+            System.out.println(String.format(
+                            "|--------------------------------------|\n" +
+                            "|         You can go here              |\n" +
+                            "|              %s                      \n" +
+                            "|--------------------------------------|",
+                            adj.next().getName()));
         }
 
         System.out.println("--------------------------------------------------\n");
