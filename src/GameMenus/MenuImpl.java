@@ -205,8 +205,9 @@ public class MenuImpl implements Menu{
                 option = scanner.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("Invalid character!");
-                menuStartGame(manual);
                 scanner.next();
+                option = -1;
+                continue;
             }
 
             switch (option) {
@@ -255,8 +256,9 @@ public class MenuImpl implements Menu{
                 option = scanner.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("Invalid character!");
-                menuChangeDivision(division, manual);
                 scanner.next();
+                option = -1;
+                continue;
             }
 
 
@@ -352,8 +354,9 @@ public class MenuImpl implements Menu{
                 option = scanner.nextInt();
             } catch (InputMismatchException e) {
                 System.out.println("Invalid character!");
-                menuDuringFase(manualImpl);
                 scanner.next();
+                option = -1;
+                continue;
             }
 
             if (option == 0) {
