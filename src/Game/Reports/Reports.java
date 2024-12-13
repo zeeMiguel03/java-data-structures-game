@@ -16,7 +16,6 @@ import java.util.Iterator;
 public class Reports {
     static OrderedListADT<Report> reports = new DoubleLinkedOrderedList<>();
 
-
     public static void generateReport(ManualImpl manualImpl) {
         Report newReport = new Report(manualImpl.getPathDivisions(), enemiesKilled(manualImpl), itemPicked(manualImpl), manualImpl.getPlayer().getHaveTarget(), manualImpl.getPlayer().getLife(), manualImpl.getMission().getCodMission(), manualImpl.getMission().getVersion());
 

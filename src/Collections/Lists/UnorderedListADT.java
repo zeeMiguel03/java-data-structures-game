@@ -6,9 +6,6 @@ package Collections.Lists;
 
 import Collections.Exceptions.ElementNotFoundException;
 
-/**
- * @author Miguel Rocha
- */
 public interface UnorderedListADT<T> extends ListADT<T>{
     
     /**

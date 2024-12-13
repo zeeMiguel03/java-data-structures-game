@@ -75,6 +75,14 @@ public class Menu {
 
         } while (option < 0 || option > count);
     }
+
+    /**
+     * Menu to select the version of a mission based on the imported JSON file.
+     *
+     * @throws IOException if an I/O error occurs
+     * @throws ParseException if a parsing error occurs
+     * @throws KeyNotFoundException if a required key is not found in the JSON data
+     */
     public void menuSelectVersion() throws IOException, ParseException, KeyNotFoundException {
         int option = 0;
 
@@ -101,6 +109,15 @@ public class Menu {
 
         }while (option < 0 || option > 1);
     }
+
+    /**
+     * Main menu to user select what type of mission he wants to do, or se reports, export data
+     * or leave the program.
+     *
+     * @throws IOException if an I/O error occurs
+     * @throws ParseException if a parsing error occurs
+     * @throws KeyNotFoundException if a required key is not found in the JSON data
+     */
     public void mainMenu() throws IOException, ParseException, KeyNotFoundException {
         int option;
         Scanner scanner = new Scanner(System.in);
@@ -149,6 +166,14 @@ public class Menu {
         scanner.close();
     }
 
+    /**
+     * Menu to start a game in manual mode.
+     *
+     * @param manualImpl the manual mission
+     * @throws IOException if an I/O error occurs
+     * @throws ParseException if a parsing error occurs
+     * @throws KeyNotFoundException if a required key is not found in the JSON data
+     */
     public void menuStartGame(ManualImpl manualImpl) throws IOException, ParseException, KeyNotFoundException {
         int option = 0;
         QueueADT<Division> divisoes;
@@ -202,6 +227,12 @@ public class Menu {
         } while (option < 0 || option > nDivisoesInDivision);
     }
 
+    /**
+     *
+     *
+     * @param division the actual division
+     * @param manualImpl the manual division
+     */
     public void menuChangeDivision(Division division, ManualImpl manualImpl) {
         int option = 0;
 
@@ -362,7 +393,6 @@ public class Menu {
 
                 }
             }
-
 
         } while (option < 0 || option > counter);
     }

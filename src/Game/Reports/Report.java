@@ -1,6 +1,5 @@
 package Game.Reports;
 
-import Collections.Lists.OrderedListADT;
 import Collections.Lists.UnorderedListADT;
 
 public class Report implements Comparable<Report>{

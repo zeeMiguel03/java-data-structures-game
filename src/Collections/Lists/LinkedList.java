@@ -11,7 +11,16 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 /**
- * @author Miguel Rocha
+ * This List provides methods to efficiently manipulate elements,
+ * such as adding,removing, accessing them, and iterate them.
+ *
+ * @param <T> The type of elements to put in the list.
+ *
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
 public abstract class LinkedList<T> implements ListADT<T> {
     protected LinearNode<T> head, tail;

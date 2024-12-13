@@ -4,10 +4,6 @@
  */
 package Collections.Lists;
 
-/**
- *
- * @author Miguel
- */
 public interface OrderedListADT<T> extends ListADT<T> {
     
     /**

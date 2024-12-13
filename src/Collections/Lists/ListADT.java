@@ -8,11 +8,6 @@ import Collections.Exceptions.ElementNotFoundException;
 import Collections.Exceptions.EmptyCollectionException;
 import java.util.Iterator;
 
-
-
-/**
- * @author Miguel Rocha
- */
 public interface ListADT<T> extends Iterable<T> {
 
     /**
