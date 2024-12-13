@@ -9,17 +9,18 @@ package Collections.Exceptions;
  * @author Miguel
  */
 public class EmptyCollectionException extends RuntimeException {
+
     /**
-     * Creates an EmptyCollectionException with no message
+     * Creates an EmptyCollectionException
      */
     public EmptyCollectionException() {
         super();
     }
 
     /**
-     * Creates an EmptyCollectionException with the specified message
+     * Creates an EmptyCollectionException
      *
-     * @param message the message to be displayed with the exception
+     * @param message the message
      */
     public EmptyCollectionException(String message) {
         super(message);

@@ -92,7 +92,8 @@ public class ManualImpl extends GameImpl implements Manual{
             }
 
         }
-        if (!player.getHaveTarget()) {
+
+        if (!player.getHaveTarget() || !player.getDivision().isEntranceExit()) {
             player.setLife(0);
             System.out.println("Mission Failed");
         } else {

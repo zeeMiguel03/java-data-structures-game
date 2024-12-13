@@ -9,17 +9,18 @@ package Collections.Exceptions;
  * @author Miguel
  */
 public class NoComparableException extends RuntimeException {
+
     /**
-     * Creates an NoComparableException with no message
+     * Creates an NoComparableException
      */
     public NoComparableException() {
         super();
     }
 
     /**
-     * Creates an NoComparableException with the specified message
+     * Creates an NoComparableException
      *
-     * @param message the message to be displayed with the exception
+     * @param message the message
      */
     public NoComparableException(String message) {
         super(message);

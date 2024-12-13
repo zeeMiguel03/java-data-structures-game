@@ -18,9 +18,9 @@ public class ElementNotFoundException extends RuntimeException{
     }
 
     /**
-     * Creates an ElementNotFoundException with the specified message
+     * Creates an ElementNotFoundException
      *
-     * @param message the message to be displayed with the exception
+     * @param message the message
      */
     public ElementNotFoundException(String message) {
         super(message);
