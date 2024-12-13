@@ -16,7 +16,7 @@ import java.util.Iterator;
  * Author: José Miguel Monteiro da Rocha
  * Number: 8230238
  */
-public class DoublyLinkedList<T> implements ListADT<T> {
+public abstract class DoublyLinkedList<T> implements ListADT<T> {
     protected DoubleNode<T> head;
     protected DoubleNode<T> tail;
     protected int count;
