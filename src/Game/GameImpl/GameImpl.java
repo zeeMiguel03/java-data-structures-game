@@ -334,12 +334,12 @@ public class GameImpl implements Game {
 
         for (Item item : getItems()) {
             if (item.getDivision() != null) {
-                System.out.println("Item: " + item.getType() + " Pontos: " + item.getPoints() + " Division: " + item.getDivision().getName());
+                System.out.println("Item: " + item.getType() + " Points: " + item.getPoints() + " Division: " + item.getDivision().getName());
             }
         }
 
         if (getTarget() != null && !getPlayer().getHaveTarget()) {
-            System.out.println("Alvo: " + getTarget().getType() + " Division: " + getTarget().getDivision().getName());
+            System.out.println("Target: " + getTarget().getType() + " Division: " + getTarget().getDivision().getName());
         }
     }
 
