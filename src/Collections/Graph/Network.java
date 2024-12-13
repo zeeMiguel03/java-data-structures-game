@@ -271,12 +271,8 @@ public class Network<T> extends Graph<T> implements NetworkADT<T> {
      * of the vertices along the shortest path between two vertices,
      * starting at the given vertex.
      *
-     * @Author João Oliveira
-     * @Source https://github.com/joaopsoliveira03
-     * Repository: https://github.com/joaopsoliveira03-school/estg-ed/blob/main/src/main/java/Collections/Graphs/Network.java
-     *
-     * @param startIndex the index of the vertex to begin the traversal from
-     * @param targetIndex the index of the target vertex
+     * @param startVertex the index of the vertex to begin the traversal from
+     * @param targetVertex the index of the target vertex
      * @return an iterator that performs a traversal of the indices of
      *         the vertices along the shortest path
      */
@@ -349,11 +345,6 @@ public class Network<T> extends Graph<T> implements NetworkADT<T> {
      * Returns an iterator that performs a traversal of the shortest path
      * between two vertices, starting at the given vertex.
      *
-     *
-     * @Source https://www.w3schools.com/dsa/dsa_algo_graphs_dijkstra.php
-     * @Source https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-in-java-using-priorityqueue/
-     * @Source https://www.softwaretestinghelp.com/dijkstras-algorithm-in-java/
-     *
      * @param startVertex the vertex to begin the traversal from
      * @param targetVertex the target vertex
      * @return an iterator that performs a traversal of the shortest path
@@ -363,10 +354,36 @@ public class Network<T> extends Graph<T> implements NetworkADT<T> {
         return iteratorShortestPathNet(startVertex,targetVertex);
     }
 
+    @Override
+    public double shortestPathWeight(T startVertex, T targetVertex) {
+        double result = 0;
+        int startIndex = getIndex(startVertex);
+        int targetIndex = getIndex(targetVertex);
 
+        if (!indexIsValid(startIndex) || !indexIsValid(targetIndex)) {
+            return Double.POSITIVE_INFINITY;
+        }
+
+        int index1, index2;
+        Iterator<T> it = iteratorShortestPath(startVertex, targetVertex);
+
+        if (it.hasNext()) {
+            index1 = getIndex(it.next());
+        } else {
+            return Double.POSITIVE_INFINITY;
+        }
+
+        while (it.hasNext()) {
+            index2 = getIndex(it.next());
+            result += adjMatrix[index1][index2];
+            index1 = index2;
+        }
+
+        return result;
+    }
 
     /**
-     * Expands the capacity of the Graph.
+     * Expands the capacity of the Network.
      */
     @Override
     protected void expandCapacity() {
@@ -420,34 +437,6 @@ public class Network<T> extends Graph<T> implements NetworkADT<T> {
                 result += (int) adjMatrix[i][j] + "   ";
             }
             result += "\n";
-        }
-
-        return result;
-    }
-
-    @Override
-    public double shortestPathWeight(T startVertex, T targetVertex) {
-        double result = 0;
-        int startIndex = getIndex(startVertex);
-        int targetIndex = getIndex(targetVertex);
-
-        if (!indexIsValid(startIndex) || !indexIsValid(targetIndex)) {
-            return Double.POSITIVE_INFINITY;
-        }
-
-        int index1, index2;
-        Iterator<T> it = iteratorShortestPath(startVertex, targetVertex);
-
-        if (it.hasNext()) {
-            index1 = getIndex(it.next());
-        } else {
-            return Double.POSITIVE_INFINITY;
-        }
-
-        while (it.hasNext()) {
-            index2 = getIndex(it.next());
-            result += adjMatrix[index1][index2];
-            index1 = index2;
         }
 
         return result;

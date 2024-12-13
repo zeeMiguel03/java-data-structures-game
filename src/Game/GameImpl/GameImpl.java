@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 package Game.GameImpl;
 
 import Collections.Lists.LinkedUnorderedList;
@@ -22,10 +18,15 @@ import java.util.Iterator;
 import java.util.Random;
 
 /**
+ * This class implements the interface Game.
  *
- * @author Miguel
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
-public class Game {
+public class GameImpl implements Game {
     private Mission mission;
     private Building building;
     private UnorderedListADT<Division> divisions;
@@ -38,14 +39,13 @@ public class Game {
     /**
      * Game class Constructor.
      */
-    public Game() {
+    public GameImpl() {
         ToCruz = new PlayerImpl(null);
         building = new BuildingImpl();
         divisions = new LinkedUnorderedList<>();
         enemies = new LinkedUnorderedList<>();
         items = new LinkedUnorderedList<>();
         target = null;
-
     }
 
     /**
@@ -55,6 +55,7 @@ public class Game {
      * @throws ParseException       if a parsing error occurs
      * @throws KeyNotFoundException if a required key is not found in the JSON data
      */
+    @Override
     public void loadGame() throws IOException, ParseException, KeyNotFoundException {
         createDivisions();
         setEnemy();
@@ -226,18 +227,42 @@ public class Game {
         }
     }
 
+    /**
+     * Returns the Game Building.
+     *
+     * @return the building
+     */
+    @Override
     public Building getBuilding() {
         return building;
     }
-    
+
+    /**
+     * Returns the Game Player.
+     *
+     * @return the player
+     */
+    @Override
     public Player getPlayer() {
         return ToCruz;
     }
 
+    /**
+     * Returns the game enemies.
+     *
+     * @return the enemies.
+     */
+    @Override
     public UnorderedListADT<Enemy> getEnemies() {
         return enemies;
     }
 
+    /**
+     * Update the player position.
+     *
+     * @param division the player next division
+     */
+    @Override
     public void updatePlayer(Division division) {
         if (ToCruz.getDivision() != null) {
             ToCruz.getDivision().removePlayer(ToCruz);
@@ -247,18 +272,40 @@ public class Game {
         division.addPlayer(ToCruz);
     }
 
+    /**
+     * Return the items of the game.
+     *
+     * @return the items in game
+     */
+    @Override
     public UnorderedListADT<Item> getItems() {
         return items;
     }
 
+    /**
+     * Return the game target.
+     *
+     * @return the game target
+     */
+    @Override
     public Target getTarget() {
         return target;
     }
 
+    /**
+     * Return the game mission.
+     *
+     * @return the mission.
+     */
+    @Override
     public Mission getMission() {
         return mission;
     }
 
+    /**
+     * Represents all the information of the game by division.
+     */
+    @Override
     public void informationGame() {
         Iterator<Division> adj = building.getDivisions().iteratorAdjacent(getPlayer().getDivision());
 
@@ -278,6 +325,7 @@ public class Game {
         }
 
         System.out.println("--------------------------------------------------\n");
+
         for (Enemy enemy : getEnemies()) {
             if (enemy.getLife() > 0)
                 System.out.println("Enemy: " + enemy.getName() + " Life: " + enemy.getLife() + " Division: " + enemy.getDivision().getName());
@@ -292,9 +340,13 @@ public class Game {
         if (getTarget() != null && !getPlayer().getHaveTarget()) {
             System.out.println("Alvo: " + getTarget().getType() + " Division: " + getTarget().getDivision().getName());
         }
-
     }
 
+    /**
+     * This method manages enemy movements on the build, ensuring their positions are adjusted
+     * according to specific conditions.
+     */
+    @Override
     public void updateEnemy() {
         Random rd = new Random();
         int movimento;

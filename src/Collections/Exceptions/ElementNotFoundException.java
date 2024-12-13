@@ -9,8 +9,9 @@ package Collections.Exceptions;
  * @author Miguel
  */
 public class ElementNotFoundException extends RuntimeException{
+
     /**
-     * Creates an ElementNotFoundException with no message
+     * Creates an ElementNotFoundException
      */
     public ElementNotFoundException() {
         super();

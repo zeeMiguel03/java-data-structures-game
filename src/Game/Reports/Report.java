@@ -2,71 +2,70 @@ package Game.Reports;
 
 import Collections.Lists.UnorderedListADT;
 
-public class Report implements Comparable<Report>{
-    private String codMission;
-    private int version;
-    private static int simulationManual;
-    private int idSimulation;
-    private UnorderedListADT<String> path;
-    private int enemiesKilled;
-    private int itemsPicked;
-    private boolean targetOut;
-    private int lifePlayer;
+/**
+ * Implementation of the Report interface.
+ *
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
+ */
+public interface Report {
 
-    public Report(UnorderedListADT<String> path, int enemiesKilled, int itemsPicked, boolean targetOut, int lifePlayer, String codMission, int version) {
-        this.path = path;
-        idSimulation = ++simulationManual;
-        this.enemiesKilled = enemiesKilled;
-        this.itemsPicked = itemsPicked;
-        this.targetOut = targetOut;
-        this.codMission = codMission;
-        this.version = version;
-        this.lifePlayer = lifePlayer;
-    }
+    /**
+     * Return the id of the mission.
+     *
+     * @return the mission id
+     */
+    int getIdSimulation();
 
-    public int getIdSimulation() {
-        return idSimulation;
-    }
+    /**
+     * Returns the code of the mission.
+     *
+     * @return the mission code
+     */
+    String getCodMission();
 
-    public String getCodMission() {
-        return codMission;
-    }
+    /**
+     * Returns the version of the mission.
+     *
+     * @return the mission version
+     */
+    int getVersion();
 
-    public int getVersion() {
-        return version;
-    }
+    /**
+     * Returns the player life of the mission.
+     *
+     * @return player life
+     */
+    int getLifePlayer();
 
-    public int getLifePlayer() {
-        return lifePlayer;
-    }
+    /**
+     * Returns the path of the mission.
+     *
+     * @return the mission path
+     */
+    UnorderedListADT<String> getPath();
 
-    public static int getSimulationManual() {
-        return simulationManual;
-    }
+    /**
+     * Returns the number of enemies killed.
+     *
+     * @return the number of killed enemies
+     */
+    int getEnemiesKilled();
 
-    public UnorderedListADT<String> getPath() {
-        return path;
-    }
+    /**
+     * Returns the number of the items picked.
+     *
+     * @return the number of picked items
+     */
+    int getItemsPicked();
 
-    public int getEnemiesKilled() {
-        return enemiesKilled;
-    }
-
-    public int getItemsPicked() {
-        return itemsPicked;
-    }
-
-    public boolean isTargetOut() {
-        return targetOut;
-    }
-
-    @Override
-    public int compareTo(Report other) {
-        return Integer.compare(other.lifePlayer, this.lifePlayer);
-    }
-
-    @Override
-    public String toString() {
-        return "Number Simulation: " + idSimulation + " CodMissao: " + codMission + " Version: " + version + " Player Life: " + lifePlayer + " Enemies Killed By Player: " + enemiesKilled + " Items Picked: " + itemsPicked + " Target Out successfully: " + targetOut;
-    }
+    /**
+     * Returns if the target is out.
+     *
+     * @return true if he is out, false otherwise
+     */
+    boolean isTargetOut();
 }

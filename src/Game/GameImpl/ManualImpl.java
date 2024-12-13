@@ -6,14 +6,23 @@ import Game.Enums.typeItem;
 import Game.Interfaces.*;
 import Game.Json.KeyNotFoundException;
 import Game.Reports.Reports;
-import GameMenus.Menu;
+import GameMenus.MenuImpl;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.util.Iterator;
 
-public class ManualImpl extends Game implements Manual{
-    private Menu menu;
+/**
+ * This class implements the interface manual.
+ *
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
+ */
+public class ManualImpl extends GameImpl implements Manual{
+    private MenuImpl menu;
     private boolean isEndTrue;
     private boolean continuarNoEdificio;
     private boolean pegouKit;
@@ -25,13 +34,12 @@ public class ManualImpl extends Game implements Manual{
     public ManualImpl() throws IOException, ParseException, KeyNotFoundException {
         super();
         super.loadGame();
-        menu = new Menu();
+        menu = new MenuImpl();
         isEndTrue = false;
         continuarNoEdificio = false;
         pegouKit = false;
         pathDivisions = new LinkedUnorderedList<>();
     }
-
 
     /**
      * Starts the game manually.
@@ -50,7 +58,7 @@ public class ManualImpl extends Game implements Manual{
                 if (!player.getDivision().getEnemysInDivision().isEmpty() && !pegouKit && !continuarNoEdificio) {
                     updateEnemy();
                     getBuilding().updateConnections(player);
-                    enemyAtack(player.getDivision());
+                    enemyAttack(player.getDivision());
                 }
 
             } else if (player.getDivision().getEnemysInDivision().isEmpty() && !player.getDivision().getItemsInDivision().isEmpty() || player.getLife() < player.getMaxLife() && !player.getBackpack().isEmpty() || player.getDivision().isEntranceExit() && !continuarNoEdificio || player.getDivision().getTarget() != null) {
@@ -71,7 +79,7 @@ public class ManualImpl extends Game implements Manual{
                 if (!player.getDivision().getEnemysInDivision().isEmpty() && !pegouKit && !continuarNoEdificio) {
                     updateEnemy();
                     getBuilding().updateConnections(player);
-                    enemyAtack(player.getDivision());
+                    enemyAttack(player.getDivision());
                     continue;
                 }
 
@@ -105,7 +113,7 @@ public class ManualImpl extends Game implements Manual{
      * Sets true that the player will remain in the building.
      */
     @Override
-    public void setContinuarNoEdificio() {
+    public void setContinueInBuilding() {
         continuarNoEdificio = true;
     }
 
@@ -113,15 +121,15 @@ public class ManualImpl extends Game implements Manual{
      * Sets true that the player has picked up a kit.
      */
     @Override
-    public void setPegouKit() {
+    public void setPickedKit() {
         pegouKit = true;
     }
 
-    /*
+    /**
     * Executes enemy attacks in the specified division.
     * @param division the division where the player is.
     */
-    private void enemyAtack(Division division) {
+    private void enemyAttack(Division division) {
         for (Enemy enemy : division.getEnemysInDivision()) {
             enemy.atack();
         }

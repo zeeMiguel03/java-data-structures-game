@@ -3,6 +3,15 @@ package Game.GameImpl;
 import Game.Interfaces.Division;
 import Game.Interfaces.Enemy;
 
+/**
+ * This class implements the interface Enemy and extends the PersonImpl
+ *
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
+ */
 public class EnemyImpl extends PersonImpl implements Enemy {
     private Division inicialDivision;
     

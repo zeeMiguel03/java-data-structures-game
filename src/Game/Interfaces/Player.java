@@ -7,8 +7,13 @@ package Game.Interfaces;
 import Collections.Stacks.StackADT;
 
 /**
- * @author Miguel Rocha
- * @author António Monteiro
+ *  A interface representing of the player in the game.
+ *
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
 public interface Player extends Person{
 

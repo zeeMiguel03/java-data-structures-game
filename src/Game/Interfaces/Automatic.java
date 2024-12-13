@@ -9,7 +9,7 @@ package Game.Interfaces;
  * Author: José Miguel Monteiro da Rocha
  * Number: 8230238
  */
-public interface Automatic {
+public interface Automatic extends Game{
 
     /**
      * Starts the game automatically, where the player begins in the best entrance and navigates

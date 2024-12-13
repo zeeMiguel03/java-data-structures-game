@@ -12,9 +12,12 @@ import Game.Interfaces.*;
 
 /**
  * Implementation of the Division interface, representing a division in the game.
- * 
- * @author Miguel Rocha
- * @author António Monteiro
+ *
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
 public class DivisionImpl implements Division {
     private static final int MAX_ITENS = 2;
@@ -245,6 +248,12 @@ public class DivisionImpl implements Division {
         this.target = target;
     }
 
+    /**
+     * Compares this DivisionImpl name with another object.
+     *
+     * @param obj obj to compare to
+     * @return true if they are equals, false otherwise
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -253,7 +262,12 @@ public class DivisionImpl implements Division {
 
         return this.name.equals(other.name);
     }
-    
+
+    /**
+     * String representation of the division.
+     *
+     * @return the string representation
+     */
     @Override
     public String toString() {
         return this.name;

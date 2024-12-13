@@ -5,8 +5,13 @@
 package Game.Interfaces;
 
 /**
- * @author Miguel Rocha
- * @author António Monteiro
+ *  A interface representing of the enemy in the game.
+ *
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
 public interface Enemy extends Person{
 

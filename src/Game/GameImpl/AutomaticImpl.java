@@ -22,7 +22,7 @@ import java.util.Iterator;
  * Author: José Miguel Monteiro da Rocha
  * Number: 8230238
  */
-public class AutomaticImpl extends Game implements Automatic {
+public class AutomaticImpl extends GameImpl implements Automatic {
     private Division bestEntrance;
     private Division bestExit;
     private String result;

@@ -8,7 +8,13 @@ import Collections.Graph.NetworkADT;
 import java.util.Iterator;
 
 /**
- * @author Miguel Rocha
+ * GameNetworkADT defines the interface to the game network.
+ *
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
 public interface GameNetworkADT<T> extends NetworkADT<T> {
 
