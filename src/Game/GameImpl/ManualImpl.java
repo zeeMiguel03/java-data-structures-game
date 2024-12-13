@@ -99,6 +99,7 @@ public class ManualImpl extends GameImpl implements Manual{
         } else {
             System.out.println("Mission Passed");
         }
+
         Reports.generateReport(this);
     }
 
@@ -146,11 +147,13 @@ public class ManualImpl extends GameImpl implements Manual{
         if (getTarget().getDivision() != null) {
             shortestPath = getBuilding().getDivisions().iteratorShortestPath(getPlayer().getDivision(), getTarget().getDivision());
         }
+
         Iterator shortestPathToKit = null;
         Item itemMaisProximo = null;
         int distancia = 0;
 
         for (Item item : getItems()) {
+
             if (item.getDivision() == null) {
                 continue;
             }
@@ -169,6 +172,7 @@ public class ManualImpl extends GameImpl implements Manual{
                 }
             }
         }
+
         if (itemMaisProximo != null) {
             shortestPathToKit = getBuilding().getDivisions().iteratorShortestPath(getPlayer().getDivision(), itemMaisProximo.getDivision());
         }

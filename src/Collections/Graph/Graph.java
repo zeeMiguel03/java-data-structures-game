@@ -13,14 +13,18 @@ import Collections.Stacks.LinkedStack;
 import java.util.Iterator;
 
 /**
- * @author Miguel Rocha
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
 
 /**
  * Graph represents an adjacency matrix implementation of a graph.
  */
 public class Graph<T> implements GraphADT<T> {
-    protected final int DEFAULT_CAPACITY = 2;
+    protected final int DEFAULT_CAPACITY = 10;
     protected int numVertices; 
     protected boolean[][] adjMatrix; 
     protected T[] vertices; 
@@ -270,13 +274,14 @@ public class Graph<T> implements GraphADT<T> {
     }
 
     /**
-     * Returns an iterator that performs a shortest path traversal
-     * between two vertices in the graph.
+     * Returns an iterator that contains the shortest path between
+     * the two vertices.
      *
-     * @param startVertex the vertex to start the traversal from
-     * @param targetVertex the vertex to reach
-     * @return an iterator containing the shortest path from startVertex to targetVertex
-     * @throws ElementNotFoundException if any of the vertices are not found
+     * This method was created from several sources mentioned in the READ.ME
+     *
+     * @param startVertex the starting vertex
+     * @param targetVertex the ending vertex
+     * @return an iterator that contains the shortest path between the two vertices
      */
     @Override
     public Iterator<T> iteratorShortestPath(T startVertex, T targetVertex) throws ElementNotFoundException {
@@ -289,6 +294,7 @@ public class Graph<T> implements GraphADT<T> {
 
         LinkedQueue<Integer> traversalQueue = new LinkedQueue<>();
         ArrayUnorderedList<T> resultList = new ArrayUnorderedList<>();
+
         boolean[] visited = new boolean[numVertices];
         int[] previous = new int[numVertices];
 
@@ -304,7 +310,7 @@ public class Graph<T> implements GraphADT<T> {
             int current = traversalQueue.dequeue();
 
             if (current == targetIndex) {
-                break; // Path to target found
+                break;
             }
 
             for (int i = 0; i < numVertices; i++) {
@@ -321,7 +327,9 @@ public class Graph<T> implements GraphADT<T> {
         }
 
         LinkedStack<T> pathStack = new LinkedStack<>();
+
         int current = targetIndex;
+
         while (current != -1) {
             pathStack.push(vertices[current]);
             current = previous[current];
@@ -333,8 +341,6 @@ public class Graph<T> implements GraphADT<T> {
 
         return resultList.iterator();
     }
-
-
 
     /**
      * Verify if the index is valid.

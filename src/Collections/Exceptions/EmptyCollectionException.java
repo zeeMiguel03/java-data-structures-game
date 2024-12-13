@@ -5,8 +5,11 @@
 package Collections.Exceptions;
 
 /**
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
  *
- * @author Miguel
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
 public class EmptyCollectionException extends RuntimeException {
 
