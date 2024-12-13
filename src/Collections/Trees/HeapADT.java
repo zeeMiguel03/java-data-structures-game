@@ -6,9 +6,6 @@ package Collections.Trees;
 
 import Collections.Exceptions.EmptyCollectionException;
 
-/**
- * @author Miguel Rocha
- */
 
 public interface HeapADT<T> extends BinaryTreeADT<T> {
     

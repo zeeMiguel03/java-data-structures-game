@@ -8,12 +8,16 @@ import Collections.Exceptions.ElementNotFoundException;
 import Collections.Exceptions.EmptyCollectionException;
 
 /**
- * @author Miguel Rocha
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
 public class DoubleLinkedUnorderedList<T> extends DoublyLinkedList<T> implements UnorderedListADT<T> {
     
     /**
-     * Creates an new DoubleLinkedUnorderedList.
+     * Creates a new DoubleLinkedUnorderedList.
      */
     public DoubleLinkedUnorderedList() {
         super();
@@ -61,8 +65,12 @@ public class DoubleLinkedUnorderedList<T> extends DoublyLinkedList<T> implements
         modCount++;
     }
 
-    //verificar se esta certo
-    @Override
+    /**
+     * Adds the specified element after the specified target.
+     *
+     * @param element the element to be added after the target
+     * @param target the target is the item that the element will be added after
+     */   @Override
     public void addAfter(T element, T target) throws EmptyCollectionException, ElementNotFoundException {
         if (count == 0) {
             throw new EmptyCollectionException("Empty list!");

@@ -9,8 +9,11 @@ import Collections.Exceptions.EmptyCollectionException;
 import java.util.Iterator;
 
 /**
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
  *
- * @author Miguel
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
 public class CircularDoubleLinkedList<T> implements ListADT<T> {
     private DoubleNode<T> head;

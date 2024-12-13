@@ -30,7 +30,7 @@ public class Graph<T> implements GraphADT<T> {
     protected T[] vertices; 
     
     /**
-     * Creates a empty graph.
+     * Creates an empty graph.
      */
     public Graph() {
         this.numVertices = 0;
@@ -122,16 +122,9 @@ public class Graph<T> implements GraphADT<T> {
      */
     @Override
     public void addEdge(T vertex1, T vertex2) {
-        addEdge(getIndex(vertex1), getIndex(vertex2));
-    }
-    
-    /**
-     * Inserts an edge between two vertices of the graph.
-     *
-     * @param index1 the first index
-     * @param index2 the second index
-     */
-    public void addEdge (int index1, int index2) {
+        int index1 = getIndex(vertex1);
+        int index2 = getIndex(vertex2);
+
         if (indexIsValid(index1) && indexIsValid(index2)) {
             adjMatrix[index1][index2] = true;
             adjMatrix[index2][index1] = true;
@@ -277,7 +270,7 @@ public class Graph<T> implements GraphADT<T> {
      * Returns an iterator that contains the shortest path between
      * the two vertices.
      *
-     * This method was created from several sources mentioned in the READ.ME
+     * This method was created with a help from several sources mentioned in the READ.ME
      *
      * @param startVertex the starting vertex
      * @param targetVertex the ending vertex

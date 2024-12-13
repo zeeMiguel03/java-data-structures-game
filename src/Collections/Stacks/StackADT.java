@@ -6,10 +6,6 @@ package Collections.Stacks;
 
 import Collections.Exceptions.EmptyCollectionException;
 
-/**
- *
- * @author Miguel
- */
 public interface StackADT<T>{
     
     /** Adds one element to the top of this stack.

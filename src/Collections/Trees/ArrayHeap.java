@@ -7,14 +7,21 @@ package Collections.Trees;
 import Collections.Exceptions.EmptyCollectionException;
 
 /**
- * @author Miguel Rocha
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
 
 /**
  * ArrayHeap provides an array implementation of a minheap.
  */
 public class ArrayHeap<T> extends ArrayBinaryTree<T> implements HeapADT<T>  {
-    
+
+    /**
+     * Constructor for ArrayHeap
+     */
     public ArrayHeap() {
         super();
     }

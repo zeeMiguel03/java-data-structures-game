@@ -5,13 +5,17 @@
 package Collections.Stacks;
 
 /**
- * @author Miguel Rocha
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
 public class LinearNode<T>{
     private T element;
     private LinearNode<T> next;
     
-    /*
+    /**
      * Creates an empty node.
      */
     public LinearNode() {

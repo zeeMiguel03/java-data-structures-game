@@ -13,6 +13,13 @@ import Collections.Trees.PriorityQueue;
 
 import java.util.Iterator;
 
+/**
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
+ */
 
 /**
  * Network represents an adjacency matrix implementation of a network.
@@ -102,7 +109,7 @@ public class Network<T> extends Graph<T> implements NetworkADT<T> {
         int index2 = getIndex(vertex2);
 
         if (index1 == -1 || index2 == -1) {
-            throw new ElementNotFoundException("One or both vertices not found.");
+            throw new ElementNotFoundException("Vertex not found!.");
         }
 
         if (indexIsValid(index1) && indexIsValid(index2)) {
@@ -257,11 +264,11 @@ public class Network<T> extends Graph<T> implements NetworkADT<T> {
         return resultList.iterator();
     }
 
-
-
     /**
      * Returns an iterator that performs a traversal of the shortest path
      * between two vertices, starting at the given vertex.
+     *
+     * This method was created with a help from several sources mentioned in the READ.ME
      *
      * @param startVertex the vertex to begin the traversal from
      * @param targetVertex the target vertex
@@ -279,13 +286,11 @@ public class Network<T> extends Graph<T> implements NetworkADT<T> {
         int[] previous = new int[numVertices];
         boolean[] visited = new boolean[numVertices];
 
-
         for (int i = 0; i < numVertices; i++) {
             distances[i] = Double.POSITIVE_INFINITY;
             previous[i] = -1;
             visited[i] = false;
         }
-
 
         distances[startIndex] = 0;
 

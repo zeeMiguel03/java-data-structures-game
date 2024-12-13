@@ -6,10 +6,6 @@ package Collections.Stacks;
 
 import Collections.Exceptions.EmptyCollectionException;
 
-/**
- *
- * @author Miguel
- */
 public interface SmackStackADT<T> extends StackADT<T> {
     
     /**

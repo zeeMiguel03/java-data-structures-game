@@ -5,14 +5,17 @@
 package Collections.Trees;
 
 /**
- * @author migue Rocha
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
 
 /**
-* PriorityQueueNode represents a node in a priority queue
-* containing a comparable object, order, and a priority value.
-*
-*/
+ * PriorityQueueNode represents a node in a priority queue
+ * containing a comparable object, order, and a priority value.
+ */
 public class PriorityQueueNode<T> implements Comparable<PriorityQueueNode> {
     private static int nextorder = 0;
     private int priority;

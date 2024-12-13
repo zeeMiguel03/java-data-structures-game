@@ -9,7 +9,6 @@ import java.io.*;
 public class JsonHandler {
     private static String FILE_NAME = "./Json/";
 
-
     /**
      * gets a section from the json file
      * @param section that we want to get

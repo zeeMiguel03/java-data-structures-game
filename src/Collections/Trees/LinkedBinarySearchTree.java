@@ -8,7 +8,11 @@ import Collections.Exceptions.ElementNotFoundException;
 import Collections.Exceptions.EmptyCollectionException;
 
 /**
- * @author Miguel Rocha
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
 
 public class LinkedBinarySearchTree<T> extends LinkedBinaryTree<T> implements BinarySearchTreeADT<T> {
@@ -160,7 +164,7 @@ public class LinkedBinarySearchTree<T> extends LinkedBinaryTree<T> implements Bi
     }
     
     /**
-     * Removes all occurences of the specified element from this tree.
+     * Removes all occurrences of the specified element from this tree.
      *
      * @param targetElement the element that the list will
      * have all instances of it removed

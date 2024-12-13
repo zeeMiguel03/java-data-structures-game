@@ -7,8 +7,13 @@ package Collections.Queues;
 import Collections.Exceptions.EmptyCollectionException;
 
 /**
- * @author Miguel Rocha
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
+
 public class CircularArrayQueue<T> implements QueueADT<T> {
     private static final int INITAL_CAPACITY = 100;
     private int front, rear, count;

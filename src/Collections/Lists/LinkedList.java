@@ -11,11 +11,6 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 /**
- * This List provides methods to efficiently manipulate elements,
- * such as adding,removing, accessing them, and iterate them.
- *
- * @param <T> The type of elements to put in the list.
- *
  * Author: António Miguel Cunha Monteiro
  * Number: 8230230
  *

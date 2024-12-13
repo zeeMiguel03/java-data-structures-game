@@ -3,10 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Collections.Trees;
+
 /**
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
  *
- * @author migue
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
+
 public class PriorityQueue<T> extends ArrayHeap<PriorityQueueNode<T>> {
     
     /**

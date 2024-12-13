@@ -7,8 +7,13 @@ package Collections.Stacks;
 import Collections.Exceptions.EmptyCollectionException;
 
 /**
- * @author Miguel Rocha
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
+
 public class ArrayStack<T> implements StackADT<T> {
     private static final int INITIAL_CAPACITY = 100;
     

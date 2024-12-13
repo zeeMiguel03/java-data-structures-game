@@ -7,7 +7,11 @@ package Collections.Lists;
 import Collections.Exceptions.ElementNotFoundException;
 
 /**
- * @author Miguel Rocha
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
 
 public class ArrayUnorderedList<T> extends DefaultArrayList<T> implements UnorderedListADT<T> {

@@ -8,7 +8,11 @@ import Collections.Exceptions.EmptyCollectionException;
 import Collections.Stacks.LinearNode;
 
 /**
- * @author Miguel Rocha
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
 public class LinkedQueue<T> implements QueueADT<T> {
     private LinearNode<T> front, rear;

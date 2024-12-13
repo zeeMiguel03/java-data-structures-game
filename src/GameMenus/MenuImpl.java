@@ -18,19 +18,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-/*
- * Nome: António Miguel Cunha Monteiro
- * Número: 8230230
- * Turma: T3
+/**
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
  *
- * Nome: José Miguel Monteiro da Rocha
- * Número: 8230238
- * Turma: T3
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
 
-/**
- *
- */
 public class MenuImpl implements Menu{
 
     public Scanner scanner = new Scanner(System.in);

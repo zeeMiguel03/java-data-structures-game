@@ -7,7 +7,11 @@ package Collections.Stacks;
 import Collections.Exceptions.EmptyCollectionException;
 
 /**
- * @author Miguel Rocha
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
 
 public class SmackStack<T> extends ArrayStack<T> implements SmackStackADT<T> {

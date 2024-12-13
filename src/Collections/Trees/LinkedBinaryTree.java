@@ -13,7 +13,11 @@ import Collections.Queues.QueueADT;
 import java.util.Iterator;
 
 /**
- * @author Miguel Rocha
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
 
 public class LinkedBinaryTree<T> implements BinaryTreeADT<T> {

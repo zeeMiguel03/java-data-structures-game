@@ -5,8 +5,6 @@
 package Game.Exceptions;
 
 /**
- * Custom exception to handle item null errors in the game.
- *
  * Author: António Miguel Cunha Monteiro
  * Number: 8230230
  *
@@ -18,7 +16,7 @@ public class ItemNullException extends RuntimeException {
     /**
      * Creates an ItemNullException.
      *
-     * @param message the message to show
+     * @param message the message
      */
     public ItemNullException(String message) {
         super(message);

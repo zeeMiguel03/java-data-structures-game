@@ -7,9 +7,12 @@ package Collections.Trees;
 import Collections.Exceptions.EmptyCollectionException;
 
 /**
- * @author Miguel Rocha
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
-
 public class LinkedHeap<T> extends LinkedBinaryTree<T>  implements HeapADT<T>  {
     public HeapNode<T> lastNode;
 

@@ -5,7 +5,11 @@
 package Collections.Trees;
 
 /**
- * @author Miguel Rocha
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
 
 public class BinaryTreeNode<T> {
@@ -46,6 +50,7 @@ public class BinaryTreeNode<T> {
 
     /**
      * Sets the element of the node.
+     *
      * @param element the element to add
      */
     public void setElement(T element) {
@@ -54,6 +59,7 @@ public class BinaryTreeNode<T> {
 
     /**
      * Sets the left child of the node.
+     *
      * @param left the child to add
      */
     public void setLeft(BinaryTreeNode<T> left) {
@@ -62,6 +68,7 @@ public class BinaryTreeNode<T> {
 
     /**
      * Sets the right child of the node.
+     *
      * @param right the child to add
      */
     public void setRight(BinaryTreeNode<T> right) {
@@ -70,6 +77,7 @@ public class BinaryTreeNode<T> {
 
     /**
      * Gets the element of the node.
+     *
      * @return the element
      */
     public T getElement() {
@@ -78,6 +86,7 @@ public class BinaryTreeNode<T> {
 
     /**
      * Gets the left child of the node.
+     *
      * @return the left child
      */
     public BinaryTreeNode<T> getLeft() {
@@ -86,6 +95,7 @@ public class BinaryTreeNode<T> {
 
     /**
      * Gets the right child of the node.
+     *
      * @return the right child
      */
     public BinaryTreeNode<T> getRight() {

@@ -5,8 +5,11 @@
 package Collections.Lists;
 
 /**
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
  *
- * @author Miguel Rocha
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
  */
 public class DoubleNode<T> {
     private T element;
@@ -14,7 +17,7 @@ public class DoubleNode<T> {
     private DoubleNode<T> previous;
     
     /**
-     * Creates a empty double node.
+     * Creates an empty double node.
      */
     public DoubleNode() {
         this.element = null;

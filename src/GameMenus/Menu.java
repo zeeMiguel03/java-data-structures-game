@@ -8,6 +8,13 @@ import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 
+/**
+ * Author: António Miguel Cunha Monteiro
+ * Number: 8230230
+ *
+ * Author: José Miguel Monteiro da Rocha
+ * Number: 8230238
+ */
 public interface Menu {
     /**
      * Menu to select and import a mission from JSON files.

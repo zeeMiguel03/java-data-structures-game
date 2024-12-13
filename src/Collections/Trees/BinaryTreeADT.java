@@ -5,10 +5,6 @@
 package Collections.Trees;
 import java.util.Iterator;
 
-/**
- *
- * @author Miguel
- */
 public interface BinaryTreeADT<T> {
     
     /**
@@ -16,21 +12,21 @@ public interface BinaryTreeADT<T> {
      *
      * @return a reference to the root
      */
-    public T getRoot ();
+    T getRoot ();
     
     /**
      * Returns true if this binary tree is empty and false otherwise.
      *
      * @return true if this binary tree is empty
      */
-    public boolean isEmpty();
+    boolean isEmpty();
     
     /**
      * Returns the number of elements in this binary tree.
      *
      * @return the integer number of elements in this tree
      */
-    public int size();
+     int size();
     
     /**
      * Returns true if the binary tree contains an element that
@@ -39,7 +35,7 @@ public interface BinaryTreeADT<T> {
      * @param targetElement the element being sought in the tree
      * @return true if the tree contains the target element
      */
-    public boolean contains (T targetElement);
+    boolean contains (T targetElement);
      
     /**
      * Returns a reference to the specified element if it is found in
@@ -49,14 +45,14 @@ public interface BinaryTreeADT<T> {
      * @param targetElement the element being sought in the tree
      * @return a reference to the specified element
      */
-    public T find (T targetElement);
+    T find (T targetElement);
      
     /**
      * Returns the string representation of the binary tree.
      *
      * @return a string representation of the binary tree
      */
-    public String toString();
+    String toString();
     
     /**
      * Performs an inorder traversal on this binary tree by calling an
@@ -64,7 +60,7 @@ public interface BinaryTreeADT<T> {
      *
      * @return an iterator over the elements of this binary tree
      */
-    public Iterator<T> iteratorInOrder();
+    Iterator<T> iteratorInOrder();
     
     /**
      * Performs a preorder traversal on this binary tree by calling an
@@ -73,7 +69,7 @@ public interface BinaryTreeADT<T> {
      *
      * @return an iterator over the elements of this binary tree
      */
-    public Iterator<T> iteratorPreOrder();
+    Iterator<T> iteratorPreOrder();
     
     /**
      * Performs a postorder traversal on this binary tree by
@@ -82,7 +78,7 @@ public interface BinaryTreeADT<T> {
      *
      * @return an iterator over the elements of this binary tree
      */
-    public Iterator<T> iteratorPostOrder();
+    Iterator<T> iteratorPostOrder();
     
     /**
      * Performs a levelorder traversal on the binary tree,
@@ -90,5 +86,5 @@ public interface BinaryTreeADT<T> {
      *
      * @return an iterator over the elements of this binary tree
      */
-    public Iterator<T> iteratorLevelOrder();
+    Iterator<T> iteratorLevelOrder();
 }
