@@ -13,9 +13,6 @@ import Collections.Trees.PriorityQueue;
 
 import java.util.Iterator;
 
-/**
- * @author Miguel Rocha
- */
 
 /**
  * Network represents an adjacency matrix implementation of a network.
@@ -24,7 +21,7 @@ public class Network<T> extends Graph<T> implements NetworkADT<T> {
     protected double[][] adjMatrix;
 
     /**
-     * Creates a empty network
+     * Creates an empty network
      */
     public Network() {
         this.numVertices = 0;
@@ -101,32 +98,28 @@ public class Network<T> extends Graph<T> implements NetworkADT<T> {
      */
     @Override
     public void addEdge(T vertex1, T vertex2, double weight) {
-        addEdge(getIndex(vertex1), getIndex(vertex2), weight);
+        int index1 = getIndex(vertex1);
+        int index2 = getIndex(vertex2);
+
+        if (index1 == -1 || index2 == -1) {
+            throw new ElementNotFoundException("One or both vertices not found.");
+        }
+
+        if (indexIsValid(index1) && indexIsValid(index2)) {
+            adjMatrix[index1][index2] = weight;
+            adjMatrix[index2][index1] = weight;
+        }
     }
 
     /**
-     * Inserts an edge between two vertices of the graph, with a specific weight.
+     * Inserts an edge between two vertices of the graph.
      *
      * @param vertex1 the first vertex
      * @param vertex2 the second vertex
      */
     @Override
     public void addEdge(T vertex1, T vertex2) {
-        addEdge(getIndex(vertex1), getIndex(vertex2), 0);
-    }
-
-    /**
-     * Inserts an edge between two vertices of the graph, with a specific weight.
-     *
-     * @param index1 the first vertex
-     * @param index2 the second vertex
-     * @param weight the weight from the edge
-     */
-    private void addEdge(int index1, int index2, double weight) {
-        if (indexIsValid(index1) && indexIsValid(index2)) {
-            adjMatrix[index1][index2] = weight;
-            adjMatrix[index2][index1] = weight;
-        }
+        addEdge(vertex1, vertex2, 0);
     }
 
     /**
@@ -267,14 +260,12 @@ public class Network<T> extends Graph<T> implements NetworkADT<T> {
 
 
     /**
-     * Returns an iterator that performs a traversal of the indices
-     * of the vertices along the shortest path between two vertices,
-     * starting at the given vertex.
+     * Returns an iterator that performs a traversal of the shortest path
+     * between two vertices, starting at the given vertex.
      *
-     * @param startVertex the index of the vertex to begin the traversal from
-     * @param targetVertex the index of the target vertex
-     * @return an iterator that performs a traversal of the indices of
-     *         the vertices along the shortest path
+     * @param startVertex the vertex to begin the traversal from
+     * @param targetVertex the target vertex
+     * @return an iterator that performs a traversal of the shortest path
      */
     protected Iterator<T> iteratorShortestPathNet(T startVertex, T targetVertex) {
         int startIndex = getIndex(startVertex);
@@ -354,6 +345,13 @@ public class Network<T> extends Graph<T> implements NetworkADT<T> {
         return iteratorShortestPathNet(startVertex,targetVertex);
     }
 
+    /**
+     * Returns the value of the short path, between two vertex.
+     *
+     * @param startVertex the start vertex
+     * @param targetVertex the finish vertex
+     * @return the weight of the shortest.
+     */
     @Override
     public double shortestPathWeight(T startVertex, T targetVertex) {
         double result = 0;
