@@ -1,1 +1,22 @@
-/dist/
+# Build output
+build/
+dist/
+out/
+*.class
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# NetBeans local/private files
+nbproject/private/
+
+# Generated documentation
+Javadoc/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
