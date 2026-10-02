@@ -74,7 +74,7 @@ public class GameImpl implements Game {
      */
     private void setItems() throws IOException, ParseException, KeyNotFoundException {
         JSONArray jArray = (JSONArray) JsonHandler.getFromFile("itens");
-        Item mewItem;
+        Item newItem;
 
         for (Object itens : jArray) {
             JSONObject item = (JSONObject) itens;
@@ -82,13 +82,13 @@ public class GameImpl implements Game {
             long pontosExtra = item.get("pontos-extra") != null ? ((long) item.get("pontos-extra")) : 0;
 
             if (item.get("tipo").equals("kit de vida")) {
-                mewItem = new ItemImpl(typeItem.KIT_LIFE, (int) pontosVida, building.searchDivisionByName(item.get("divisao").toString()));
-                building.searchDivisionByName(item.get("divisao").toString()).addItem(mewItem);
+                newItem = new ItemImpl(typeItem.KIT_LIFE, (int) pontosVida, building.searchDivisionByName(item.get("divisao").toString()));
+                building.searchDivisionByName(item.get("divisao").toString()).addItem(newItem);
             } else {
-                mewItem = new ItemImpl(typeItem.VEST, (int) pontosExtra, building.searchDivisionByName(item.get("divisao").toString()));
-                building.searchDivisionByName(item.get("divisao").toString()).addItem(mewItem);
+                newItem = new ItemImpl(typeItem.VEST, (int) pontosExtra, building.searchDivisionByName(item.get("divisao").toString()));
+                building.searchDivisionByName(item.get("divisao").toString()).addItem(newItem);
             }
-            items.addToRear(mewItem);
+            items.addToRear(newItem);
         }
 
     }
@@ -135,7 +135,7 @@ public class GameImpl implements Game {
             Division div1 = null, div2 = null;
             iterator = divisions.iterator();
 
-            while (iterator.hasNext() && div1 == null || div2 == null) {
+            while ((div1 == null || div2 == null) && iterator.hasNext()) {
                 Division div = iterator.next();
                 if (div.getName().equals(array.get(0))) {
                     div1 = div;
